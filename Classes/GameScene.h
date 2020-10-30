@@ -1,10 +1,13 @@
 #ifndef __GAME_SCENE_H__
 #define __GAME_SCENE_H__
 #include "cocos2d.h"
+#include "Player.h"
 
 class GameScene : public cocos2d::Scene
 {
 public:
+    Unit* player;
+
     static cocos2d::Scene* createScene();
 
     virtual bool init();

@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "Definitions.h"
+#include "Player.h"
 
 USING_NS_CC;
 
@@ -31,34 +32,9 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    auto sprite = Sprite::create("CloseNormal.png");
-    sprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    this->addChild(sprite);
-
-    auto eventListener = EventListenerKeyboard::create();
-    eventListener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) 
-    {
-        Vec2 loc = event->getCurrentTarget()->getPosition();
-        switch (keyCode) {
-        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-        case EventKeyboard::KeyCode::KEY_A:
-            event->getCurrentTarget()->setPosition(loc.x - 10, loc.y);
-            break;
-        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-        case EventKeyboard::KeyCode::KEY_D:
-            event->getCurrentTarget()->setPosition(loc.x + 10, loc.y);
-            break;
-        case EventKeyboard::KeyCode::KEY_UP_ARROW:
-        case EventKeyboard::KeyCode::KEY_W:
-            event->getCurrentTarget()->setPosition(loc.x, loc.y + 10);
-            break;
-        case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-        case EventKeyboard::KeyCode::KEY_S:
-            event->getCurrentTarget()->setPosition(loc.x, loc.y - 10);
-            break;
-        }
-    };
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, sprite);
+    player = Player::create(this);
+    player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(player);
     
     return true;
 }
