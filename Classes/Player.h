@@ -9,23 +9,17 @@
 class Player : public Unit
 {
 public:
-    cocos2d::EventListenerKeyboard* listener = cocos2d::EventListenerKeyboard::create();
-
     Player();
 
     static Unit* create(cocos2d::Scene* scene);
 
 private:
-    cocos2d::MoveBy* moveBy = new cocos2d::MoveBy();
-    cocos2d::Vec2* targetPosition = new cocos2d::Vec2(0, 0);
-
-    void listenKeyboard();
+    void listenKeyboard(); 
+    bool keyStates[4] = {0, 0, 0, 0};
 
     void update(float dt);
 
-    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-
-    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void move();
 
 };
 
