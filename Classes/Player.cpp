@@ -14,6 +14,9 @@ Unit* Player::create(cocos2d::Scene* scene)
 {
     Player* newPlayer = new Player();
     if (newPlayer->sprite->initWithFile("CloseNormal.png")) {
+        auto body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width / 2);
+        body->setContactTestBitmask(true);
+        newPlayer->setPhysicsBody(body);
         newPlayer->scene = scene;
         newPlayer->autorelease();
         newPlayer->listenKeyboard();

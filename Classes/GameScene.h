@@ -18,8 +18,15 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     
 
+
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
+
+private:
+    cocos2d::PhysicsWorld* sceneWorld;
+
+    void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
+
 };
 
 #endif // __GAME_SCENE_H__
