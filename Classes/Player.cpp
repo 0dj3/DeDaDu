@@ -9,6 +9,7 @@ Player::Player()
     speed = 1;
 }
 
+
 Unit* Player::create(cocos2d::Scene* scene)
 {
     Player* newPlayer = new Player();
