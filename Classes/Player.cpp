@@ -12,6 +12,7 @@ Player::Player()
 
 Unit* Player::create(cocos2d::Scene* scene)
 {
+    Sprite sprite;
     Player* newPlayer = new Player();
     if (newPlayer->sprite->initWithFile("test_hero.png")) {
         auto body = PhysicsBody::createBox(Size(newPlayer->sprite->getContentSize().width / 2, newPlayer->sprite->getContentSize().height / 2),PhysicsMaterial());
