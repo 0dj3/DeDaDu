@@ -13,9 +13,15 @@ Player::Player()
 Unit* Player::create(cocos2d::Scene* scene)
 {
     Player* newPlayer = new Player();
+<<<<<<< HEAD
     if (newPlayer->sprite->initWithFile("hero.png")) {
         auto body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width / 2);
+=======
+    if (newPlayer->sprite->initWithFile("test_hero.png")) {
+        auto body = PhysicsBody::createBox(Size(newPlayer->sprite->getContentSize().width / 2, newPlayer->sprite->getContentSize().height / 2),PhysicsMaterial());
+>>>>>>> 9556820903c2fc4f4c340be9db9a21427f94d7bc
         body->setContactTestBitmask(true);
+        newPlayer->setScale(3.0);
         newPlayer->setPhysicsBody(body);
         newPlayer->scene = scene;
         newPlayer->autorelease();

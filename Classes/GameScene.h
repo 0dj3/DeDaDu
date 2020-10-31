@@ -23,6 +23,9 @@ public:
     CREATE_FUNC(GameScene);
 
 private:
+    cocos2d::TMXTiledMap* tileMap;
+    cocos2d::TMXLayer* background;
+
     cocos2d::PhysicsWorld* sceneWorld;
 
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
