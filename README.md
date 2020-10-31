@@ -1,4 +1,4 @@
-![Alt-текст](https://fontmeme.com/temporary/81d7a3648746eb9cc754472c6a396dfe.png "DeepDarkDev")
+![Dedadev](https://fontmeme.com/temporary/81d7a3648746eb9cc754472c6a396dfe.png "DeepDarkDev")
 ## Состав
 - Васенин Владислав as fiitt
 - Егоров Айтал as aitalyy
@@ -21,5 +21,8 @@ ___
 - [Cерия туторов по cocos2d-x. Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf4od_bOKN3WjAPr7snPXzoe)
 - [Пример. Флаппи бёрдю Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf7GSD9crXIjMQiRuIZ7mUVp)
 - [Физика. Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf4dOgNrnQCw1DyIFGUhnVtZ)
+
+___
+![Vanishing](https://media1.tenor.com/images/9e9fdd1ebe593f3adf24b829a0f5a989/tenor.gif?itemid=3377649)
 
 
