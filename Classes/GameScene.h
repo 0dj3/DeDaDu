@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 
-class GameScene : public cocos2d::Scene
+class GameScene : public cocos2d::Layer
 {
 public:
     Unit* player;

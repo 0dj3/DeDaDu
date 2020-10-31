@@ -8,7 +8,7 @@ class Unit : public cocos2d::Node
 {
 public:
     cocos2d::Sprite* sprite;
-    cocos2d::Scene* scene;
+    cocos2d::Layer* scene;
     float speed;
 
     Unit();
