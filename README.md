@@ -11,9 +11,9 @@ ___
 ___
 
 ## Шпоры:
-- [Создание проектаю Хабр](https://m.habr.com/ru/company/intel/blog/260267/)
-- [Пример игры и теорияю Хабр](https://habr.com/ru/post/339564/)
-- [Cерия туторов по cocos2d-xю Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf4od_bOKN3WjAPr7snPXzoe)
+- [Создание проекта. Хабр](https://m.habr.com/ru/company/intel/blog/260267/)
+- [Пример игры и теория. Хабр](https://habr.com/ru/post/339564/)
+- [Cерия туторов по cocos2d-x. Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf4od_bOKN3WjAPr7snPXzoe)
 - [Пример. Флаппи бёрдю Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf7GSD9crXIjMQiRuIZ7mUVp)
 - [Физика. Плэйлист](https://www.youtube.com/playlist?list=PLRtjMdoYXLf4dOgNrnQCw1DyIFGUhnVtZ)
 - [Работа со спрайтами. Хабр](https://habr.com/ru/post/339690/)
