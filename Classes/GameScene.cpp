@@ -35,8 +35,7 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    tileMap = new cocos2d::TMXTiledMap();
-    tileMap->initWithTMXFile("room_test.tmx");
+    tileMap = TMXTiledMap::create("rooms/room_test.tmx");
     background = tileMap->getLayer("wall");
 
     this->addChild(tileMap);
