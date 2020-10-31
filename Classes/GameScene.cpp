@@ -36,8 +36,8 @@ bool GameScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     tileMap = TMXTiledMap::create("Test.tmx");
-    background = tileMap->getLayer("background");
-    tileMap->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    tileMap->setScale(3.0);
+    tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
 
     this->addChild(tileMap);
 
@@ -45,7 +45,7 @@ bool GameScene::init()
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
-    auto edgeBody = PhysicsBody::createEdgeBox(Size(500,500), PHYSICSBODY_MATERIAL_DEFAULT, 3);  
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(590,450), PHYSICSBODY_MATERIAL_DEFAULT, 3);  
     auto edgeNode = Node::create();
     edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
