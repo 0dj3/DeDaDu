@@ -13,7 +13,7 @@ Player::Player()
 Unit* Player::create(cocos2d::Scene* scene)
 {
     Player* newPlayer = new Player();
-    if (newPlayer->sprite->initWithFile("CloseNormal.png")) {
+    if (newPlayer->sprite->initWithFile("hero.png")) {
         auto body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width / 2);
         body->setContactTestBitmask(true);
         newPlayer->setPhysicsBody(body);
