@@ -14,6 +14,7 @@ Unit* Player::create(cocos2d::Scene* scene)
 {
     Player* newPlayer = new Player();
     if (newPlayer->sprite->initWithFile("test_hero.png")) {
+        newPlayer->sprite->getTexture()->setAliasTexParameters();
         auto body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width / 2,PhysicsMaterial());
         body->setContactTestBitmask(true);
         newPlayer->setScale(3.0);
