@@ -50,11 +50,22 @@ bool GameScene::init()
     edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
     this->addChild(edgeNode);
-    
+
+    auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
+    closeItem->setPosition(Vec2(visibleSize.width-60, visibleSize.height-60));
+    auto menu = Menu::create(closeItem, NULL);
+    menu->setPosition(Vec2::ZERO);
+    this->addChild(menu, 1);
+
     return true;
 }
 
 void GameScene::Update()
 {
 
+}
+
+void GameScene::menuCloseCallback(Ref* pSender)
+{
+    Director::getInstance()->end();
 }
