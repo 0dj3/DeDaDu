@@ -1,9 +1,12 @@
 ![Dedadev](https://fontmeme.com/temporary/81d7a3648746eb9cc754472c6a396dfe.png "DeepDarkDev")
+
 ## Состав
-- Васенин Владислав as fiitt
-- Егоров Айтал as aitalyy
-- Двораковский Александр as ekkennyko
-- Иннокентьев Владимир as 0dj3
+- Васенин Владислав as **[fiitt](https://github.com/0dj3/DeDaDu/commits?author=fiitt)**
+- Егоров Айтал as **[aitalyy](https://github.com/0dj3/DeDaDu/commits?author=aitalyy)**
+- Двораковский Александр as **[ekkennyko](https://github.com/0dj3/DeDaDu/commits?author=ekkennyko)**
+- Иннокентьев Владимир as **[0dj3](https://github.com/0dj3/DeDaDu/commits?author=0dj3)**
+
+![cat](https://im6.ezgif.com/tmp/ezgif-6-ca119bafb79c.gif "Working hard")
 ___
 ## Ссылки
 - [ГДД](https://docs.google.com/document/d/1IGrs0XJwPmvafaEsAyJMMBFn2eL-RT0z3EabMz1SmMg/edit)
