@@ -10,3 +10,15 @@ Unit::Unit()
 	stats = new UnitStats();
 	this->addChild(sprite);
 }
+
+void Unit::Damage(int value) {
+	if (hp <= value) {
+		Dead();
+		return;
+	}
+	hp -= value;
+}
+
+void Unit::Dead() {
+
+}

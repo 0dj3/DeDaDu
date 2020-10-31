@@ -14,7 +14,13 @@ public:
 
     Unit();
 
+    void Damage(int value);
+
+    void Dead();
+    
+
 private:
+    int hp = 100;
 
 };
 
