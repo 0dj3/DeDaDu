@@ -39,7 +39,7 @@ bool GameScene::init()
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
-    auto edgeBody = PhysicsBody::createEdgeBox(Size(500,500), PHYSICSBODY_MATERIAL_DEFAULT, 100);  
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(500,500), PhysicsMaterial(0,1,0), 3);  
     auto edgeNode = Node::create();
     edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
