@@ -35,8 +35,9 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    tileMap = TMXTiledMap::create("rooms/room_test.tmx");
-    background = tileMap->getLayer("wall");
+    tileMap = TMXTiledMap::create("Test.tmx");
+    //background = tileMap->getLayer("wall");
+    tileMap->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
     this->addChild(tileMap);
 
