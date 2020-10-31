@@ -5,6 +5,10 @@
 - Двораковский Александр as ekkennyko
 - Иннокентьев Владимир as 0dj3
 ___
+## Ссылки
+- [ГДД](https://docs.google.com/document/d/1IGrs0XJwPmvafaEsAyJMMBFn2eL-RT0z3EabMz1SmMg/edit)
+- [Концепт](https://docs.google.com/document/d/1Oo0Se4T49saTvboynYM79g_3wZfpYGCT9ZUBiIumxtc/edit?usp=drive_web&ouid=108039641319216515313)
+___
 
 ## Шпоры:
 - [Создание проекта](https://m.habr.com/ru/company/intel/blog/260267/)
