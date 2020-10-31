@@ -37,6 +37,7 @@ bool GameScene::init()
 
     tileMap = TMXTiledMap::create("Test.tmx");
     background = tileMap->getLayer("background");
+    tileMap->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
     this->addChild(tileMap);
 
