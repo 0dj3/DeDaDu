@@ -52,7 +52,7 @@ bool GameScene::init()
     this->addChild(edgeNode);
 
     auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
-    closeItem->setPosition(Vec2(visibleSize.width-60, visibleSize.height-60));
+    closeItem->setPosition(Vec2(visibleSize.width-280, visibleSize.height-60));
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
