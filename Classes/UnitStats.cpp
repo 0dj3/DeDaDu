@@ -9,7 +9,7 @@ UnitStats::UnitStats()
 	intellect = DEFAULT_INT;
 }
 
-UnitStats::UnitStats(int speed)
+UnitStats::UnitStats(float speed)
 {
 	this->speed = speed;
 	strength = DEFAULT_STR;
@@ -25,7 +25,7 @@ UnitStats::UnitStats(int strength, int agility, int intellect)
 	this->intellect = intellect;
 }
 
-UnitStats::UnitStats(int speed, int strength, int agility, int intellect)
+UnitStats::UnitStats(float speed, int strength, int agility, int intellect)
 {
 	this->speed = speed;
 	this->strength = strength;

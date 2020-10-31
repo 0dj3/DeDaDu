@@ -8,6 +8,7 @@
 class Unit : public cocos2d::Node
 {
 public:
+    cocos2d::PhysicsBody* body;
     cocos2d::Sprite* sprite;
     cocos2d::Layer* layer;
     UnitStats* stats;

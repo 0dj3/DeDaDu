@@ -15,10 +15,14 @@ Unit* Player::create(cocos2d::Layer* layer)
     Player* newPlayer = new Player();
     if (newPlayer->sprite->initWithFile("test_hero.png")) {
         newPlayer->sprite->getTexture()->setAliasTexParameters();
-        auto body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width / 2,PhysicsMaterial());
-        body->setContactTestBitmask(true);
-        newPlayer->setScale(3.0);
-        newPlayer->setPhysicsBody(body);
+        newPlayer->sprite->setScale(3.0);
+
+        newPlayer->body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width,PhysicsMaterial());
+        newPlayer->body->setContactTestBitmask(true);
+        newPlayer->body->setLinearDamping(PHYSICS_DAMPING);
+        newPlayer->body->setMass(1.0f);
+        newPlayer->addComponent(newPlayer->body);
+
         newPlayer->layer = layer;
         newPlayer->autorelease();
         newPlayer->listenKeyboard();
@@ -54,7 +58,11 @@ void Player::move()
         directionX *= 0.7f;
         directionY *= 0.7f;
     }
-    this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
+    if (directionX == 0 && directionY == 0) {
+        this->body->setVelocity(Vec2(this->body->getVelocity().x / 2, this->body->getVelocity().y / 2));
+    }
+    this->body->applyImpulse(Vec2(directionX, directionY));
+    //this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
 }

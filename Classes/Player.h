@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "Unit.h"
 #include <string>
+#include <Box2d/Box2d.h>
 
 class Player : public Unit
 {

@@ -2,7 +2,7 @@
 #ifndef __UNITSTATS_H__
 #define __UNITSTATS_H__
 
-#define DEFAULT_SPEED 3
+#define DEFAULT_SPEED 5
 #define DEFAULT_STR 1
 #define DEFAULT_AGI 1
 #define DEFAULT_INT 1
@@ -16,9 +16,9 @@ public:
     int intellect;
 
     UnitStats();
-    UnitStats(int speed);
+    UnitStats(float speed);
     UnitStats(int strength, int agility, int intellect);
-    UnitStats(int speed, int strength, int agility, int intellect);
+    UnitStats(float speed, int strength, int agility, int intellect);
 
 private:
 
