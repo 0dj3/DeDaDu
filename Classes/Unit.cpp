@@ -5,7 +5,8 @@ USING_NS_CC;
 
 Unit::Unit()
 {
-	scene = new Layer();
+	layer = new Layer();
     sprite = new Sprite();
+	stats = new UnitStats();
 	this->addChild(sprite);
 }

@@ -6,11 +6,11 @@ USING_NS_CC;
 
 Player::Player()
 {
-    speed = 3;
+
 }
 
 
-Unit* Player::create(cocos2d::Layer* scene)
+Unit* Player::create(cocos2d::Layer* layer)
 {
     Player* newPlayer = new Player();
     if (newPlayer->sprite->initWithFile("test_hero.png")) {
@@ -19,7 +19,7 @@ Unit* Player::create(cocos2d::Layer* scene)
         body->setContactTestBitmask(true);
         newPlayer->setScale(3.0);
         newPlayer->setPhysicsBody(body);
-        newPlayer->scene = scene;
+        newPlayer->layer = layer;
         newPlayer->autorelease();
         newPlayer->listenKeyboard();
         newPlayer->scheduleUpdate();
@@ -39,16 +39,16 @@ void Player::move()
     float directionX = 0;
     float directionY = 0;
     if (keyStates[0]) {
-        directionY += speed;
+        directionY += stats->speed;
     }
     if (keyStates[1]) {
-        directionY -= speed;
+        directionY -= stats->speed;
     }
     if (keyStates[2]) {
-        directionX += speed;
+        directionX += stats->speed;
     }
     if (keyStates[3]) {
-        directionX -= speed;
+        directionX -= stats->speed;
     }
     if (directionX != 0 && directionY != 0) {
         directionX *= 0.7f;
