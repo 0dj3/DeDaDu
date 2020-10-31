@@ -55,6 +55,8 @@ void Player::move()
         directionY *= 0.7f;
     }
     this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
+    auto cam = Camera::getDefaultCamera();
+    cam->setPosition(this->getPosition());
 }
 
 void Player::listenKeyboard() 
