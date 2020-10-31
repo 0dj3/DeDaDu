@@ -10,7 +10,7 @@ Player::Player()
 }
 
 
-Unit* Player::create(cocos2d::Scene* scene)
+Unit* Player::create(cocos2d::Layer* scene)
 {
     Player* newPlayer = new Player();
     if (newPlayer->sprite->initWithFile("test_hero.png")) {
@@ -55,8 +55,8 @@ void Player::move()
         directionY *= 0.7f;
     }
     this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
-    //auto cam = this->scene->getDefaultCamera();
-    //cam->setPosition(this->getPosition());
+    auto cam = Camera::getDefaultCamera();
+    cam->setPosition(this->getPosition());
 }
 
 void Player::listenKeyboard() 

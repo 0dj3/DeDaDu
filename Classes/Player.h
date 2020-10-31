@@ -11,7 +11,7 @@ class Player : public Unit
 public:
     Player();
 
-    static Unit* create(cocos2d::Scene* scene);
+    static Unit* create(cocos2d::Layer* scene);
 
 private:
     void listenKeyboard(); 
