@@ -24,6 +24,7 @@ public:
 
 private:
     cocos2d::TMXTiledMap* tileMap;
+    cocos2d::TMXTiledMap* tileHall;
     cocos2d::TMXLayer* background;
 
     cocos2d::PhysicsWorld* sceneWorld;
