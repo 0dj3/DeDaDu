@@ -14,6 +14,7 @@ ___
 ___
 
 ## Шпоры:
+- [Документация cocos2d-x](https://docs.cocos2d-x.org/cocos2d-x/v3/en/)
 - [Создание проекта. Хабр](https://m.habr.com/ru/company/intel/blog/260267/)
 - [Основные понятия. Хабр](https://habr.com/ru/post/339564/)
 - [Работа со спрайтами. Хабр](https://habr.com/ru/post/339690/)
