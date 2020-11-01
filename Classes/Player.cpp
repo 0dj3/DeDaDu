@@ -6,7 +6,7 @@ USING_NS_CC;
 
 Player::Player()
 {
-
+    this->autorelease();
 }
 
 
@@ -17,14 +17,10 @@ Unit* Player::create(cocos2d::Layer* layer)
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
 
-        newPlayer->body = PhysicsBody::createCircle(newPlayer->sprite->getContentSize().width,PhysicsMaterial());
-        newPlayer->body->setContactTestBitmask(true);
-        newPlayer->body->setLinearDamping(PHYSICS_DAMPING);
-        newPlayer->body->setMass(1.0f);
+        newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize());
         newPlayer->addComponent(newPlayer->body);
 
         newPlayer->layer = layer;
-        newPlayer->autorelease();
         newPlayer->listenKeyboard();
         newPlayer->scheduleUpdate();
         return newPlayer;

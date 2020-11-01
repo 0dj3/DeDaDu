@@ -6,6 +6,7 @@
 #include "Unit.h"
 #include <string>
 #include <Box2d/Box2d.h>
+#include "PhysicHelper.h"
 
 class Player : public Unit
 {
