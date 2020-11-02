@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="8" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" source="../../github/VOV/DeDaDu/Resources/maps/full tilemap.tsx"/>
+ <layer id="1" name="background" width="8" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAPtAlgiRGOCYUPAIELCLE=
+  </data>
+ </layer>
+ <layer id="2" name="walls" width="8" height="11">
+  <data encoding="base64" compression="zlib">
+   eJyzYGBgsMSBbYDYkAE3MCJC3oqAPD5AD3mg+xzwyRPynxNQPz4MAKkgCOQ=
+  </data>
+ </layer>
+ <layer id="3" name="shop" width="8" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg8gAmImfHIczEwKODTz01AHgT4GRgSSHIUhQAAaowAyg==
+  </data>
+ </layer>
+ <layer id="4" name="potion" width="8" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg6gJ2APBsRZjBSwyEkAAAKNAAP
+  </data>
+ </layer>
+</map>
