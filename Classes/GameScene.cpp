@@ -41,32 +41,17 @@ bool GameScene::init()
     tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     this->addChild(tileMap);
 
-    auto layer = tileMap->getLayer("walls");
-    auto gid = layer->getTileAt(Vec2(0, 0));
-    auto asd = Size(gid->getPosition());
-
-    /*auto edgeBody = PhysicsBody::createEdgeBox(asd, PHYSICSBODY_MATERIAL_DEFAULT, 3);*/
-
-    tileHall = TMXTiledMap::create("maps/hall.tmx");
-    tileHall->setScale(3.0);
-    tileHall->setPosition(asd);
-    this->addChild(tileHall);
-
-    auto size_hall= tileHall->getPosition();
-    auto size_map = tileMap->getPosition();
-
     player = Player::create(this);
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
-    auto size_player = player->getPosition();
 
-    /*auto edgeBody = PhysicsBody::createEdgeBox(Size(580,700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(580,700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
 
     auto edgeNode = Node::create();
     edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
-    this->addChild(edgeNode);*/
+    this->addChild(edgeNode);
 
     auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
     closeItem->setPosition(Vec2(visibleSize.width-280, visibleSize.height-60));
