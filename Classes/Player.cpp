@@ -54,11 +54,11 @@ void Player::move()
         directionX *= 0.7f;
         directionY *= 0.7f;
     }
-    if (directionX == 0 && directionY == 0) {
+    /*if (directionX == 0 && directionY == 0) {
         this->body->setVelocity(Vec2(this->body->getVelocity().x / 2, this->body->getVelocity().y / 2));
-    }
-    this->body->applyImpulse(Vec2(directionX, directionY));
-    //this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
+    }*/
+    //this->body->setVelocity(Vec2(directionX * 20, directionY * 20));
+    this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
 }

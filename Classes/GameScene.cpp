@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Slime.h"
 #include "2d/CCFastTMXLayer.h"
+#include "Generation_map.h"
 
 USING_NS_CC;
 
@@ -12,6 +13,7 @@ Scene* GameScene::createScene()
     scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vect(0, 0));
     auto layer = GameScene::create();
+    layer->scene = scene;
     layer->SetPhysicsWorld(scene->getPhysicsWorld());
     scene->addChild(layer);
     return scene;
@@ -37,10 +39,10 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    tileMap = TMXTiledMap::create("maps/main_room.tmx");
+    /*tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
     tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
-    this->addChild(tileMap);
+    this->addChild(tileMap);*/
 
     player = Player::create(this);
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
@@ -50,7 +52,6 @@ bool GameScene::init()
     slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 30));
     this->addChild(slime);
 
-   
     auto edgeBody = PhysicsBody::createEdgeBox(Size(580, 700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
     auto edgeNode = Node::create();
     edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
@@ -66,10 +67,6 @@ bool GameScene::init()
     return true;
 }
 
-void GameScene::Update()
-{
-
-}
 
 void GameScene::menuCloseCallback(Ref* pSender)
 {
