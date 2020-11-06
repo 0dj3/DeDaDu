@@ -12,6 +12,7 @@ public:
 
     virtual bool init();
 
+    cocos2d::Scene* scene;
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
@@ -22,6 +23,7 @@ public:
     CREATE_FUNC(GameScene);
 
 private:
+    
     cocos2d::TMXTiledMap* tileMap;
     cocos2d::TMXTiledMap* tileHall;
     cocos2d::TMXLayer* background;

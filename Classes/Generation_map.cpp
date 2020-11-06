@@ -3,9 +3,11 @@
 USING_NS_CC;
 
 
-Scene* Generation_map::createScene()
+Scene* Generation_map::createScene(Scene* scene)
 {
-    return Generation_map::create();
+    auto map = Generation_map::create();
+    return map;
+    
 }
 
 bool Generation_map::init() {
@@ -19,6 +21,7 @@ bool Generation_map::init() {
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
     tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
+    
     addChild(tileMap);
     return true;
 }

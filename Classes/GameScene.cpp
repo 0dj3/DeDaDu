@@ -12,6 +12,7 @@ Scene* GameScene::createScene()
     scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vect(0, 0));
     auto layer = GameScene::create();
+    layer->scene = scene;
     layer->SetPhysicsWorld(scene->getPhysicsWorld());
     scene->addChild(layer);
     return scene;
@@ -42,7 +43,7 @@ bool GameScene::init()
     tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     this->addChild(tileMap);*/
 
-    auto map = Generation_map::createScene();
+    
 
 
     player = Player::create(this);
