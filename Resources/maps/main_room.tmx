@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="10" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="10" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="1">
  <tileset firstgid="1" name="full tilemap" tilewidth="16" tileheight="16" tilecount="72" columns="9">
   <image source="full tilemap.png" width="144" height="128"/>
  </tileset>
  <tileset firstgid="73" source="full tilemap.tsx"/>
  <layer id="1" name="backgtound" width="10" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgIA6UIOEENIxPbhQPLCY23gA8zDqyCAIAAA==
+   H4sIAAAAAAAACmNgIB0koGF8cqN4aGAA4E6PKggCAAA=
+  </data>
+ </layer>
+ <layer id="5" name="brick" width="10" height="13">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgIA6UIGFS5EbB0AAAU2bCVwgCAAA=
   </data>
  </layer>
  <layer id="2" name="walls" width="10" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACutiYGDoAuJeIE5Aw51QORCuZCAMgGoaiFFXRaR5IHVNRKgDqmkgQtmAAqAbHYhQc6CSCHXAcHEgVl0XFPdiUd+JJA8AWfFKOQgCAAA=
+   H4sIAAAAAAAACutiYGDoAuJeIE5Aw51QORCuZCAMgGoaiFFXRaR5IHVNRKgDqmkgQtmAAqAbHYhQc6CSCHXAcHEgVh1yHKIDmDgo7gH762hFCAIAAA==
   </data>
  </layer>
 </map>

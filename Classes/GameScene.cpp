@@ -38,16 +38,25 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /*tileMap = TMXTiledMap::create("maps/main_room.tmx");
+    tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
-    tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
-    this->addChild(tileMap);*/
+    tileMap->setAnchorPoint(Point(0.5, 0.5));
+    //tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
+    
+    tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
+    tileHall->setScale(3.0);
+    auto sizeMapX = tileMap->getPositionX();
+    auto sizeMapY = tileMap->getPositionY();
+    tileHall->setAnchorPoint(Point(0.5, 0.5));
+    tileHall->setPosition(Point(sizeMapX, sizeMapY + tileHall->getMapSize().height));
 
+    this->addChild(tileMap);
+    this->addChild(tileHall);
     
 
 
     player = Player::create(this);
-    player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    //player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
     
@@ -55,7 +64,7 @@ bool GameScene::init()
     auto edgeBody = PhysicsBody::createEdgeBox(Size(580,700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
 
     auto edgeNode = Node::create();
-    edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    //edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
     this->addChild(edgeNode);
 

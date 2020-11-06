@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="10" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="../../github/VOV/DeDaDu/Resources/maps/full tilemap.tsx"/>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="10" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="full tilemap.tsx"/>
  <layer id="1" name="background" width="10" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYCAO6BCJJUbxoMLExhsAH1wM0Q==
+   eJxjYKAukBjFQxIDAPPgClE=
+  </data>
+ </layer>
+ <layer id="3" name="brick" width="10" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAO6BCJR8HQBAAcRQG5
   </data>
  </layer>
  <layer id="2" name="walls" width="10" height="13">
   <data encoding="base64" compression="zlib">
-   eJyzYGBgsCSAbYDYkIEwMKKBOisi1REDBlId0B8OxKijdvg5Ae0lBgMAmFALIA==
+   eJyzYGBgsCSAbYDYkIEwMKKBOisi1REDBlId0B8OxKijdvg5ArETAewKxABotAii
   </data>
  </layer>
 </map>

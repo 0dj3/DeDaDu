@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="8" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
- <tileset firstgid="1" source="../../github/VOV/DeDaDu/Resources/maps/full tilemap.tsx"/>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="8" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="full tilemap.tsx"/>
  <layer id="1" name="background" width="8" height="11">
   <data encoding="base64" compression="zlib">
-   eJxjYMAPtAlgiRGOCYUPAIELCLE=
+   eJxjYKAMSIxivBgA2w0GwQ==
+  </data>
+ </layer>
+ <layer id="5" name="brick" width="8" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAPdAjgUYAfAACmLwFh
   </data>
  </layer>
  <layer id="2" name="walls" width="8" height="11">
   <data encoding="base64" compression="zlib">
-   eJyzYGBgsMSBbYDYkAE3MCJC3oqAPD5AD3mg+xzwyRPynxNQPz4MAKkgCOQ=
+   eJyzYGBgsMSBbYDYkAE3MCJC3oqAPD5AD3mg+xzwyRPynyMQO+HArkAMAIsMBuY=
   </data>
  </layer>
  <layer id="3" name="shop" width="8" height="11">
