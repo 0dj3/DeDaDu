@@ -15,8 +15,8 @@ public:
     static Unit* create(cocos2d::Layer* scene);
     
     void setPos(float x, float y) { xp = x; yp = y; };
-    float getX() { return xp; }
-    float getY() { return yp; }
+    float getX() { return xp; };
+    float getY() { return yp; };
 
 private:
     float xp;
