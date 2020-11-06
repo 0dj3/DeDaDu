@@ -13,15 +13,17 @@ Player::Player()
 Unit* Player::create(cocos2d::Layer* layer)
 {
     Player* newPlayer = new Player();
-    if (newPlayer->sprite->initWithFile("test_hero.png")) {
+    if (newPlayer && newPlayer->sprite->initWithFile("test_hero.png")) {
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
+        newPlayer->CreateWeapon();
 
-        newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize());
+        newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize() * 2);
         newPlayer->addComponent(newPlayer->body);
 
         newPlayer->layer = layer;
         newPlayer->listenKeyboard();
+        newPlayer->listenMouse();
         newPlayer->scheduleUpdate();
         return newPlayer;
     }
@@ -32,6 +34,25 @@ Unit* Player::create(cocos2d::Layer* layer)
 void Player::update(float dt)
 {
     move();
+    rotate();
+}
+
+void Player::CreateWeapon() {
+    weaponSprite = new Sprite();
+    if (weaponSprite && weaponSprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/heroes/knight/weapon_sword_1.png")) {
+        weaponSprite->getTexture()->setAliasTexParameters();
+        weaponSprite->setScale(3.0);
+        weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
+        weaponSprite->setAnchorPoint(this->sprite->getPosition());
+        this->addChild(weaponSprite);
+        return;
+    }
+    CC_SAFE_DELETE(weaponSprite);
+    return;
+}
+
+void Player::rotate() {
+    weaponSprite->setRotation(CC_RADIANS_TO_DEGREES(-(weaponSprite->getPosition() - mousePosition).getAngle()) - 135);
 }
 
 void Player::move()
@@ -66,7 +87,7 @@ void Player::move()
 
 void Player::listenKeyboard() 
 {
-    auto eventListener = EventListenerKeyboard::create();
+    auto eventListener = cocos2d::EventListenerKeyboard::create();
     eventListener->onKeyPressed = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
     {
         Vec2 loc = event->getCurrentTarget()->getPosition();
@@ -104,4 +125,20 @@ void Player::listenKeyboard()
         }
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+}
+
+void Player::listenMouse()
+{
+    auto mouseListener = cocos2d::EventListenerMouse::create();
+
+    mouseListener->onMouseMove = [this](cocos2d::Event* ccevnt)
+    {
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        EventMouse* eventMouse = (EventMouse*)ccevnt;
+        mousePosition = Vec2(eventMouse->getCursorX() - visibleSize.width / 2 + origin.x, eventMouse->getCursorY() - visibleSize.height / 2 + origin.y);
+        log("float is %f", mousePosition.x);
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
