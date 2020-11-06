@@ -17,9 +17,11 @@ public:
     void setPos(float x, float y) { xp = x; yp = y; };
     float getX() { return xp; }
     float getY() { return yp; }
+
 private:
     float xp;
     float yp;
+
     void listenKeyboard(); 
     bool keyStates[4] = {0, 0, 0, 0};
 

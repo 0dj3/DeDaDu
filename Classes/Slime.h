@@ -14,7 +14,7 @@ class Slime : public Unit
 public:
     Slime();
 
-    static Unit* create(cocos2d::Layer* scene);
+    static Unit* create(cocos2d::Layer* scene, Unit* Player);
 
 private:
     void update(float dt);

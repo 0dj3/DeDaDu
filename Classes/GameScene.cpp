@@ -48,8 +48,8 @@ bool GameScene::init()
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
-    slime = Slime::create(this);
-    slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 30));
+    slime = Slime::create(this, player);
+    slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
     this->addChild(slime);
 
     auto edgeBody = PhysicsBody::createEdgeBox(Size(580, 700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
@@ -66,7 +66,6 @@ bool GameScene::init()
 
     return true;
 }
-
 
 void GameScene::menuCloseCallback(Ref* pSender)
 {
