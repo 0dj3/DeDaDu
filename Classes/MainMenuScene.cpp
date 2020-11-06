@@ -38,7 +38,7 @@ bool MainMenuScene::init()
 
     auto playItem = MenuItemImage::create("menu_button.png", "menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
     playItem->setPosition(Point(0, 0));
-    
+
     auto menu = Menu::create(playItem, NULL);
     menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
     this->addChild(menu);

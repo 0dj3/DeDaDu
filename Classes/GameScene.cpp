@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Definitions.h"
 #include "Player.h"
+#include "Slime.h"
 #include "2d/CCFastTMXLayer.h"
 #include "Generation_map.h"
 
@@ -40,6 +41,7 @@ bool GameScene::init()
 
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
+<<<<<<< HEAD
     tileMap->setAnchorPoint(Point(0.5, 0.5));
     //tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     
@@ -54,15 +56,20 @@ bool GameScene::init()
     this->addChild(tileHall);
     
 
+=======
+    tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
+    this->addChild(tileMap);*/
+>>>>>>> 1c0485a2cbe1465bf4b7b13fd0c19a8498ed467e
 
     player = Player::create(this);
     //player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
-    
+    slime = Slime::create(this, player);
+    slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
+    this->addChild(slime);
 
-    auto edgeBody = PhysicsBody::createEdgeBox(Size(580,700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
-
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(580, 700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
     auto edgeNode = Node::create();
     //edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
@@ -76,7 +83,6 @@ bool GameScene::init()
 
     return true;
 }
-
 
 void GameScene::menuCloseCallback(Ref* pSender)
 {
