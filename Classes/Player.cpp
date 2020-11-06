@@ -104,4 +104,3 @@ void Player::listenKeyboard()
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
 }
-

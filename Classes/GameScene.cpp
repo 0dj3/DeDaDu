@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Definitions.h"
 #include "Player.h"
+#include "Slime.h"
 #include "2d/CCFastTMXLayer.h"
 
 USING_NS_CC;
@@ -45,9 +46,12 @@ bool GameScene::init()
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
+    slime = Slime::create(this);
+    slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 30));
+    this->addChild(slime);
 
-    auto edgeBody = PhysicsBody::createEdgeBox(Size(580,700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
-
+   
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(580, 700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
     auto edgeNode = Node::create();
     edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     edgeNode->setPhysicsBody(edgeBody);
