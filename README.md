@@ -1,4 +1,4 @@
-![Dedadev](https://fontmeme.com/temporary/81d7a3648746eb9cc754472c6a396dfe.png "DeepDarkDev")
+![Dedadev](https://cdn.discordapp.com/attachments/769499768443240505/774115732405223495/68747470733a2f2f666f6e746d656d652e636f6d2f74656d706f726172792f38316437613336343837343665623963633735.png "DeepDarkDev")
 
 ## Состав:
 - Васенин Владислав as **[fiitt](https://github.com/0dj3/DeDaDu/commits?author=fiitt)**
