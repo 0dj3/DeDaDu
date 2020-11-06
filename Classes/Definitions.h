@@ -3,6 +3,6 @@
 
 #define DISPLAY_TIME_SPLASH_SCENE 2
 #define TRANSITION_TIME 0.5
-#define PHYSICS_DAMPING 1.0f
+#define PHYSICS_DAMPING 0.0f
 
 #endif // __DEFINITIONS_H__
