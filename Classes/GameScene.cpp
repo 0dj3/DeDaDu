@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "Player.h"
 #include "2d/CCFastTMXLayer.h"
+#include "Generation_map.h"
 
 USING_NS_CC;
 
@@ -36,15 +37,19 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    tileMap = TMXTiledMap::create("maps/main_room.tmx");
+    /*tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
     tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
-    this->addChild(tileMap);
+    this->addChild(tileMap);*/
+
+    auto map = Generation_map::createScene();
+
 
     player = Player::create(this);
     player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
+    
 
     auto edgeBody = PhysicsBody::createEdgeBox(Size(580,700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
 
@@ -62,10 +67,6 @@ bool GameScene::init()
     return true;
 }
 
-void GameScene::Update()
-{
-
-}
 
 void GameScene::menuCloseCallback(Ref* pSender)
 {

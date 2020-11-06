@@ -12,7 +12,6 @@ public:
 
     virtual bool init();
 
-    void Update();
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
