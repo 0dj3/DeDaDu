@@ -41,7 +41,6 @@ bool GameScene::init()
 
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
-<<<<<<< HEAD
     tileMap->setAnchorPoint(Point(0.5, 0.5));
     //tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     
@@ -55,11 +54,6 @@ bool GameScene::init()
     this->addChild(tileMap);
     this->addChild(tileHall);
     
-
-=======
-    tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
-    this->addChild(tileMap);*/
->>>>>>> 1c0485a2cbe1465bf4b7b13fd0c19a8498ed467e
 
     player = Player::create(this);
     //player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
