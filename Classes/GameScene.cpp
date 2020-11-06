@@ -60,7 +60,7 @@ bool GameScene::init()
     this->addChild(player);
 
     slime = Slime::create(this, player);
-    slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
+    //slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
     this->addChild(slime);
 
     auto edgeBody = PhysicsBody::createEdgeBox(Size(580, 700), PHYSICSBODY_MATERIAL_DEFAULT, 3);
