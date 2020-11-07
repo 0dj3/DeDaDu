@@ -20,7 +20,9 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     
+    void generation();
 
+    void border(cocos2d::TMXTiledMap* tiled);
 
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
@@ -29,7 +31,11 @@ private:
     
     cocos2d::TMXTiledMap* tileMap;
     cocos2d::TMXTiledMap* tileHall;
+    cocos2d::TMXTiledMap* tileHallHor;
+    cocos2d::TMXTiledMap* allMap;
     cocos2d::TMXLayer* background;
+
+
 
     cocos2d::PhysicsWorld* sceneWorld;
 

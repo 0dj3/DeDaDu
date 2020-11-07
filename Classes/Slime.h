@@ -18,7 +18,7 @@ public:
 
 private:
     void update(float dt);
-
+    int hp = 30;
     void move();
 
 };
