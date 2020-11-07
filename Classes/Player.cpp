@@ -155,6 +155,9 @@ bool Player::onContactBegin(PhysicsContact& contact)
 {
     auto nodeA = contact.getShapeA()->getBody()->getNode();
     auto nodeB = contact.getShapeB()->getBody()->getNode(); 
+    if (nodeB->getTag() == 2) {
+        static_cast<Unit*> (nodeB)->Damage(50);
+    }
 
     return false;
 }
