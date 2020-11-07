@@ -19,15 +19,22 @@ public:
     float getY() { return yp; };
 
 private:
+    cocos2d::Sprite* weaponSprite;
+
     float xp;
     float yp;
 
     void listenKeyboard(); 
+    void listenMouse();
+    cocos2d::Vec2 mousePosition;
     bool keyStates[4] = {0, 0, 0, 0};
+
+    void CreateWeapon();
 
     void update(float dt);
 
     void move();
+    void rotate();
 
 };
 
