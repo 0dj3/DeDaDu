@@ -23,6 +23,8 @@ public:
     void generation();
 
     void border(cocos2d::TMXTiledMap* tiled);
+    void generHall(cocos2d::Vec2 sizeMap, float rotation, int direction);
+
 
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
@@ -33,6 +35,7 @@ private:
     cocos2d::TMXTiledMap* tileHall;
     cocos2d::TMXTiledMap* tileHallHor;
     cocos2d::TMXTiledMap* allMap;
+    cocos2d::TMXTiledMap* tileMapRight;
     cocos2d::TMXLayer* background;
 
 
