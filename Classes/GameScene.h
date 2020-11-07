@@ -32,10 +32,7 @@ private:
     
     cocos2d::TMXTiledMap* tileMap;
     cocos2d::TMXTiledMap* tileHall;
-    cocos2d::TMXTiledMap* tileHallHor;
-    cocos2d::TMXTiledMap* allMap;
     cocos2d::TMXTiledMap* tileMapOne;
-    cocos2d::TMXLayer* background;
 
 
 
