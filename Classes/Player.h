@@ -19,6 +19,7 @@ public:
     float getY() { return yp; };
 
 private:
+    bool onContactBegin(cocos2d::PhysicsContact& contact);
     cocos2d::Sprite* weaponSprite;
 
     float xp;
