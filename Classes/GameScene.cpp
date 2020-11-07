@@ -88,7 +88,6 @@ void GameScene::generation() {
     generHall(tileMap->getPosition(), 90.0f, 3);
     generHall(tileMap->getPosition(), 90.0f, 4);
 
-
     auto sizeMapXA = tileHallHor->getPositionX();
     auto sizeMapYA = tileHallHor->getPositionY();
 
@@ -96,7 +95,6 @@ void GameScene::generation() {
     tileMapRight->setAnchorPoint(Point(0.5, 0.5));
     tileMapRight->setPosition(Point(sizeMapXA + tileMap->getMapSize().width * 45, sizeMapYA - (tileMap->getMapSize().height)));
     tileMapRight->setScale(3.0);
-
 
     auto kol = 0;
     Sprite* kol1;
@@ -124,14 +122,13 @@ void GameScene::border(TMXTiledMap* tiled) {
                 /*auto X = layerCheck->getTileAt(Vec2(i, j))->getPosition().x;*/
                 auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
                 auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
-                auto edgeBody = PhysicsBody::createEdgeBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT, 3);
+                auto edgeBody = PhysicsBody::createBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT);
                 
                 auto edgeNode = Node::create();
-               
-                edgeNode->setPosition(PositionTile * 3);
-                edgeNode->setPhysicsBody(edgeBody);
+                edgeNode->setPosition(PositionTile * 3 + tiled->getPosition());
                 edgeNode->setScale(3.0);
                 edgeNode->setAnchorPoint(Point(0.5, 0.5));
+                edgeNode->setPhysicsBody(edgeBody);
                 this->addChild(edgeNode);
             }
         }
@@ -161,7 +158,9 @@ void GameScene::generHall(Vec2 sizeMap, float rotation, int direction) {
     default:
         break;
     }
+
     tileHallHor->setScale(3.0);
     tileHallHor->setRotation(rotation);
+    border(tileHallHor);
     this->addChild(tileHallHor);
 }
