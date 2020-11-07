@@ -83,6 +83,8 @@ void Player::move()
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
     setPos(directionX, directionY);
+    log(directionX);
+    log(directionY);
 }
 
 void Player::listenKeyboard() 

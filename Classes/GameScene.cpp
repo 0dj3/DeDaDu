@@ -48,15 +48,16 @@ bool GameScene::init()
     this->addChild(player);
 
     slime = Slime::create(this, player);
+    slime->setTag(2);
     //slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
     this->addChild(slime);
 
-    
-    auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
-    closeItem->setPosition(Vec2(visibleSize.width-280, visibleSize.height-60));
+    //----Close button
+    /*auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
+    closeItem->setPosition(Vec2(visibleSize.width, visibleSize.height));
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
+    this->addChild(menu, 1);*/
 
     return true;
 }
