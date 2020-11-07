@@ -21,5 +21,5 @@ void Unit::Damage(int value) {
 
 void Unit::Dead() 
 {
-
+	this->removeFromParentAndCleanup(true);
 }
