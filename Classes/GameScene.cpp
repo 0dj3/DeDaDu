@@ -100,7 +100,7 @@ void GameScene::generation() {
 
     auto sizeMapXA = tileHallHor->getPositionX();
 
-    //generMapOne(tileHallHor->getPosition(), 0.0f, 3);
+    generMapOne(tileHallHor->getPosition(), 0.0f, 3);
 
     
 
@@ -180,16 +180,16 @@ void GameScene::generMapOne(cocos2d::Vec2 sizeMap, float rotation, int direction
     switch (direction)
     {
     case 1://down
-        tileHallHor->setPosition(Point(sizeMapX, +sizeMapY - tileMap->getMapSize().height * 41.5));
+        tileMapOne->setPosition(Point(sizeMapX, +sizeMapY - tileMap->getMapSize().height * 41.5));
         break;
     case 2://up
-        tileHallHor->setPosition(Point(sizeMapX, +sizeMapY + tileMap->getMapSize().height * 41.5));
+        tileMapOne->setPosition(Point(sizeMapX, +sizeMapY + tileMap->getMapSize().height * 41.5));
         break;
     case 3://right
-        tileHallHor->setPosition(Point(sizeMapX + tileMap->getMapSize().width * 45, sizeMapY - (tileMap->getMapSize().height)));
+        tileMapOne->setPosition(Point(sizeMapX + tileMap->getMapSize().width * 45, sizeMapY + (tileMap->getMapSize().height / 20 * 45)));
         break;
     case 4://left
-        tileHallHor->setPosition(Point(sizeMapX - tileMap->getMapSize().width * 45, sizeMapY - (tileMap->getMapSize().height / 20 * 45)));
+        tileMapOne->setPosition(Point(sizeMapX - tileMap->getMapSize().width * 45, sizeMapY - (tileMap->getMapSize().height / 20 * 45)));
         break;
     default:
         break;
