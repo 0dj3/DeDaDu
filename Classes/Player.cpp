@@ -20,7 +20,6 @@ Unit* Player::create(cocos2d::Layer* layer)
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize() * 2);
         newPlayer->addComponent(newPlayer->body);
-
         newPlayer->layer = layer;
         newPlayer->listenKeyboard();
         newPlayer->listenMouse();
@@ -41,10 +40,17 @@ void Player::CreateWeapon() {
     weaponSprite = new Sprite();
     if (weaponSprite && weaponSprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/heroes/knight/weapon_sword_1.png")) {
         weaponSprite->getTexture()->setAliasTexParameters();
+        PhysicsBody* body = PhysicHelper::createDynamicPhysicBody(weaponSprite->getContentSize());
+        body->getShape(body->getTag())->setRestitution(0);
+        weaponSprite->addComponent(body);
         weaponSprite->setScale(3.0);
         weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
         weaponSprite->setAnchorPoint(this->sprite->getPosition());
         this->addChild(weaponSprite);
+
+        auto contactListener = EventListenerPhysicsContact::create();
+        contactListener->onContactBegin = CC_CALLBACK_1(Player::onContactBegin, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
         return;
     }
     CC_SAFE_DELETE(weaponSprite);
@@ -83,6 +89,8 @@ void Player::move()
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
     setPos(directionX, directionY);
+    log(directionX);
+    log(directionY);
 }
 
 void Player::listenKeyboard() 
@@ -141,4 +149,15 @@ void Player::listenMouse()
     };
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+}
+
+bool Player::onContactBegin(PhysicsContact& contact)
+{
+    auto nodeA = contact.getShapeA()->getBody()->getNode();
+    auto nodeB = contact.getShapeB()->getBody()->getNode(); 
+    if (nodeB->getTag() == 2) {
+        static_cast<Unit*> (nodeB)->Damage(50);
+    }
+
+    return false;
 }
