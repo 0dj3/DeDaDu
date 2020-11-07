@@ -19,7 +19,6 @@ void Unit::Damage(int value) {
 	hp -= value;
 }
 
-void Unit::Dead() 
-{
+void Unit::Dead() {
 
 }
