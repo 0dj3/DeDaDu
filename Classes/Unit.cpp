@@ -1,6 +1,6 @@
 #include "Unit.h"
 #include "Definitions.h"
-
+#include "AudioEngine.h"
 USING_NS_CC;
 
 Unit::Unit()
@@ -12,6 +12,8 @@ Unit::Unit()
 }
 
 void Unit::Damage(int value) {
+	AudioEngine::play2d("hit.mp3", false, 1.0);
+
 	if (hp <= value) {
 		Dead();
 		return;

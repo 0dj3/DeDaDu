@@ -4,6 +4,7 @@
 #include "Slime.h"
 #include "2d/CCFastTMXLayer.h"
 #include "Generation_map.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 CC_DLL;
@@ -49,9 +50,17 @@ bool GameScene::init()
 
     slime = Slime::create(this, player);
     slime->setTag(2);
-    //slime->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
+    slime->setPosition(Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
 
+    auto eventListener = EventListenerKeyboard::create();
+    eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)
+    {
+        if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
+            CC_CALLBACK_1(GameScene::menuCloseCallback, this);
+        
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
     //----Close button
     /*auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
     closeItem->setPosition(Vec2(visibleSize.width, visibleSize.height));
