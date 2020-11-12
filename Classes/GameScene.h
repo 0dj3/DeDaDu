@@ -23,7 +23,7 @@ public:
     void generation();
     void border(cocos2d::TMXTiledMap* tiled);
     void generHall(cocos2d::Vec2 sizeMap, float rotation, int direction);
-    void generMapOne(cocos2d::Vec2 sizeMap, float rotation, int direction);
+    void generMapOne(cocos2d::TMXTiledMap* sizeMap, float rotation, int direction);
 
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);

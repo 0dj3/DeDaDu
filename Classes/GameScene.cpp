@@ -45,7 +45,7 @@ bool GameScene::init()
     
 
     player = Player::create(this);
-    //player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    player->setPosition(Point(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
     slime = Slime::create(this, player);
@@ -99,7 +99,7 @@ void GameScene::generation() {
     generHall(tileMap->getPosition(), 90.0f, 3);
     
 
-    generMapOne(tileHall->getPosition(), 0.0f, 3);
+    generMapOne(tileHall, 0.0f, 3);
 }
 
 
@@ -112,25 +112,13 @@ void GameScene::border(TMXTiledMap* tiled) {
                 /*auto X = layerCheck->getTileAt(Vec2(i, j))->getPosition().x;*/
                 auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
                 auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
-
                 auto edgeNode = Node::create();
                 auto edgeBody = PhysicsBody::createBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT);
                 edgeBody->setDynamic(false);
                 edgeNode->setPhysicsBody(edgeBody);
                 edgeNode->setScale(3.0);
                 edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
-                double XX, YY;
-                /*if (tiled->getPosition().x != 0)
-                    XX = tiled->getPosition().x / 1.426 + PositionTile.x * 3;
-                else 
-                    XX = (tiled->getPosition().x + 0)/ 1.426 + PositionTile.x * 3;
-                if (tiled->getPosition().y != 0)
-                    YY = tiled->getPosition().y / 1.426 + PositionTile.y * 3;
-                else 
-                    YY = (tiled->getPosition().y + 0) / 1.426 + PositionTile.y * 3;*/
                 edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
-                //edgeNode->setPosition(Vec2(XX , YY));
-                
                 this->addChild(edgeNode);
             }
         }
@@ -149,16 +137,16 @@ void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
     switch (direction)
     {
     case 1://down
-        tileHall->setPosition(Point(MapX, +MapY - tileMap->getMapSize().height * 41.5));
+        tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY - tileHall->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
         break;
     case 2://up
-        tileHall->setPosition(Point(MapX, +MapY + tileMap->getMapSize().height * 41.5));
+        tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY + tileMap->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
         break;
     case 3://right
-        tileHall->setPosition(Point(MapX + tileMap->getMapSize().width * 45, MapY - (tileMap->getMapSize().height / 20 * 45)));
+        tileHall->setPosition(Point((MapX + tileMap->getMapSize().width) * 60, (MapY + tileMap->getMapSize().height / 6.5) * 60));
         break;
     case 4://left
-        tileHall->setPosition(Point(MapX - tileMap->getMapSize().width * 45, MapY - (tileMap->getMapSize().height / 20 * 45)));
+        tileHall->setPosition(Point((MapX - tileHall->getMapSize().width) * 60, (MapY + tileMap->getMapSize().height / 6.5) * 60));
         break;
     default:
         break;
@@ -167,13 +155,12 @@ void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
     tileHall->setScale(3.0);
     
     border(tileHall);
-    //generMapOne(tileHall->getPosition(), rotation, direction);
     this->addChild(tileHall);
 }
 
-void GameScene::generMapOne(cocos2d::Vec2 PosMap, float rotation, int direction) {
-    auto sizeMapX = PosMap.x;
-    auto sizeMapY = PosMap.y;
+void GameScene::generMapOne(TMXTiledMap* PosMap, float rotation, int direction) {
+    auto sizeMapX = PosMap->getMapSize().width;
+    auto sizeMapY = PosMap->getMapSize().height;
     tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
     tileMapOne->setAnchorPoint(Point(0, 0));
 
@@ -186,7 +173,7 @@ void GameScene::generMapOne(cocos2d::Vec2 PosMap, float rotation, int direction)
         tileMapOne->setPosition(Point(sizeMapX, +sizeMapY + tileMap->getMapSize().height * 41.5));
         break;
     case 3://right
-        tileMapOne->setPosition(Point(sizeMapX + tileMap->getMapSize().width * 45, sizeMapY + (tileMap->getMapSize().height / 20 * 45)));
+        tileMapOne->setPosition(Point(sizeMapX * 60 + PosMap->getPosition().x, -2 * 60 + PosMap->getPosition().y));
         break;
     case 4://left
         tileMapOne->setPosition(Point(sizeMapX - tileMap->getMapSize().width * 45, sizeMapY - (tileMap->getMapSize().height / 20 * 45)));
