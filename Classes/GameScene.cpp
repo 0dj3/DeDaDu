@@ -83,10 +83,10 @@ void GameScene::generation() {
 
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
-    tileMap->setAnchorPoint(Point(0.5, 0.5));
+    tileMap->setAnchorPoint(Point(0, 0));
     //tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     this->addChild(tileMap);
-
+    border(tileMap);
     
     //direction = 1;//["down"] 
     //direction = 2;//["up"]
@@ -115,12 +115,21 @@ void GameScene::border(TMXTiledMap* tiled) {
 
                 auto edgeNode = Node::create();
                 auto edgeBody = PhysicsBody::createBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT);
-                
-                edgeNode->setPhysicsBody(edgeBody);
                 edgeBody->setDynamic(false);
+                edgeNode->setPhysicsBody(edgeBody);
                 edgeNode->setScale(3.0);
-                edgeNode->setAnchorPoint(Point(0.5, 0.5));
-                edgeNode->setPosition(PositionTile * 3 + tiled->getPosition());
+                edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
+                double XX, YY;
+                /*if (tiled->getPosition().x != 0)
+                    XX = tiled->getPosition().x / 1.426 + PositionTile.x * 3;
+                else 
+                    XX = (tiled->getPosition().x + 0)/ 1.426 + PositionTile.x * 3;
+                if (tiled->getPosition().y != 0)
+                    YY = tiled->getPosition().y / 1.426 + PositionTile.y * 3;
+                else 
+                    YY = (tiled->getPosition().y + 0) / 1.426 + PositionTile.y * 3;*/
+                edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
+                //edgeNode->setPosition(Vec2(XX , YY));
                 
                 this->addChild(edgeNode);
             }
@@ -131,8 +140,11 @@ void GameScene::border(TMXTiledMap* tiled) {
 void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
     auto MapX = PosMap.x;
     auto MapY = PosMap.y;
-    tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
-    tileHall->setAnchorPoint(Point(0.5, 0.5));
+    if (rotation == 0.0f)
+        tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
+    else tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
+    
+    tileHall->setAnchorPoint(Point(0, 0));
     
     switch (direction)
     {
@@ -153,7 +165,7 @@ void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
     }
 
     tileHall->setScale(3.0);
-    tileHall->setRotation(rotation);
+    
     border(tileHall);
     //generMapOne(tileHall->getPosition(), rotation, direction);
     this->addChild(tileHall);
@@ -163,7 +175,7 @@ void GameScene::generMapOne(cocos2d::Vec2 PosMap, float rotation, int direction)
     auto sizeMapX = PosMap.x;
     auto sizeMapY = PosMap.y;
     tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
-    tileMapOne->setAnchorPoint(Point(0.5, 0.5));
+    tileMapOne->setAnchorPoint(Point(0, 0));
 
     switch (direction)
     {

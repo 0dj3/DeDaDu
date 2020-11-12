@@ -4,6 +4,9 @@
   <image source="full tilemap.png" width="144" height="128"/>
  </tileset>
  <tileset firstgid="73" source="full tilemap.tsx"/>
+ <tileset firstgid="145" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
+  <image source="full tilemap2.png" width="144" height="128"/>
+ </tileset>
  <layer id="1" name="background" width="6" height="5">
   <data encoding="base64" compression="zlib">
    eJxjYGBgSEDDMEBLcQDRhweB
@@ -11,7 +14,7 @@
  </layer>
  <layer id="2" name="walls" width="6" height="5">
   <data encoding="base64" compression="zlib">
-   eJyrYsAElUBcRWNxACb7BMA=
+   eJzbyoAJtkIxLcUBtuMHEw==
   </data>
  </layer>
 </map>

@@ -4,6 +4,9 @@
   <image source="full tilemap.png" width="144" height="128"/>
  </tileset>
  <tileset firstgid="73" source="full tilemap.tsx"/>
+ <tileset firstgid="145" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
+  <image source="full tilemap2.png" width="144" height="128"/>
+ </tileset>
  <layer id="6" name="check" width="10" height="13">
   <data encoding="base64" compression="zlib">
    eJxjYMAEtVjERhKoZRjeYYDNbwDsUwH1
@@ -21,7 +24,7 @@
  </layer>
  <layer id="2" name="walls" width="10" height="13">
   <data encoding="base64" compression="zlib">
-   eJzrYmBg6ALiXgZM0AmVA+FKLPLooIoG6pqIUNdMhJqBBkB/OBBSA/SHQyUR6qpIUIcch+gAJg6KewB0eg7G
+   eJzbysDAsBWK0cFWNLwHitEBTByXObjMJUYdNvuw2T/YAbXDBRnjk0eOG2zqYPIAVn8YUQ==
   </data>
  </layer>
 </map>
