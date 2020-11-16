@@ -33,7 +33,8 @@ private:
     cocos2d::TMXTiledMap* tileMap;
     cocos2d::TMXTiledMap* tileHall;
     cocos2d::TMXTiledMap* tileMapOne;
-
+    cocos2d::Node* edgeNode;
+    
 
 
     cocos2d::PhysicsWorld* sceneWorld;

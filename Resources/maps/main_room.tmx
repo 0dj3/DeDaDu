@@ -7,24 +7,19 @@
  <tileset firstgid="145" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
   <image source="full tilemap2.png" width="144" height="128"/>
  </tileset>
- <layer id="6" name="check" width="10" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYMAEtVjERhKoZRjeYYDNbwDsUwH1
-  </data>
- </layer>
  <layer id="1" name="background" width="10" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYECABDSMC+BThy43iocGBgBv7yxB
+   eJxbwcDAsIJKmIGKZo1i+sYJABlSVAE=
   </data>
  </layer>
  <layer id="5" name="brick" width="10" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYCAOlCBhUuRGwdAAAOpUArk=
+   eJxjYCAOlFBJzSgYnAAApMcA6Q==
   </data>
  </layer>
  <layer id="2" name="walls" width="10" height="13">
   <data encoding="base64" compression="zlib">
-   eJzbysDAsBWK0cFWNLwHitEBTByXObjMJUYdNvuw2T/YAbXDBRnjk0eOG2zqYPIAVn8YUQ==
+   eJzbysDAsBWK0cFWNEwIDKS6wQ4GMvyIiV8ARJESYw==
   </data>
  </layer>
 </map>

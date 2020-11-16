@@ -99,9 +99,7 @@ void GameScene::generation() {
     generHall(tileMap->getPosition(), 90.0f, 3);
     
 
-    generMapOne(tileHall, 0.0f, 3);
 }
-
 
 void GameScene::border(TMXTiledMap* tiled) {
     //auto layerCheck = tiled->getLayer("walls");
@@ -112,7 +110,7 @@ void GameScene::border(TMXTiledMap* tiled) {
                 /*auto X = layerCheck->getTileAt(Vec2(i, j))->getPosition().x;*/
                 auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
                 auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
-                auto edgeNode = Node::create();
+                edgeNode = Node::create();
                 auto edgeBody = PhysicsBody::createBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT);
                 edgeBody->setDynamic(false);
                 edgeNode->setPhysicsBody(edgeBody);
@@ -153,7 +151,7 @@ void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
     }
 
     tileHall->setScale(3.0);
-    
+    generMapOne(tileHall, rotation - 90.0f, direction);
     border(tileHall);
     this->addChild(tileHall);
 }
@@ -173,17 +171,22 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, float rotation, int direction) 
         tileMapOne->setPosition(Point(sizeMapX, +sizeMapY + tileMap->getMapSize().height * 41.5));
         break;
     case 3://right
-        tileMapOne->setPosition(Point(sizeMapX * 60 + PosMap->getPosition().x, -2 * 60 + PosMap->getPosition().y));
+        tileMapOne->setPosition(Point(sizeMapX * 60 + PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
+        tileMapOne->setRotation(rotation);
+        tileMapOne->setScale(3.0);
+        border(tileMapOne);
+        this->addChild(tileMapOne);
         break;
     case 4://left
-        tileMapOne->setPosition(Point(sizeMapX - tileMap->getMapSize().width * 45, sizeMapY - (tileMap->getMapSize().height / 20 * 45)));
+        tileMapOne->setPosition(Point(PosMap->getPosition().x, +11 * 60 + PosMap->getPosition().y));
+        tileMapOne->setRotation(rotation - 180.0f);
+        tileMapOne->setScale(3.0);
+        border(tileMapOne);
+        this->addChild(tileMapOne);
         break;
     default:
         break;
     }
 
-    tileMapOne->setScale(3.0);
-    tileMapOne->setRotation(rotation);
-    border(tileMapOne);
-    this->addChild(tileMapOne);
+    
 }
