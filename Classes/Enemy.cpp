@@ -5,8 +5,4 @@ USING_NS_CC;
 
 Enemy::Enemy()
 {
-	layer = new Layer();
-	sprite = new Sprite();
-	stats = new UnitStats();
-	this->addChild(sprite);
 }

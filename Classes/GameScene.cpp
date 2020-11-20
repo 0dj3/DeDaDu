@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "Player.h"
 #include "Slime.h"
+#include "Goblin.h"
 #include "2d/CCFastTMXLayer.h"
 #include "Generation_map.h"
 #include "AudioEngine.h"
@@ -52,6 +53,12 @@ bool GameScene::init()
     slime->setTag(2);
     slime->setPosition(Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
+
+    auto goblin = Goblin::create(this);
+    goblin->setTag(3);
+    goblin->setPosition(Point(player->getPosition().x + 100, player->getPosition().y + 100));
+    this->addChild(goblin);
+
 
     auto eventListener = EventListenerKeyboard::create();
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)

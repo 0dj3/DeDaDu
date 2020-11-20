@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __SLIME_H__
-#define __SLIME_H__
+#ifndef __GOBLIN_H__
+#define __GOBLIN_H__
 
 #include "cocos2d.h"
 #include <string>
@@ -8,17 +8,16 @@
 #include "PhysicHelper.h"
 #include "Enemy.h"
 
-class Slime : public Enemy
+class Goblin : public Enemy
 {
 public:
-    Slime();
+    Goblin();
 
-    static Enemy* create(cocos2d::Layer* scene, Unit* Player);
+    static Enemy* create(cocos2d::Layer* scene);
 private:
     void update(float dt);
     int hp = 30;
     void move();
-
 };
 
-#endif // __SLIME_H__
+#endif // __GOBLIN_H__

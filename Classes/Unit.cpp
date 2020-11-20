@@ -12,7 +12,8 @@ Unit::Unit()
 }
 
 void Unit::Damage(int value) {
-	AudioEngine::play2d("hit.mp3", false, 1.0);
+	AudioEngine::preload(dmgsound);
+	AudioEngine::play2d(dmgsound, false, 1.0);
 
 	if (hp <= value) {
 		Dead();

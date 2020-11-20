@@ -18,7 +18,8 @@ public:
     void Damage(int value);
 
     void Dead();
-    
+   
+    char* dmgsound;
 
 private:
     int hp = 100;

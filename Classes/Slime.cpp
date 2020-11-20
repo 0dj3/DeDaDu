@@ -9,8 +9,10 @@ float targetY;
 USING_NS_CC;
 Slime::Slime()
 {
+    dmgsound = "slime.mp3";
     this->autorelease();
 }
+
 
 
 Enemy* Slime::create(cocos2d::Layer* layer, Unit* player)
