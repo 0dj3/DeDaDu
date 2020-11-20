@@ -7,14 +7,14 @@
 #include <string>
 #include <Box2d/Box2d.h>
 #include "PhysicHelper.h"
-#include "Player.h"
+#include "Enemy.h"
 
-class Slime : public Unit
+class Slime : public Enemy
 {
 public:
     Slime();
 
-    static Unit* create(cocos2d::Layer* scene, Unit* Player);
+    static Enemy* create(cocos2d::Layer* scene, Unit* Player);
 
 private:
     void update(float dt);

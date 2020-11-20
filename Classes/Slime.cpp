@@ -13,7 +13,7 @@ Slime::Slime()
 }
 
 
-Unit* Slime::create(cocos2d::Layer* layer, Unit* player)
+Enemy* Slime::create(cocos2d::Layer* layer, Unit* player)
 {
     targetX = player->getPosition().x;
     targetY = player->getPosition().y;
