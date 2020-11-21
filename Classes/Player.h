@@ -9,7 +9,7 @@
 #include "PhysicHelper.h"
 #include "InputListener.h"
 
-class Player : public Unit
+class Player : public Unit, b2ContactListener
 {
 public:
     Player();
@@ -24,6 +24,12 @@ private:
 
     void move();
     void rotate();
+
+
+    void BeginContact(b2Contact* contact);
+    void EndContact(b2Contact* contact);
+    void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
 };
 

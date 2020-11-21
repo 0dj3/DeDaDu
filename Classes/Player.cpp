@@ -18,11 +18,11 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
 
-        newPlayer->CreateWeapon();
-
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
         newPlayer->layer = layer;
+        newPlayer->CreateWeapon();
+        PhysicHelper::world->SetContactListener(newPlayer);
         newPlayer->scheduleUpdate();
         return newPlayer;
     }
@@ -60,16 +60,16 @@ void Player::move()
     float directionX = 0;
     float directionY = 0;
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_W)]) {
-        directionY += 1;
+        directionY++;
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_S)]) {
-        directionY -= 1;
+        directionY--;
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_D)]) {
-        directionX += 1;
+        directionX++;
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_A)]) {
-        directionX -= 1;
+        directionX--;
     }
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
@@ -80,4 +80,29 @@ void Player::move()
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
+}
+
+void Player::BeginContact(b2Contact* contact)
+{
+    auto a = contact->GetFixtureA()->GetBody()->GetUserData();
+    auto b = contact->GetFixtureB()->GetBody()->GetUserData();
+    //PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
+    if (static_cast<Node*>(b)->getTag() == 2) {
+        static_cast<Unit*> (b)->Damage(20);
+    }
+}
+
+void Player::EndContact(b2Contact* contact)
+{
+
+}
+
+void Player::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+{
+
+}
+
+void Player::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
+{
+
 }

@@ -88,6 +88,20 @@ void GameScene::update(float dt)
 
     PhysicHelper::world->Step(dt, velocityIterations, positionIterations);
 
+    b2Body* node = PhysicHelper::world->GetBodyList();
+    while (node)
+    {
+        b2Body* b = node;
+        node = node->GetNext();
+
+        Unit* unit = (Unit*)b->GetUserData();
+        if (unit->IsDead())
+        {
+            PhysicHelper::world->DestroyBody(b);
+            unit->removeFromParentAndCleanup(true);
+        }
+    }
+
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetUserData() != NULL) {

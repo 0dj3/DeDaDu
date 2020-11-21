@@ -13,6 +13,7 @@ public:
     cocos2d::Sprite* sprite;
     cocos2d::Layer* layer;
     UnitStats* stats;
+    bool IsDead() { return isDead; };
 
     Unit();
 
@@ -23,6 +24,7 @@ public:
     char* dmgsound;
 
 private:
+    bool isDead = false;
     int hp = 100;
 
 };
