@@ -23,7 +23,6 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
         newPlayer->layer = layer;
-        newPlayer->listenMouse();
         newPlayer->scheduleUpdate();
         return newPlayer;
     }
@@ -53,7 +52,7 @@ void Player::CreateWeapon() {
 }
 
 void Player::rotate() {
-    weaponSprite->setRotation(CC_RADIANS_TO_DEGREES(-(weaponSprite->getPosition() - mousePosition).getAngle()) - 135);
+    weaponSprite->setRotation(CC_RADIANS_TO_DEGREES(-(weaponSprite->getPosition() - InputListener::Instance()->mousePosition).getAngle()) - 135);
 }
 
 void Player::move()
@@ -61,7 +60,6 @@ void Player::move()
     float directionX = 0;
     float directionY = 0;
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_W)]) {
-        //directionY += stats->speed;
         directionY += 1;
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_S)]) {
@@ -82,53 +80,4 @@ void Player::move()
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
-}
-
-void Player::listenMouse()
-{
-    auto mouseListener = cocos2d::EventListenerMouse::create();
-
-    mouseListener->onMouseMove = [this](cocos2d::Event* ccevnt)
-    {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        EventMouse* eventMouse = (EventMouse*)ccevnt;
-        mousePosition = Vec2(eventMouse->getCursorX() - visibleSize.width / 2 + origin.x, eventMouse->getCursorY() - visibleSize.height / 2 + origin.y);
-        //log("float is %f", mousePosition.x);
-    };
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
-}
-
-bool Player::onContactBegin(PhysicsContact& contact)
-{
-    auto bodyA = contact.getShapeA()->getBody();
-    auto bodyB = contact.getShapeB()->getBody();
-    PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
-    if (bodyB->getTag() == 2) {
-        static_cast<Unit*> (bodyB->getNode())->Damage(50);
-    }
-    if (bodyB->getTag() == 5 || bodyB->getTag() == 5) {
-        return false;
-    }
-
-    return true;
-}
-
-bool Player::onContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve)
-{
-    contact.getShapeA()->getBody()->setVelocity({ 0,0 });
-    contact.getShapeA()->getBody()->setVelocity({ 0,0 });
-    solve.setRestitution(0);
-    return true;
-}
-
-void Player::onContactPostSolve(PhysicsContact& contact, const PhysicsContactPostSolve& solve)
-{
-
-}
-
-void Player::onContactSeperate(PhysicsContact& contact)
-{
-
 }

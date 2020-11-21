@@ -19,7 +19,8 @@ public:
 	bool keyStates[256] = {};
 
 	cocos2d::EventListenerMouse* mouseListener;
-	bool mouseStates[15];
+	bool mouseStates[15] = {};
+	cocos2d::Vec2 mousePosition;
 
 private:
 	static InputListener* instance;
