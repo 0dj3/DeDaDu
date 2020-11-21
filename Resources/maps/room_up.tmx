@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="14" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="full tilemap.tsx"/>
- <tileset firstgid="73" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
+ <tileset firstgid="1" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
   <image source="full tilemap2.png" width="144" height="128"/>
  </tileset>
  <layer id="1" name="background" width="14" height="10">
@@ -11,7 +10,7 @@
  </layer>
  <layer id="2" name="walls" width="14" height="10">
   <data encoding="base64" compression="zlib">
-   eJzLZWBgyEXD6ABdHpc6QmBU3+DSRw4GABjPEQk=
+   eJxTZWBgUCUTkwpG9Q0ufYTiE5saAPKKBck=
   </data>
  </layer>
 </map>

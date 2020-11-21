@@ -188,34 +188,34 @@ void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
 void GameScene::generMapOne(TMXTiledMap* PosMap, float rotation, int direction) {
     auto sizeMapX = PosMap->getMapSize().width;
     auto sizeMapY = PosMap->getMapSize().height;
-    tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
-    tileMapOne->setAnchorPoint(Point(0, 0));
+    
+    
 
     switch (direction)
     {
     case 1://down
-        tileMapOne->setPosition(Point(sizeMapX, +sizeMapY - tileMap->getMapSize().height * 41.5));
+        tileMapOne = TMXTiledMap::create("maps/room_down.tmx");
+        tileMapOne->setPosition(Point((-sizeMapX/2 + 1) * 60, -10 * 60 + PosMap->getPosition().y));
         break;
     case 2://up
-        tileMapOne->setPosition(Point(sizeMapX, +sizeMapY + tileMap->getMapSize().height * 41.5));
+        tileMapOne = TMXTiledMap::create("maps/room_up.tmx");
+        tileMapOne->setPosition(Point((-sizeMapX / 2 + 1) * 60, 5 * 60 + PosMap->getPosition().y));
         break;
     case 3://right
+        tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
         tileMapOne->setPosition(Point(sizeMapX * 60 + PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
-        tileMapOne->setRotation(rotation);
-        tileMapOne->setScale(3.0);
-        border(tileMapOne);
-        this->addChild(tileMapOne);
         break;
     case 4://left
-        tileMapOne->setPosition(Point(PosMap->getPosition().x, +11 * 60 + PosMap->getPosition().y));
-        tileMapOne->setRotation(rotation - 180.0f);
-        tileMapOne->setScale(3.0);
-        border(tileMapOne);
-        this->addChild(tileMapOne);
+        tileMapOne = TMXTiledMap::create("maps/room_left.tmx");
+        tileMapOne->setPosition(Point(-20 * 60 - PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
         break;
     default:
         break;
     }
-
+    tileMapOne->setAnchorPoint(Point(0, 0));
+    tileMapOne->setScale(3.0);
+    border(tileMapOne);
+    this->addChild(tileMapOne);
+    
     
 }
