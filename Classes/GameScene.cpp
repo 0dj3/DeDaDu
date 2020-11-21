@@ -54,14 +54,12 @@ bool GameScene::init()
     //player->setPosition(Point(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
-    slime = Slime::create(this, player);
+    slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     slime->setTag(2);
-    slime->setPosition(Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
 
-    auto goblin = Goblin::create(this);
-    goblin->setTag(3);
-    goblin->setPosition(Point(player->getPosition().x + 100, player->getPosition().y + 100));
+    auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
+    goblin->setTag(2);
     this->addChild(goblin);
 
 

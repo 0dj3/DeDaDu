@@ -13,7 +13,7 @@ class Goblin : public Enemy
 public:
     Goblin();
 
-    static Enemy* create(cocos2d::Layer* scene);
+    static Enemy* create(cocos2d::Layer* scene, const cocos2d::Vec2& position);
 private:
     void update(float dt);
     int hp = 30;

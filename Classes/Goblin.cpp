@@ -11,16 +11,16 @@ Goblin::Goblin()
 
 
 
-Enemy* Goblin::create(cocos2d::Layer* layer)
+Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Goblin* newGoblin = new Goblin();
-    if (newGoblin->sprite->initWithFile("test_goblin.png")) {
+    if (newGoblin && newGoblin->sprite->initWithFile("test_goblin.png"))
+    {
         newGoblin->sprite->getTexture()->setAliasTexParameters();
         newGoblin->sprite->setScale(3.0);
+        newGoblin->setPosition(position);
 
-        //newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin->sprite->getContentSize());
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
-        //newGoblin->addComponent(newGoblin->body);
 
         newGoblin->layer = layer;
         newGoblin->scheduleUpdate();
