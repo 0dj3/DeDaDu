@@ -7,12 +7,6 @@ b2World* PhysicHelper::world;
 
 b2Body* PhysicHelper::createDynamicPhysicBody(Node* node, const Size& size)
 {
-	/*auto newBody = cocos2d::PhysicsBody::createCircle(size.x / 2, cocos2d::PhysicsMaterial(0, 0, 0));
-    newBody->setDynamic(true);
-    newBody->setContactTestBitmask(true);
-    newBody->setLinearDamping(PHYSICS_DAMPING);
-    newBody->setMass(1.0f);
-    return newBody;*/
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;

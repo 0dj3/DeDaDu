@@ -9,6 +9,13 @@
 class Unit : public cocos2d::Node
 {
 public:
+    typedef enum
+    {
+        T_PLAYER,
+        T_ENEMY
+    } TAG_UNIT;
+
+    TAG_UNIT tag;
     b2Body* body;
     cocos2d::Sprite* sprite;
     cocos2d::Layer* layer;
