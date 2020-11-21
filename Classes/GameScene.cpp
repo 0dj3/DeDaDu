@@ -43,6 +43,8 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    InputListener::Instance()->Init(this);
+
     PhysicHelper::CreateWorld();
 
     generation();

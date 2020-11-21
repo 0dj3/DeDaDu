@@ -7,6 +7,7 @@
 #include <string>
 #include <Box2d/Box2d.h>
 #include "PhysicHelper.h"
+#include "InputListener.h"
 
 class Player : public Unit
 {
@@ -21,10 +22,8 @@ private:
     void onContactSeperate(cocos2d::PhysicsContact& contact);
     cocos2d::Sprite* weaponSprite;
 
-    void listenKeyboard(); 
     void listenMouse();
     cocos2d::Vec2 mousePosition;
-    bool keyStates[4] = {0, 0, 0, 0};
 
     void CreateWeapon();
 

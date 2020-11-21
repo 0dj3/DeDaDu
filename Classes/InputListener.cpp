@@ -1,6 +1,8 @@
 #include "InputListener.h"
 #include "Definitions.h"
 
+InputListener* InputListener::instance;
+
 bool InputListener::Init(cocos2d::Layer* layer) {
 	auto director = cocos2d::Director::getInstance();
 

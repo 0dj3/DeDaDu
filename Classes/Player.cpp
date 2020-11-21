@@ -7,12 +7,6 @@ USING_NS_CC;
 Player::Player()
 {
     this->autorelease();
-    auto contactListener = EventListenerPhysicsContact::create();
-    contactListener->onContactBegin = CC_CALLBACK_1(Player::onContactBegin, this);
-    contactListener->onContactPreSolve = CC_CALLBACK_2(Player::onContactPreSolve, this);
-    contactListener->onContactPostSolve = CC_CALLBACK_2(Player::onContactPostSolve, this);
-    contactListener->onContactSeparate = CC_CALLBACK_1(Player::onContactSeperate, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
 
@@ -23,16 +17,12 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
+
         newPlayer->CreateWeapon();
 
-        //newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize() * 2);
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
-        //newPlayer->body->getShape(newPlayer->body->getTag())->setRestitution(0);
-        //newPlayer->body->setTag(4);
-        //newPlayer->addComponent(newPlayer->body);
 
         newPlayer->layer = layer;
-        newPlayer->listenKeyboard();
         newPlayer->listenMouse();
         newPlayer->scheduleUpdate();
         return newPlayer;
@@ -51,12 +41,6 @@ void Player::CreateWeapon() {
     weaponSprite = new Sprite();
     if (weaponSprite && weaponSprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/heroes/knight/weapon_sword_1.png")) {
         weaponSprite->getTexture()->setAliasTexParameters();
-
-        //PhysicsBody* body = PhysicHelper::createDynamicPhysicBody(weaponSprite->getContentSize());
-        //body->getShape(body->getTag())->setRestitution(0);
-        //body->setDynamic(false);
-        //weaponSprite->addComponent(body);
-
         weaponSprite->setScale(3.0);
         weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
         weaponSprite->setAnchorPoint(this->sprite->getPosition());
@@ -76,29 +60,19 @@ void Player::move()
 {
     float directionX = 0;
     float directionY = 0;
-    if (keyStates[0]) {
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_W)]) {
         //directionY += stats->speed;
         directionY += 1;
     }
-    if (keyStates[1]) {
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_S)]) {
         directionY -= 1;
     }
-    if (keyStates[2]) {
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_D)]) {
         directionX += 1;
     }
-    if (keyStates[3]) {
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_A)]) {
         directionX -= 1;
     }
-    /*if (directionX != 0 && directionY != 0) {
-        directionX *= 0.7f;
-        directionY *= 0.7f;
-    }*/
-    /*if (directionX == 0 && directionY == 0) {
-        this->body->setVelocity(Vec2(this->body->getVelocity().x / 2, this->body->getVelocity().y / 2));
-    }*/
-    //body->ApplyForceToCenter(b2Vec2(directionX * 20, directionY * 20), true);
-    //this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
-
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
     b2Vec2 desiredVel = stats->speed * PPM * toTarget;
@@ -108,48 +82,6 @@ void Player::move()
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
-}
-
-void Player::listenKeyboard()
-{
-    auto eventListener = cocos2d::EventListenerKeyboard::create();
-    eventListener->onKeyPressed = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
-    {
-        Vec2 loc = event->getCurrentTarget()->getPosition();
-        switch (keyCode) {
-        case EventKeyboard::KeyCode::KEY_W:
-            keyStates[0] = true;
-            break;
-        case EventKeyboard::KeyCode::KEY_S:
-            keyStates[1] = true;
-            break;
-        case EventKeyboard::KeyCode::KEY_D:
-            keyStates[2] = true;
-            break;
-        case EventKeyboard::KeyCode::KEY_A:
-            keyStates[3] = true;
-            break;
-        }
-    };
-    eventListener->onKeyReleased = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
-    {
-        Vec2 loc = event->getCurrentTarget()->getPosition();
-        switch (keyCode) {
-        case EventKeyboard::KeyCode::KEY_W:
-            keyStates[0] = false;
-            break;
-        case EventKeyboard::KeyCode::KEY_S:
-            keyStates[1] = false;
-            break;
-        case EventKeyboard::KeyCode::KEY_D:
-            keyStates[2] = false;
-            break;
-        case EventKeyboard::KeyCode::KEY_A:
-            keyStates[3] = false;
-            break;
-        }
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
 }
 
 void Player::listenMouse()

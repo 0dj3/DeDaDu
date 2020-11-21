@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "Slime.h"
+#include "InputListener.h"
 
 class GameScene : public cocos2d::Layer
 {

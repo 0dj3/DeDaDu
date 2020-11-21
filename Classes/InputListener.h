@@ -16,7 +16,7 @@ public:
 	bool Init(cocos2d::Layer* layer);
 
 	cocos2d::EventListenerKeyboard* kbListener;
-	bool keyStates[256];
+	bool keyStates[256] = {};
 
 	cocos2d::EventListenerMouse* mouseListener;
 	bool mouseStates[15];
