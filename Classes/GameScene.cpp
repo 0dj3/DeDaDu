@@ -46,7 +46,7 @@ bool GameScene::init()
     InputListener::Instance()->Init(this);
 
     PhysicHelper::CreateWorld();
-
+    AudioEngine::play2d("bgsound.mp3", true, 0.1f);
     generation();
     
 

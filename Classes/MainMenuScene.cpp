@@ -1,6 +1,7 @@
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "Definitions.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 
@@ -22,6 +23,7 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool MainMenuScene::init()
 {
+    AudioEngine::play2d("bgsound2.mp3", true, 0.1f);
     //////////////////////////////
     // 1. super init first
     if ( !Scene::init() )
@@ -48,6 +50,7 @@ bool MainMenuScene::init()
 
 void MainMenuScene::GoToGameScene(cocos2d::Ref* sender)
 {
+    AudioEngine::stopAll();
     auto scene = GameScene::createScene();
 
     Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));

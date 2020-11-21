@@ -13,7 +13,7 @@ Unit::Unit()
 
 void Unit::Damage(int value) {
 	AudioEngine::preload(dmgsound);
-	AudioEngine::play2d(dmgsound, false, 1.0);
+	AudioEngine::play2d(dmgsound, false, 0.5);
 
 	if (hp <= value) {
 		Dead();
