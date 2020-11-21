@@ -24,8 +24,9 @@ Enemy* Slime::create(cocos2d::Layer* layer, Unit* player)
         newSlime->sprite->getTexture()->setAliasTexParameters();
         newSlime->sprite->setScale(3.0);
 
-        newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime->sprite->getContentSize());
-        newSlime->addComponent(newSlime->body);
+        //newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime->sprite->getContentSize());
+        newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
+        //newSlime->addComponent(newSlime->body);
 
         newSlime->layer = layer;
         newSlime->scheduleUpdate();

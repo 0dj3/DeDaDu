@@ -7,19 +7,30 @@ USING_NS_CC;
 Player::Player()
 {
     this->autorelease();
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(Player::onContactBegin, this);
+    contactListener->onContactPreSolve = CC_CALLBACK_2(Player::onContactPreSolve, this);
+    contactListener->onContactPostSolve = CC_CALLBACK_2(Player::onContactPostSolve, this);
+    contactListener->onContactSeparate = CC_CALLBACK_1(Player::onContactSeperate, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
 
-Unit* Player::create(cocos2d::Layer* layer)
+Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Player* newPlayer = new Player();
     if (newPlayer && newPlayer->sprite->initWithFile("test_hero.png")) {
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
+        newPlayer->setPosition(position);
         newPlayer->CreateWeapon();
 
-        newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize() * 2);
-        newPlayer->addComponent(newPlayer->body);
+        //newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer->sprite->getContentSize() * 2);
+        newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
+        //newPlayer->body->getShape(newPlayer->body->getTag())->setRestitution(0);
+        //newPlayer->body->setTag(4);
+        //newPlayer->addComponent(newPlayer->body);
+
         newPlayer->layer = layer;
         newPlayer->listenKeyboard();
         newPlayer->listenMouse();
@@ -40,17 +51,17 @@ void Player::CreateWeapon() {
     weaponSprite = new Sprite();
     if (weaponSprite && weaponSprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/heroes/knight/weapon_sword_1.png")) {
         weaponSprite->getTexture()->setAliasTexParameters();
-        PhysicsBody* body = PhysicHelper::createDynamicPhysicBody(weaponSprite->getContentSize());
-        body->getShape(body->getTag())->setRestitution(0);
-        weaponSprite->addComponent(body);
+
+        //PhysicsBody* body = PhysicHelper::createDynamicPhysicBody(weaponSprite->getContentSize());
+        //body->getShape(body->getTag())->setRestitution(0);
+        //body->setDynamic(false);
+        //weaponSprite->addComponent(body);
+
         weaponSprite->setScale(3.0);
         weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
         weaponSprite->setAnchorPoint(this->sprite->getPosition());
+        weaponSprite->setTag(5);
         this->addChild(weaponSprite);
-
-        auto contactListener = EventListenerPhysicsContact::create();
-        contactListener->onContactBegin = CC_CALLBACK_1(Player::onContactBegin, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
         return;
     }
     CC_SAFE_DELETE(weaponSprite);
@@ -66,34 +77,40 @@ void Player::move()
     float directionX = 0;
     float directionY = 0;
     if (keyStates[0]) {
-        directionY += stats->speed;
+        //directionY += stats->speed;
+        directionY += 1;
     }
     if (keyStates[1]) {
-        directionY -= stats->speed;
+        directionY -= 1;
     }
     if (keyStates[2]) {
-        directionX += stats->speed;
+        directionX += 1;
     }
     if (keyStates[3]) {
-        directionX -= stats->speed;
+        directionX -= 1;
     }
-    if (directionX != 0 && directionY != 0) {
+    /*if (directionX != 0 && directionY != 0) {
         directionX *= 0.7f;
         directionY *= 0.7f;
-    }
+    }*/
     /*if (directionX == 0 && directionY == 0) {
         this->body->setVelocity(Vec2(this->body->getVelocity().x / 2, this->body->getVelocity().y / 2));
     }*/
-    //this->body->setVelocity(Vec2(directionX * 20, directionY * 20));
-    this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
+    //body->ApplyForceToCenter(b2Vec2(directionX * 20, directionY * 20), true);
+    //this->runAction(MoveBy::create(0.3f, Vec2(directionX, directionY)));
+
+    b2Vec2 toTarget = b2Vec2(directionX, directionY);
+    toTarget.Normalize();
+    b2Vec2 desiredVel = stats->speed * PPM * toTarget;
+    b2Vec2 currentVel = body->GetLinearVelocity();
+    b2Vec2 thrust = desiredVel - currentVel;
+    body->ApplyForceToCenter(sprite->getContentSize().width * LINEAR_ACCELERATION * thrust, true);
+
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
-    setPos(directionX, directionY);
-    log(directionX);
-    log(directionY);
 }
 
-void Player::listenKeyboard() 
+void Player::listenKeyboard()
 {
     auto eventListener = cocos2d::EventListenerKeyboard::create();
     eventListener->onKeyPressed = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
@@ -145,7 +162,7 @@ void Player::listenMouse()
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         EventMouse* eventMouse = (EventMouse*)ccevnt;
         mousePosition = Vec2(eventMouse->getCursorX() - visibleSize.width / 2 + origin.x, eventMouse->getCursorY() - visibleSize.height / 2 + origin.y);
-        log("float is %f", mousePosition.x);
+        //log("float is %f", mousePosition.x);
     };
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
@@ -153,16 +170,33 @@ void Player::listenMouse()
 
 bool Player::onContactBegin(PhysicsContact& contact)
 {
-    auto nodeA = contact.getShapeA()->getBody()->getNode();
-    auto nodeB = contact.getShapeB()->getBody()->getNode(); 
-    if (nodeB->getTag() == 2) 
-    {
-        static_cast<Unit*> (nodeB)->Damage(50);
+    auto bodyA = contact.getShapeA()->getBody();
+    auto bodyB = contact.getShapeB()->getBody();
+    PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
+    if (bodyB->getTag() == 2) {
+        static_cast<Unit*> (bodyB->getNode())->Damage(50);
     }
-    else if(nodeB->getTag() == 3)
-    {
-        static_cast<Unit*> (nodeB)->Damage(50);
+    if (bodyB->getTag() == 5 || bodyB->getTag() == 5) {
+        return false;
     }
 
-    return false;
+    return true;
+}
+
+bool Player::onContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve)
+{
+    contact.getShapeA()->getBody()->setVelocity({ 0,0 });
+    contact.getShapeA()->getBody()->setVelocity({ 0,0 });
+    solve.setRestitution(0);
+    return true;
+}
+
+void Player::onContactPostSolve(PhysicsContact& contact, const PhysicsContactPostSolve& solve)
+{
+
+}
+
+void Player::onContactSeperate(PhysicsContact& contact)
+{
+
 }

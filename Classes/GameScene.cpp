@@ -18,6 +18,7 @@ Scene* GameScene::createScene()
     auto layer = GameScene::create();
     layer->scene = scene;
     layer->SetPhysicsWorld(scene->getPhysicsWorld());
+    layer->scheduleUpdate();
     scene->addChild(layer);
     return scene;
 }
@@ -42,11 +43,13 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    PhysicHelper::CreateWorld();
+
     generation();
     
 
-    player = Player::create(this);
-    player->setPosition(Point(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
+    player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
+    //player->setPosition(Point(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
 
     slime = Slime::create(this, player);
@@ -76,6 +79,23 @@ bool GameScene::init()
     this->addChild(menu, 1);*/
 
     return true;
+}
+
+void GameScene::update(float dt)
+{
+    int velocityIterations = 6;
+    int positionIterations = 2;
+
+    PhysicHelper::world->Step(dt, velocityIterations, positionIterations);
+
+    for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
+    {
+        if (b->GetUserData() != NULL) {
+            Sprite* myActor = (Sprite*)b->GetUserData();
+            myActor->setPosition(Vec2(b->GetPosition().x, b->GetPosition().y));
+            myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
+        }
+    }
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)
@@ -118,12 +138,14 @@ void GameScene::border(TMXTiledMap* tiled) {
                 auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
                 auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
                 edgeNode = Node::create();
-                auto edgeBody = PhysicsBody::createBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT);
+                /*auto edgeBody = PhysicsBody::createBox(Size(Y.size), PHYSICSBODY_MATERIAL_DEFAULT);
                 edgeBody->setDynamic(false);
-                edgeNode->setPhysicsBody(edgeBody);
-                edgeNode->setScale(3.0);
+                edgeNode->setPhysicsBody(edgeBody);*/
+                edgeNode->setScale(2.0);
                 edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
                 edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
+                log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
+                PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
                 this->addChild(edgeNode);
             }
         }

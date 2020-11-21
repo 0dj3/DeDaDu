@@ -18,8 +18,9 @@ Enemy* Goblin::create(cocos2d::Layer* layer)
         newGoblin->sprite->getTexture()->setAliasTexParameters();
         newGoblin->sprite->setScale(3.0);
 
-        newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin->sprite->getContentSize());
-        newGoblin->addComponent(newGoblin->body);
+        //newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin->sprite->getContentSize());
+        newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
+        //newGoblin->addComponent(newGoblin->body);
 
         newGoblin->layer = layer;
         newGoblin->scheduleUpdate();

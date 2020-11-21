@@ -35,7 +35,7 @@ private:
     cocos2d::TMXTiledMap* tileMapOne;
     cocos2d::Node* edgeNode;
     
-
+    void update(float dt);
 
     cocos2d::PhysicsWorld* sceneWorld;
 

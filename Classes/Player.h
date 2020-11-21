@@ -12,18 +12,14 @@ class Player : public Unit
 {
 public:
     Player();
-    static Unit* create(cocos2d::Layer* scene);
-    
-    void setPos(float x, float y) { xp = x; yp = y; };
-    float getX() { return xp; };
-    float getY() { return yp; };
+    static Unit* create(cocos2d::Layer* scene, const cocos2d::Vec2& position);
 
 private:
     bool onContactBegin(cocos2d::PhysicsContact& contact);
+    bool onContactPreSolve(cocos2d::PhysicsContact& contact, cocos2d::PhysicsContactPreSolve& solve); 
+    void onContactPostSolve(cocos2d::PhysicsContact& contact, const cocos2d::PhysicsContactPostSolve& solve);
+    void onContactSeperate(cocos2d::PhysicsContact& contact);
     cocos2d::Sprite* weaponSprite;
-
-    float xp;
-    float yp;
 
     void listenKeyboard(); 
     void listenMouse();
