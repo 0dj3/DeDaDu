@@ -88,25 +88,28 @@ void GameScene::update(float dt)
 
     PhysicHelper::world->Step(dt, velocityIterations, positionIterations);
 
-    /*b2Body* node = PhysicHelper::world->GetBodyList();
+    b2Body* node = PhysicHelper::world->GetBodyList();
     while (node)
     {
         b2Body* b = node;
         node = node->GetNext();
 
+        if (b->GetUserData() == nullptr)
+            continue;
+            
         Unit* unit = (Unit*)b->GetUserData();
         if (unit->IsDead())
         {
             PhysicHelper::world->DestroyBody(b);
             unit->removeFromParentAndCleanup(true);
         }
-    }*/
+    }
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
-            myActor->setPosition(Vec2(b->GetPosition().x, b->GetPosition().y));
+            myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
             myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }

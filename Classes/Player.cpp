@@ -73,10 +73,11 @@ void Player::move()
     }
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
-    b2Vec2 desiredVel = stats->speed * PPM * toTarget;
+    b2Vec2 desiredVel = stats->speed * toTarget;
     b2Vec2 currentVel = body->GetLinearVelocity();
-    b2Vec2 thrust = desiredVel - currentVel;
-    body->ApplyForceToCenter(sprite->getContentSize().width * LINEAR_ACCELERATION * thrust, true);
+    //b2Vec2 thrust = desiredVel - currentVel;
+    body->ApplyForceToCenter((LINEAR_ACCELERATION) * desiredVel, true);
+    log("%f %f", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
