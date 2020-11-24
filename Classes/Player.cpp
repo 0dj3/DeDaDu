@@ -6,6 +6,7 @@ USING_NS_CC;
 
 Player::Player()
 {
+    tag = PLAYER;
     this->autorelease();
 }
 
@@ -20,6 +21,7 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
+        newPlayer->setTag(newPlayer->tag);
         newPlayer->layer = layer;
         newPlayer->CreateWeapon();
         PhysicHelper::world->SetContactListener(newPlayer);
@@ -88,7 +90,7 @@ void Player::BeginContact(b2Contact* contact)
     auto a = contact->GetFixtureA()->GetBody()->GetUserData();
     auto b = contact->GetFixtureB()->GetBody()->GetUserData();
     //PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
-    if (static_cast<Node*>(b)->getTag() == 2) {
+    if (static_cast<Node*>(b)->getTag() == ENEMY) {
         static_cast<Unit*> (b)->Damage(20);
     }
 }

@@ -9,13 +9,13 @@
 class Unit : public cocos2d::Node
 {
 public:
-    typedef enum
+    typedef enum UnitTag
     {
-        T_PLAYER,
-        T_ENEMY
-    } TAG_UNIT;
+        PLAYER = 1,
+        ENEMY
+    };
 
-    TAG_UNIT tag;
+    UnitTag tag;
     b2Body* body;
     cocos2d::Sprite* sprite;
     cocos2d::Layer* layer;

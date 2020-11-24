@@ -22,6 +22,7 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position)
 
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
 
+        newGoblin->setTag(newGoblin->tag);
         newGoblin->layer = layer;
         newGoblin->scheduleUpdate();
         return newGoblin;
