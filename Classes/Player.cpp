@@ -14,7 +14,7 @@ Player::Player()
 Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Player* newPlayer = new Player();
-    if (newPlayer && newPlayer->sprite->initWithFile("test_hero.png")) {
+    if (newPlayer && newPlayer->sprite->initWithFile("res/hero/test_hero.png")) {
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
@@ -40,7 +40,7 @@ void Player::update(float dt)
 
 void Player::CreateWeapon() {
     weaponSprite = new Sprite();
-    if (weaponSprite && weaponSprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/heroes/knight/weapon_sword_1.png")) {
+    if (weaponSprite && weaponSprite->initWithFile("res/hero/weapon_sword_1.png")) {
         weaponSprite->getTexture()->setAliasTexParameters();
         weaponSprite->setScale(3.0);
         weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
