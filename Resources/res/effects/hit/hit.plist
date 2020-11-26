@@ -4,71 +4,48 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>enemy_afterdead_explosion_anim_f0.png</key>
+            <key>hit_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{16,16}</string>
+                <string>{8,8}</string>
                 <key>spriteSourceSize</key>
-                <string>{16,16}</string>
+                <string>{8,8}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{16,16}}</string>
+                <string>{{0,0},{8,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>enemy_afterdead_explosion_anim_f1.png</key>
+            <key>hit_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{16,16}</string>
+                <string>{8,8}</string>
                 <key>spriteSourceSize</key>
-                <string>{16,16}</string>
+                <string>{8,8}</string>
                 <key>textureRect</key>
-                <string>{{16,0},{16,16}}</string>
+                <string>{{8,0},{8,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>enemy_afterdead_explosion_anim_f2.png</key>
+            <key>hit_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{16,16}</string>
+                <string>{8,8}</string>
                 <key>spriteSourceSize</key>
-                <string>{16,16}</string>
+                <string>{8,8}</string>
                 <key>textureRect</key>
-                <string>{{32,0},{16,16}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>enemy_afterdead_explosion_anim_f3.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{16,16}</string>
-                <key>spriteSourceSize</key>
-                <string>{16,16}</string>
-                <key>textureRect</key>
-                <string>{{48,0},{16,16}}</string>
+                <string>{{16,0},{8,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -82,13 +59,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>dead.png</string>
+            <string>hit.png</string>
             <key>size</key>
-            <string>{64,16}</string>
+            <string>{24,8}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:252f5e6660f07dd451377ed6a2f439fd:f136dc48791bc77b71ea5eacae65d6a7:cb46edbf51fc1c39d4d08f65db91fd43$</string>
+            <string>$TexturePacker:SmartUpdate:4d9ae6b50aed535a3ad2864ba27919fe:4999d609c0f650e6a9c3cae5a20db247:516f89fe362b6390efd4aa18575c8762$</string>
             <key>textureFileName</key>
-            <string>dead.png</string>
+            <string>hit.png</string>
         </dict>
     </dict>
 </plist>

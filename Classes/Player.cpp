@@ -40,7 +40,7 @@ void Player::update(float dt)
 
 void Player::CreateWeapon() {
     weaponSprite = new Sprite();
-    if (weaponSprite && weaponSprite->initWithFile("res/hero/weapon_sword_1.png")) {
+    if (weaponSprite && weaponSprite->initWithFile("res/weapon/sword.png")) {
         weaponSprite->getTexture()->setAliasTexParameters();
         weaponSprite->setScale(3.0);
         weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));

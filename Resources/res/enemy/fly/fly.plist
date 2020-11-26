@@ -4,12 +4,10 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>fly_anim_f0.png</key>
+            <key>idle_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -21,12 +19,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>fly_anim_f1.png</key>
+            <key>idle_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -38,12 +34,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>fly_anim_f2.png</key>
+            <key>idle_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -55,12 +49,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>fly_anim_f3.png</key>
+            <key>idle_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -86,7 +78,7 @@
             <key>size</key>
             <string>{64,16}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:1fa213b8efc9305a1313ab39940139b2:9406b8222293052bb24486d0d9498c27:1ce79e2fdbfe893a67683f01bb274a8f$</string>
+            <string>$TexturePacker:SmartUpdate:563e730fa48085ca9ea45c036a6e9966:9406b8222293052bb24486d0d9498c27:1ce79e2fdbfe893a67683f01bb274a8f$</string>
             <key>textureFileName</key>
             <string>fly.png</string>
         </dict>

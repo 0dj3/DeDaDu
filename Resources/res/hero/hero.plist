@@ -4,12 +4,10 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>knight_idle_anim_f0.png</key>
+            <key>idle_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -21,12 +19,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_idle_anim_f1.png</key>
+            <key>idle_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -38,12 +34,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_idle_anim_f2.png</key>
+            <key>idle_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -55,12 +49,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_idle_anim_f3.png</key>
+            <key>idle_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -72,12 +64,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_idle_anim_f4.png</key>
+            <key>idle_5.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -89,12 +79,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_idle_anim_f5.png</key>
+            <key>idle_6.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -106,12 +94,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_run_anim_f0.png</key>
+            <key>run_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -123,12 +109,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_run_anim_f1.png</key>
+            <key>run_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -140,12 +124,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_run_anim_f2.png</key>
+            <key>run_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -157,12 +139,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_run_anim_f3.png</key>
+            <key>run_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -174,12 +154,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_run_anim_f4.png</key>
+            <key>run_5.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -191,12 +169,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>knight_run_anim_f5.png</key>
+            <key>run_6.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -218,13 +194,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>knight.png</string>
+            <string>hero.png</string>
             <key>size</key>
             <string>{192,16}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cb694185c02391ea5906efe4055940e4:f7c80689fb60a68d1fd539661e7362ca:2f689271eec2c0f2098986227ad4fb90$</string>
+            <string>$TexturePacker:SmartUpdate:ecef1e6a7b33e59fd1bd1d6c3f0d3625:4f8e81a44ff0b31180ef43a5886c3c40:e44e28a7f983377b8bb0c97d886e5bb7$</string>
             <key>textureFileName</key>
-            <string>knight.png</string>
+            <string>hero.png</string>
         </dict>
     </dict>
 </plist>

@@ -4,12 +4,10 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>slime_idle_f0.png</key>
+            <key>idle_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -21,12 +19,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_idle_f1.png</key>
+            <key>idle_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -38,12 +34,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_idle_f2.png</key>
+            <key>idle_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -55,12 +49,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_idle_f3.png</key>
+            <key>idle_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -72,12 +64,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_idle_f4.png</key>
+            <key>idle_5.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -89,12 +79,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_idle_f5.png</key>
+            <key>idle_6.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -106,12 +94,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_run_anim_f0.png</key>
+            <key>run_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -123,12 +109,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_run_anim_f1.png</key>
+            <key>run_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -140,12 +124,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_run_anim_f2.png</key>
+            <key>run_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -157,12 +139,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_run_anim_f3.png</key>
+            <key>run_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -174,12 +154,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_run_anim_f4.png</key>
+            <key>run_5.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -191,12 +169,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slime_run_anim_f5.png</key>
+            <key>run_6.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -222,7 +198,7 @@
             <key>size</key>
             <string>{192,16}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:9ae959bd5964a20bd267da8e466ef8cb:72d2767e8e1d3c14ad3447786fe5c4a1:b3a62b0b328aea8bce2242c347c9e672$</string>
+            <string>$TexturePacker:SmartUpdate:e1206ae5ff6d438926e84aea0bac061e:e55c3c65ee9825fccfe0d2a765e09d39:b3a62b0b328aea8bce2242c347c9e672$</string>
             <key>textureFileName</key>
             <string>slime.png</string>
         </dict>

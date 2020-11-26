@@ -4,12 +4,10 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>explosion_anim_f0.png</key>
+            <key>idle_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -21,12 +19,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>explosion_anim_f1.png</key>
+            <key>idle_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -38,12 +34,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>explosion_anim_f2.png</key>
+            <key>idle_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -55,12 +49,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>explosion_anim_f3.png</key>
+            <key>idle_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -72,12 +64,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>explosion_anim_f4.png</key>
+            <key>idle_5.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -89,12 +79,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>explosion_anim_f5.png</key>
+            <key>idle_6.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -106,12 +94,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>explosion_anim_f6.png</key>
+            <key>idle_7.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -133,13 +119,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>explsion.png</string>
+            <string>explosion.png</string>
             <key>size</key>
             <string>{224,32}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:4261532759a1dbc76680e8b5a7c3f00b:7e45b7660c95ef3d63c055fabb03818f:66d09fb027014a69280cf686274ff7da$</string>
+            <string>$TexturePacker:SmartUpdate:9e8685feb9d47609215dcff5372f3f04:7e45b7660c95ef3d63c055fabb03818f:c5a2c42043f2b0dda1e7e7adb0cc6144$</string>
             <key>textureFileName</key>
-            <string>explsion.png</string>
+            <string>explosion.png</string>
         </dict>
     </dict>
 </plist>

@@ -4,12 +4,10 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>slash_effect_anim_f0.png</key>
+            <key>dead_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -21,12 +19,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slash_effect_anim_f1.png</key>
+            <key>dead_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -38,12 +34,10 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>slash_effect_anim_f2.png</key>
+            <key>dead_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -52,6 +46,21 @@
                 <string>{16,16}</string>
                 <key>textureRect</key>
                 <string>{{32,0},{16,16}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>dead_4.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{16,16}</string>
+                <key>spriteSourceSize</key>
+                <string>{16,16}</string>
+                <key>textureRect</key>
+                <string>{{48,0},{16,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -65,13 +74,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>slash.png</string>
+            <string>dead.png</string>
             <key>size</key>
-            <string>{48,16}</string>
+            <string>{64,16}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0ec179fe2fa6e67273af77846b17825e:91fbf37bd3b0dca4a0d3edaf80e54c87:a69a086fc656d4464f3448465fad3ffe$</string>
+            <string>$TexturePacker:SmartUpdate:db429cb8857680b4a77c78da90086efd:f136dc48791bc77b71ea5eacae65d6a7:cb46edbf51fc1c39d4d08f65db91fd43$</string>
             <key>textureFileName</key>
-            <string>slash.png</string>
+            <string>dead.png</string>
         </dict>
     </dict>
 </plist>
