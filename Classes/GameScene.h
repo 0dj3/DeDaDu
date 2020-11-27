@@ -25,7 +25,7 @@ public:
     
     void generation();
     void border(cocos2d::TMXTiledMap* tiled);
-    void generHall(cocos2d::Vec2 sizeMap, int direction);
+    void generHall(cocos2d::TMXTiledMap* sizeMap, int direction);
     void generMapOne(cocos2d::TMXTiledMap* sizeMap, int direction);
     void generMainRoom(cocos2d::TMXTiledMap* tiled, int direction);
 

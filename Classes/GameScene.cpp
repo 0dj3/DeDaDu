@@ -58,7 +58,7 @@ bool GameScene::init()
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
     this->addChild(goblin);
-
+    
 
     auto eventListener = EventListenerKeyboard::create();
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)
@@ -130,12 +130,14 @@ void GameScene::generation() {
     //direction = 3;//["right"]
     //direction = 4;//["left"] 
 
-    generHall(tileMap->getPosition(), 1);
-    generHall(tileMap->getPosition(), 2);
-    generHall(tileMap->getPosition(), 4);
-    generHall(tileMap->getPosition(), 3);
+    generHall(tileMap, 1);
+    generHall(tileMap, 4);
+    generHall(tileMap, 3);
+    generHall(tileMap, 2);
+    for (int i = 0; i < 5; i++) {
+        generMainRoom(tileHall, 2);
+    }
     
-
     
 }
 
@@ -162,34 +164,32 @@ void GameScene::border(TMXTiledMap* tiled) {
     }
 }
 
-void GameScene::generHall(Vec2 PosMap, int direction) {
-    auto MapX = PosMap.x;
-    auto MapY = PosMap.y;
-    
+void GameScene::generHall(TMXTiledMap* PosMap, int direction) {
+    auto MapX = PosMap->getPosition().x;
+    auto MapY = PosMap->getPosition().y;
     
     switch (direction)
     {
     case 1://down
         tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
-        tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY - tileHall->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
+        tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width / 5) * 60, MapY + (-tileHall->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
         
         generMapOne(tileHall, direction);
         break;
     case 2://up
         tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
-        tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY + tileMap->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
-
-        //generMainRoom(tileHall, direction);
+        tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width / 5) * 60, MapY + (PosMap->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
+        //player->setPosition(tileHall->getPosition());
         break;
     case 3://right
         tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
-        tileHall->setPosition(Point((MapX + tileMap->getMapSize().width) * 60, (MapY + tileMap->getMapSize().height / 6.5) * 60));
+        tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height / 6.5) * 60));
         
         generMapOne(tileHall, direction);
         break;
     case 4://left
         tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
-        tileHall->setPosition(Point((MapX - tileHall->getMapSize().width) * 60, (MapY + tileMap->getMapSize().height / 6.5) * 60));
+        tileHall->setPosition(Point(MapX + (- tileHall->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height / 6.5) * 60));
         
         generMapOne(tileHall, direction);
         break;
@@ -238,32 +238,38 @@ void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
     TMXTiledMap* tileMainRoom = TMXTiledMap::create("maps/main_room.tmx");
     auto sizeMapX = PosMap->getMapSize().width;
     auto sizeMapY = PosMap->getMapSize().height;
-
+    int check;
     switch (direction)
     {
     case 1://down
         tileMainRoom->setPosition(Point(0, -10 * 60 + PosMap->getPosition().y));
+        check = 2;
         break;
     case 2://up
         tileMainRoom->setPosition(Point(0, 5 * 60 + PosMap->getPosition().y));
-
-        tileMainRoom->setAnchorPoint(Point(0, 0));
-        tileMainRoom->setScale(3.0);
-        border(tileMainRoom);
-        
-        generHall(tileMainRoom->getPosition(), 3);
+        check = 1;
         break;
     case 3://right
         tileMainRoom->setPosition(Point(sizeMapX * 60 + PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
+        check = 4;
         break;
     case 4://left
         tileMainRoom->setPosition(Point(-20 * 60 - PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
+        check = 3;
         break;
     default:
         break;
     }
 
+
+    for (int i = 1; i < 5; i++)
+        if (i != check)
+            generHall(tileMainRoom, i);
+
+    generHall(tileMainRoom, 2);
+    tileMainRoom->setAnchorPoint(Point(0, 0));
+    tileMainRoom->setScale(3.0);
+    border(tileMainRoom);
     
-    
-    //this->addChild(tileMainRoom);
+    this->addChild(tileMainRoom);
 }
