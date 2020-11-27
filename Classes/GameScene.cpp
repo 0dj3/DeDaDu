@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "Player.h"
 #include "Slime.h"
+#include "Fly.h"
 #include "Goblin.h"
 #include "2d/CCFastTMXLayer.h"
 #include "AudioEngine.h"
@@ -55,6 +56,29 @@ bool GameScene::init()
     
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
+
+    //
+    char str[200] = { 0 };
+    auto spritecache = SpriteFrameCache::getInstance();
+    spritecache->addSpriteFramesWithFile("res/enemy/fly/fly.plist");
+    auto spritesheet = SpriteBatchNode::create("res/enemy/fly/fly.png");
+    this->addChild(spritesheet);
+
+    Vector<SpriteFrame*> idleAnimFrames(4);
+    for (int i = 1; i <= 4; i++) {
+        sprintf(str, "idle_%i.png", i);
+        idleAnimFrames.pushBack(spritecache->getSpriteFrameByName(str));
+    }
+    auto idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.1f);
+    auto fly = Sprite::createWithSpriteFrameName("idle_1.png");
+    fly->setScale(3.0);
+    fly->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
+    Action* action = RepeatForever::create(Animate::create(idleAnimation));
+    fly->runAction(action);
+    spritesheet->addChild(fly);
+    //
+    //auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
+    //this->addChild(fly);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
     this->addChild(goblin);

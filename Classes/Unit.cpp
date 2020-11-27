@@ -1,5 +1,6 @@
 #include "Unit.h"
 #include "Definitions.h"
+#include "Anime.h"
 #include "AudioEngine.h"
 USING_NS_CC;
 
@@ -14,7 +15,7 @@ Unit::Unit()
 void Unit::Damage(int value) {
 	AudioEngine::preload(dmgsound);
 	AudioEngine::play2d(dmgsound, false, 0.5);
-
+	
 	if (hp <= value) {
 		Dead();
 		return;
@@ -23,7 +24,7 @@ void Unit::Damage(int value) {
 }
 
 void Unit::Dead() 
-{
+{	
 	//this->removeFromParentAndCleanup(true);
 	isDead = true;
 }

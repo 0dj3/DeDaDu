@@ -11,11 +11,6 @@ public:
     Anime();
 
     int frame;
-    int getFrame()
-    {
-        return frame;
-    }
-
     char* pathPlist;
 
     void runAnimation();

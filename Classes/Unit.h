@@ -4,6 +4,7 @@
 
 #include "cocos2d.h"
 #include "UnitStats.h"
+#include "Anime.h"
 #include <Box2d/Box2d.h>
 
 class Unit : public cocos2d::Node
