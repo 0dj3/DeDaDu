@@ -23,7 +23,7 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool MainMenuScene::init()
 {
-    AudioEngine::play2d("bgsound2.mp3", true, 0.1f);
+    AudioEngine::play2d("res/sounds/bgsound2.mp3", true, 0.1f);
     //////////////////////////////
     // 1. super init first
     if ( !Scene::init() )
@@ -34,11 +34,11 @@ bool MainMenuScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    auto backgroundSprite = Sprite::create("menubg.png");
+    auto backgroundSprite = Sprite::create("res/menubg.png");
     backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(backgroundSprite);
 
-    auto playItem = MenuItemImage::create("menu_button.png", "menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
+    auto playItem = MenuItemImage::create("res/ui/menu_button.png", "res/ui/menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
     playItem->setPosition(Point(0, 0));
 
     auto menu = Menu::create(playItem, NULL);

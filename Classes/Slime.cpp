@@ -6,7 +6,7 @@ USING_NS_CC;
 
 Slime::Slime()
 {
-    dmgsound = "slime.mp3";
+    dmgsound = "res/sounds/hit/slime.mp3";
     this->autorelease();
 }
 
@@ -15,13 +15,14 @@ Slime::Slime()
 Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Slime* newSlime = new Slime();
-    if (newSlime && newSlime->sprite->initWithFile("test_slime.png")) {
+    if (newSlime && newSlime->sprite->initWithFile("res/enemy/slime/test_slime.png")) {
         newSlime->sprite->getTexture()->setAliasTexParameters();
         newSlime->sprite->setScale(3.0);
         newSlime->setPosition(position);
 
         newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
 
+        newSlime->setTag(newSlime->tag);
         newSlime->layer = layer;
         newSlime->scheduleUpdate();
         return newSlime;

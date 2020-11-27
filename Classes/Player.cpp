@@ -6,6 +6,7 @@ USING_NS_CC;
 
 Player::Player()
 {
+    tag = PLAYER;
     this->autorelease();
 }
 
@@ -13,13 +14,14 @@ Player::Player()
 Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Player* newPlayer = new Player();
-    if (newPlayer && newPlayer->sprite->initWithFile("test_hero.png")) {
+    if (newPlayer && newPlayer->sprite->initWithFile("res/hero/test_hero.png")) {
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
+        newPlayer->setTag(newPlayer->tag);
         newPlayer->layer = layer;
         newPlayer->CreateWeapon();
         PhysicHelper::world->SetContactListener(newPlayer);
@@ -38,7 +40,7 @@ void Player::update(float dt)
 
 void Player::CreateWeapon() {
     weaponSprite = new Sprite();
-    if (weaponSprite && weaponSprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/heroes/knight/weapon_sword_1.png")) {
+    if (weaponSprite && weaponSprite->initWithFile("res/weapon/sword.png")) {
         weaponSprite->getTexture()->setAliasTexParameters();
         weaponSprite->setScale(3.0);
         weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
@@ -73,10 +75,11 @@ void Player::move()
     }
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
-    b2Vec2 desiredVel = stats->speed * PPM * toTarget;
+    b2Vec2 desiredVel = stats->speed * toTarget;
     b2Vec2 currentVel = body->GetLinearVelocity();
-    b2Vec2 thrust = desiredVel - currentVel;
-    body->ApplyForceToCenter(sprite->getContentSize().width * LINEAR_ACCELERATION * thrust, true);
+    //b2Vec2 thrust = desiredVel - currentVel;
+    body->ApplyForceToCenter((LINEAR_ACCELERATION) * desiredVel, true);
+    log("%f %f", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
@@ -87,7 +90,7 @@ void Player::BeginContact(b2Contact* contact)
     auto a = contact->GetFixtureA()->GetBody()->GetUserData();
     auto b = contact->GetFixtureB()->GetBody()->GetUserData();
     //PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
-    if (static_cast<Node*>(b)->getTag() == 2) {
+    if (static_cast<Node*>(b)->getTag() == ENEMY) {
         static_cast<Unit*> (b)->Damage(20);
     }
 }

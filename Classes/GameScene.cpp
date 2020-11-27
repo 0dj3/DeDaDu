@@ -46,21 +46,17 @@ bool GameScene::init()
     InputListener::Instance()->Init(this);
 
     PhysicHelper::CreateWorld();
-    AudioEngine::play2d("bgsound.mp3", true, 0.1f);
-
+    AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
     generation();
 
 
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
-    //player->setPosition(Point(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
     
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
-    slime->setTag(2);
     this->addChild(slime);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
-    goblin->setTag(2);
     this->addChild(goblin);
 
 
@@ -89,25 +85,28 @@ void GameScene::update(float dt)
 
     PhysicHelper::world->Step(dt, velocityIterations, positionIterations);
 
-    /*b2Body* node = PhysicHelper::world->GetBodyList();
+    b2Body* node = PhysicHelper::world->GetBodyList();
     while (node)
     {
         b2Body* b = node;
         node = node->GetNext();
 
+        if (b->GetUserData() == nullptr)
+            continue;
+            
         Unit* unit = (Unit*)b->GetUserData();
         if (unit->IsDead())
         {
             PhysicHelper::world->DestroyBody(b);
             unit->removeFromParentAndCleanup(true);
         }
-    }*/
+    }
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
-            myActor->setPosition(Vec2(b->GetPosition().x, b->GetPosition().y));
+            myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
             myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
@@ -180,7 +179,7 @@ void GameScene::generHall(Vec2 PosMap, int direction) {
         tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
         tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY + tileMap->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
 
-        generMainRoom(tileHall, direction);
+        //generMainRoom(tileHall, direction);
         break;
     case 3://right
         tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
@@ -266,5 +265,5 @@ void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
 
     
     
-    this->addChild(tileMainRoom);
+    //this->addChild(tileMainRoom);
 }
