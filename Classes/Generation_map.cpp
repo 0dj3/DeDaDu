@@ -1,5 +1,6 @@
 #include "Generation_map.h"
 #include "2d/CCFastTMXLayer.h"
+#include "GameScene.h"
 USING_NS_CC;
 
 
@@ -18,19 +19,22 @@ bool Generation_map::init() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    tileMap = TMXTiledMap::create("maps/main_room.tmx");
+    tileMap = TMXTiledMap::create("maps/shop_left.tmx");
     tileMap->setScale(3.0);
-    tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     
-    addChild(tileMap);
+    
+    
+    
     return true;
 }
 
 
-void Generation_map::create_main_room(Size visibleSize, Vec2 origin) {
+void Generation_map::create_main_room() {
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
-    tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
+    //tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
+    GameScene* gamescene;
+    gamescene->addChild(tileMap);
 }
 
 

@@ -5,6 +5,8 @@
 #include "Slime.h"
 #include "InputListener.h"
 
+
+
 class GameScene : public cocos2d::Layer
 {
 public:
@@ -23,8 +25,9 @@ public:
     
     void generation();
     void border(cocos2d::TMXTiledMap* tiled);
-    void generHall(cocos2d::Vec2 sizeMap, float rotation, int direction);
-    void generMapOne(cocos2d::TMXTiledMap* sizeMap, float rotation, int direction);
+    void generHall(cocos2d::Vec2 sizeMap, int direction);
+    void generMapOne(cocos2d::TMXTiledMap* sizeMap, int direction);
+    void generMainRoom(cocos2d::TMXTiledMap* tiled, int direction);
 
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);

@@ -4,8 +4,8 @@
 #include "Slime.h"
 #include "Goblin.h"
 #include "2d/CCFastTMXLayer.h"
-#include "Generation_map.h"
 #include "AudioEngine.h"
+//#include "Generation_map.h"
 
 USING_NS_CC;
 CC_DLL;
@@ -47,13 +47,14 @@ bool GameScene::init()
 
     PhysicHelper::CreateWorld();
     AudioEngine::play2d("bgsound.mp3", true, 0.1f);
+
     generation();
-    
+
 
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     //player->setPosition(Point(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
-
+    
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     slime->setTag(2);
     this->addChild(slime);
@@ -119,13 +120,9 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 
 void GameScene::generation() {
-    /*Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();*/
-
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
     tileMap->setScale(3.0);
     tileMap->setAnchorPoint(Point(0, 0));
-    //tileMap->setPosition(Point(visibleSize.width / 4 + origin.x + 20, visibleSize.height / 4 - 80));
     this->addChild(tileMap);
     border(tileMap);
     
@@ -134,16 +131,16 @@ void GameScene::generation() {
     //direction = 3;//["right"]
     //direction = 4;//["left"] 
 
-    generHall(tileMap->getPosition(), 0.0f, 1);
-    generHall(tileMap->getPosition(), 0.0f, 2);
-    generHall(tileMap->getPosition(), 90.0f, 4);
-    generHall(tileMap->getPosition(), 90.0f, 3);
+    generHall(tileMap->getPosition(), 1);
+    generHall(tileMap->getPosition(), 2);
+    generHall(tileMap->getPosition(), 4);
+    generHall(tileMap->getPosition(), 3);
     
 
+    
 }
 
 void GameScene::border(TMXTiledMap* tiled) {
-    //auto layerCheck = tiled->getLayer("walls");
     auto layerCheck = tiled->getLayer("walls");
     for (int i = 0; i < layerCheck->getLayerSize().width; i++) {
         for (int j = 0; j < layerCheck->getLayerSize().height; j++) {
@@ -166,44 +163,50 @@ void GameScene::border(TMXTiledMap* tiled) {
     }
 }
 
-void GameScene::generHall(Vec2 PosMap, float rotation, int direction) {
+void GameScene::generHall(Vec2 PosMap, int direction) {
     auto MapX = PosMap.x;
     auto MapY = PosMap.y;
-    if (rotation == 0.0f)
-        tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
-    else tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
     
-    tileHall->setAnchorPoint(Point(0, 0));
     
     switch (direction)
     {
     case 1://down
+        tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
         tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY - tileHall->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
+        
+        generMapOne(tileHall, direction);
         break;
     case 2://up
+        tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
         tileHall->setPosition(Point((MapX + tileMap->getMapSize().width / 5) * 60, (MapY + tileMap->getMapSize().height) * 60) /*+ Vec2(100, 200)*/);
+
+        generMainRoom(tileHall, direction);
         break;
     case 3://right
+        tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
         tileHall->setPosition(Point((MapX + tileMap->getMapSize().width) * 60, (MapY + tileMap->getMapSize().height / 6.5) * 60));
+        
+        generMapOne(tileHall, direction);
         break;
     case 4://left
+        tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
         tileHall->setPosition(Point((MapX - tileHall->getMapSize().width) * 60, (MapY + tileMap->getMapSize().height / 6.5) * 60));
+        
+        generMapOne(tileHall, direction);
         break;
     default:
         break;
     }
 
     tileHall->setScale(3.0);
-    generMapOne(tileHall, rotation - 90.0f, direction);
+    tileHall->setAnchorPoint(Point(0, 0));
     border(tileHall);
     this->addChild(tileHall);
 }
 
-void GameScene::generMapOne(TMXTiledMap* PosMap, float rotation, int direction) {
+void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
     auto sizeMapX = PosMap->getMapSize().width;
     auto sizeMapY = PosMap->getMapSize().height;
-    
-    
 
     switch (direction)
     {
@@ -230,6 +233,38 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, float rotation, int direction) 
     tileMapOne->setScale(3.0);
     border(tileMapOne);
     this->addChild(tileMapOne);
+}
+
+void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
+    TMXTiledMap* tileMainRoom = TMXTiledMap::create("maps/main_room.tmx");
+    auto sizeMapX = PosMap->getMapSize().width;
+    auto sizeMapY = PosMap->getMapSize().height;
+
+    switch (direction)
+    {
+    case 1://down
+        tileMainRoom->setPosition(Point(0, -10 * 60 + PosMap->getPosition().y));
+        break;
+    case 2://up
+        tileMainRoom->setPosition(Point(0, 5 * 60 + PosMap->getPosition().y));
+
+        tileMainRoom->setAnchorPoint(Point(0, 0));
+        tileMainRoom->setScale(3.0);
+        border(tileMainRoom);
+        
+        generHall(tileMainRoom->getPosition(), 3);
+        break;
+    case 3://right
+        tileMainRoom->setPosition(Point(sizeMapX * 60 + PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
+        break;
+    case 4://left
+        tileMainRoom->setPosition(Point(-20 * 60 - PosMap->getPosition().x, -3 * 60 + PosMap->getPosition().y));
+        break;
+    default:
+        break;
+    }
+
     
     
+    this->addChild(tileMainRoom);
 }

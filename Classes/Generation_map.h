@@ -1,6 +1,7 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 #include "cocos2d.h"
+#include "GameScene.h"
 
 class Generation_map: public cocos2d::Scene {
 public:
@@ -9,7 +10,7 @@ public:
 	virtual bool init();
 	cocos2d::Scene* scene;
 	void create_hall();
-	void create_main_room(cocos2d::Size visibleSize, cocos2d::Vec2 origin);
+	void create_main_room();
 	void create_shop();
 	void create_room();
 private:
