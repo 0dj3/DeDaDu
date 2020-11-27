@@ -37,6 +37,7 @@ private:
     cocos2d::TMXTiledMap* tileMap;
     cocos2d::TMXTiledMap* tileHall;
     cocos2d::TMXTiledMap* tileMapOne;
+    cocos2d::TMXTiledMap* tileMainRoom;
     cocos2d::Node* edgeNode;
     
     void update(float dt);
