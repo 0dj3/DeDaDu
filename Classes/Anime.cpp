@@ -16,7 +16,7 @@ void Anime::runAnimation()
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile(pathPlist);
 
-	for (int _i = 0; _i < frame; _i++) {
+	for (int _i = 1; _i <= frame; _i++) {
 		sprintf(str, "run_%d.png", _i);
 		runFrames.pushBack(spritecache->getSpriteFrameByName(str));
 	}
@@ -35,7 +35,7 @@ void Anime::idleAnimation()
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile(pathPlist);
 
-	for (int _i = 0; _i < frame; _i++) {
+	for (int _i = 1; _i <= frame; _i++) {
 		sprintf(str, "idle_%d.png", _i);
 		idleFrames.pushBack(spritecache->getSpriteFrameByName(str));
 	}
@@ -54,7 +54,7 @@ void Anime::dieAnimation()
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("res/effects/dead/dead.plist");
 
-	for (int _i = 0; _i < 4; _i++) {
+	for (int _i = 1; _i <= 4; _i++) {
 		sprintf(str, "dead_%d.png", _i);
 		deadFrames.pushBack(spritecache->getSpriteFrameByName(str));
 	}
@@ -62,5 +62,5 @@ void Anime::dieAnimation()
 	auto deadAnimate = Animate::create(deadAnimation);
 	deadAnimate->retain();
 
-	this->runAction(RepeatForever::create(deadAnimate));
+	this->runAction(deadAnimate);
 }

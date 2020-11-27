@@ -1,6 +1,7 @@
 #include "Goblin.h"
 #include "Definitions.h"
 #include "Player.h"
+#include "Anime.h"
 
 USING_NS_CC;
 Goblin::Goblin()
@@ -33,6 +34,7 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position)
 
 void Goblin::update(float dt)
 {   
+
 }
 
 void Goblin::move()
