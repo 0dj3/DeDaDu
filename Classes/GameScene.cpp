@@ -71,7 +71,6 @@ bool GameScene::init()
     }
     auto idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.1f);
     auto fly = Sprite::createWithSpriteFrameName("idle_1.png");
-    fly->setScale(3.0);
     fly->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
     Action* action = RepeatForever::create(Animate::create(idleAnimation));
     fly->runAction(action);
