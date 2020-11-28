@@ -155,14 +155,11 @@ void GameScene::generation() {
     //direction = 4;//["left"] 
 
     generHall(tileMap, 1);
-    //generMainRoom(tileHall, 1);
     generHall(tileMap, 4);
-    //generMainRoom(tileHall, 4);
     generHall(tileMap, 3);
     generHall(tileMap, 2);
     //generMainRoom(tileHall, 2);
     
-    //generMainRoom(tileHall, 3);
     for (int i = 0; i < 3; i++)
         generMainRoom(tileHall, 2);
 
@@ -259,6 +256,7 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
     default:
         break;
     }
+
     tileMapOne->setAnchorPoint(Point(0, 0));
     tileMapOne->setScale(3.0);
     border(tileMapOne);
@@ -296,6 +294,7 @@ void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
     for (int i = 1; i < 5; i++)
         if (i != check)
             generHall(tileMainRoom, i);
+
     generHall(tileMainRoom, 2);
     tileMainRoom->setAnchorPoint(Point(0, 0));
     tileMainRoom->setScale(3.0);

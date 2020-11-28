@@ -34,7 +34,7 @@ bool SplashScene::init()
 
     this->scheduleOnce(CC_SCHEDULE_SELECTOR(SplashScene::GoToMainMenuScene), DISPLAY_TIME_SPLASH_SCENE);
 
-    auto backgroundSprite = Sprite::create("ourlogo.png");
+    auto backgroundSprite = Sprite::create("res/ourlogo.png");
     backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     
     this->addChild(backgroundSprite);
