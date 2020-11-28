@@ -21,7 +21,7 @@ Enemy* Fly::create(cocos2d::Layer* layer, const cocos2d::Vec2& position)
 		fly->setPosition(position);
 		fly->setTag(fly->tag);
 		fly->layer = layer;
-		//fly->scheduleUpdate();
+		fly->scheduleUpdate();
 		return fly;
 	}
 	CC_SAFE_DELETE(fly);
@@ -32,6 +32,7 @@ void Fly::initFly()
 {
 	spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
+	//this->addChild(spritesheet)
 	// Animation Idle
 	idleAnimate = initAnimation(1, 6, 0.1f);
 	idleAnimate->retain();

@@ -58,26 +58,27 @@ bool GameScene::init()
     this->addChild(slime);
 
     //
-    //char str[200] = { 0 };
-    //auto spritecache = SpriteFrameCache::getInstance();
-    //spritecache->addSpriteFramesWithFile("res/enemy/fly/fly.plist");
-    //auto spritesheet = SpriteBatchNode::create("res/enemy/fly/fly.png");
-    //this->addChild(spritesheet);
+    char str1[200] = { 0 };
+    auto spritecache1 = SpriteFrameCache::getInstance();
+    spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
+    auto spritesheet1 = SpriteBatchNode::create("res/enemy/goblin/goblin.png");
+    this->addChild(spritesheet1);
 
-    //Vector<SpriteFrame*> idleAnimFrames(4);
-    //for (int i = 1; i <= 4; i++) {
-    //    sprintf(str, "idle_%i.png", i);
-    //    idleAnimFrames.pushBack(spritecache->getSpriteFrameByName(str));
-    //}
-    //auto idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.1f);
-    //auto fly = Sprite::createWithSpriteFrameName("idle_1.png");
-    //fly->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
-    //Action* action = RepeatForever::create(Animate::create(idleAnimation));
-    //fly->runAction(action);
-    //spritesheet->addChild(fly);
+    Vector<SpriteFrame*> idleAnimFrames1(4);
+    for (int i = 1; i <= 6; i++) {
+        sprintf(str1, "idle_%i.png", i);
+        idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
+    }
+    auto idleAnimation1 = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
+    auto demo1 = Sprite::createWithSpriteFrameName("idle_1.png");
+    demo1->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
+    demo1->setScale(3.0);
+    Action* action1 = RepeatForever::create(Animate::create(idleAnimation1));
+    demo1->runAction(action1);
+    spritesheet1->addChild(demo1);
     //
-    auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
-    this->addChild(fly);
+    //auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
+    //this->addChild(fly);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
     this->addChild(goblin);

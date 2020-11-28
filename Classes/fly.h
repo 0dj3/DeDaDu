@@ -19,6 +19,7 @@ private:
 
     void initFly();
     cocos2d::SpriteFrameCache* spritecache;
+    cocos2d::SpriteBatchNode* spritesheet;
     cocos2d::Animate* idleAnimate;
     cocos2d::Animate* initAnimation(int initIndex, int finIndex, float dt);
     void idle();
