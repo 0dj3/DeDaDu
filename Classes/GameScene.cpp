@@ -172,6 +172,12 @@ void GameScene::generation() {
 
     generMapOne(tileHall, 2);
     
+    int sizeMap = 5;
+    int** arrayMap = generationArrayMap(sizeMap);
+
+
+
+    delete[] arrayMap;
 }
 
 void GameScene::border(TMXTiledMap* tiled) {
@@ -361,10 +367,14 @@ void GameScene::createDoor(TMXTiledMap* tiled, int direction) {
 }
 
 
-const int sizeMap = 5;
-int* generationMap() {
-    int a[sizeMap][sizeMap];
+
+int** GameScene::generationArrayMap(int sizeMap) {
+
     int x = sizeMap, y = sizeMap;
+
+    int** a = new int*[sizeMap];
+    for (int i = 0; i < sizeMap; i++)
+        a[i] = new int[sizeMap];
 
     srand(time(0));
     int random;
@@ -404,5 +414,5 @@ int* generationMap() {
                 a[i][j] = random;
         }
     }
-    return *a;
+    return a;
 }

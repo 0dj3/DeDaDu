@@ -29,7 +29,7 @@ public:
     void generMapOne(cocos2d::TMXTiledMap* sizeMap, int direction);
     void generMainRoom(cocos2d::TMXTiledMap* tiled, int direction);
     void createDoor(cocos2d::TMXTiledMap* tiled, int direction);
-    int* generationMap();
+    int** generationArrayMap(int sizeMap);
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
 
