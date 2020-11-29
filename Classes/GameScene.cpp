@@ -279,6 +279,10 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
     if (direction == 2)
         createDoor(tileMapOne, 1);
     createDoor(tileMapOne, direction);
+    int a[2][2] = {
+        {0,0},
+        {0,0}
+    };
 }
 
 void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
@@ -353,4 +357,51 @@ void GameScene::createDoor(TMXTiledMap* tiled, int direction) {
     wall->setScale(3.0);
     border(wall);
     this->addChild(wall);
+}
+
+
+const int sizeMap = 5;
+int* generationMap() {
+    int a[sizeMap][sizeMap];
+    int x = sizeMap, y = sizeMap;
+
+    srand(time(0));
+    int random;
+
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
+            if (j == x / 2)
+                a[i][j] = 2;
+            else a[i][j] = 0;
+            if (i == 0 || i == y - 1)
+                a[i][x / 2] = 1;
+        }
+    }
+    for (int i = 0; i < y; i++) {
+        for (int j = x / 2 + 1; j < x; j++) {
+            if (a[i][j - 1] == 1)
+                break;
+            random = 1 + rand() % 2;
+            if (random == 1) {
+                a[i][j] = random;
+                break;
+            }
+            else
+                a[i][j] = random;
+        }
+    }
+    for (int i = 0; i < y; i++) {
+        for (int j = x / 2 - 1; j >= 0; j--) {
+            if (a[i][j + 1] == 1)
+                break;
+            random = 1 + rand() % 2;
+            if (random == 1) {
+                a[i][j] = random;
+                break;
+            }
+            else
+                a[i][j] = random;
+        }
+    }
+    return *a;
 }
