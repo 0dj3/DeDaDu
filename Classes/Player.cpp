@@ -24,7 +24,6 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->setTag(newPlayer->tag);
         newPlayer->layer = layer;
         newPlayer->CreateWeapon();
-        PhysicHelper::world->SetContactListener(newPlayer);
         newPlayer->scheduleUpdate();
         return newPlayer;
     }
@@ -36,25 +35,28 @@ void Player::update(float dt)
 {
     move();
     rotate();
+    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
+        _weapon->Attack();
 }
 
 void Player::CreateWeapon() {
-    weaponSprite = new Sprite();
-    if (weaponSprite && weaponSprite->initWithFile("res/weapon/sword.png")) {
-        weaponSprite->getTexture()->setAliasTexParameters();
-        weaponSprite->setScale(3.0);
-        weaponSprite->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
-        weaponSprite->setAnchorPoint(this->sprite->getPosition());
-        weaponSprite->setTag(5);
-        this->addChild(weaponSprite);
+    _weapon = new Weapon(layer, 20, 1);
+    if (_weapon && _weapon->initWithFile("res/weapon/sword.png")) {
+        _weapon->getTexture()->setAliasTexParameters();
+        _weapon->setScale(3.0);
+        _weapon->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
+        _weapon->setAnchorPoint(this->sprite->getPosition());
+        _weapon->setTag(5);
+        this->addChild(_weapon);
         return;
     }
-    CC_SAFE_DELETE(weaponSprite);
+    CC_SAFE_DELETE(_weapon);
     return;
 }
 
 void Player::rotate() {
-    weaponSprite->setRotation(CC_RADIANS_TO_DEGREES(-(weaponSprite->getPosition() - InputListener::Instance()->mousePosition).getAngle()) - 135);
+    //if (_weapon->isActive == false)
+        _weapon->setRotation(CC_RADIANS_TO_DEGREES(-(_weapon->getPosition() - InputListener::Instance()->mousePosition).getAngle()) - 135);
 }
 
 void Player::move()
@@ -78,35 +80,10 @@ void Player::move()
     b2Vec2 desiredVel = stats->speed * toTarget;
     b2Vec2 currentVel = body->GetLinearVelocity();
     //b2Vec2 thrust = desiredVel - currentVel;
-    body->ApplyForceToCenter((LINEAR_ACCELERATION) * desiredVel, true);
+    body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
     //log("%f %f", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
     //log("X = %f, Y = %f", this->getPosition().x, this->getPosition().y);
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
-}
-
-void Player::BeginContact(b2Contact* contact)
-{
-    auto a = contact->GetFixtureA()->GetBody()->GetUserData();
-    auto b = contact->GetFixtureB()->GetBody()->GetUserData();
-    //PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
-    if (static_cast<Node*>(b)->getTag() == ENEMY) {
-        static_cast<Unit*> (b)->Damage(20);
-    }
-}
-
-void Player::EndContact(b2Contact* contact)
-{
-
-}
-
-void Player::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
-{
-
-}
-
-void Player::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-{
-
 }

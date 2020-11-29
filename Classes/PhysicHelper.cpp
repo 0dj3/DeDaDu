@@ -1,9 +1,35 @@
 #include "PhysicHelper.h"
 #include "Definitions.h"
+#include "Unit.h"
 
 USING_NS_CC;
 
 b2World* PhysicHelper::world;
+
+void PhysicHelper::BeginContact(b2Contact* contact)
+{
+    auto a = contact->GetFixtureA()->GetBody()->GetUserData();
+    auto b = contact->GetFixtureB()->GetBody()->GetUserData();
+    //PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
+    if (static_cast<Node*>(b)->getTag() == Unit::ENEMY) {
+        static_cast<Unit*> (b)->Damage(20);
+    }
+}
+
+void PhysicHelper::EndContact(b2Contact* contact)
+{
+
+}
+
+void PhysicHelper::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+{
+
+}
+
+void PhysicHelper::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
+{
+
+}
 
 b2Body* PhysicHelper::createDynamicPhysicBody(Node* node, const Size& size)
 {
@@ -55,4 +81,5 @@ void PhysicHelper::CreateWorld()
     b2Vec2 gravity;
     gravity.Set(0.0f, 0.0f);
     world = new b2World(gravity);
+    //world->SetContactListener(this);
 }

@@ -118,9 +118,16 @@ void GameScene::update(float dt)
 
         if (b->GetUserData() == nullptr)
             continue;
-            
+
+        Weapon* weapon = (Weapon*)b->GetUserData();
+        if (weapon->getName() == "weapon" && !weapon->isActive)
+        {
+            PhysicHelper::world->DestroyBody(b);
+            continue;
+        }
+
         Unit* unit = (Unit*)b->GetUserData();
-        if (unit->IsDead())
+        if (unit->getName() == "unit" && unit->IsDead())
         {
             PhysicHelper::world->DestroyBody(b);
             unit->removeFromParentAndCleanup(true);
@@ -129,10 +136,15 @@ void GameScene::update(float dt)
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
+        /*Weapon* weapon = (Weapon*)b->GetUserData();
+        if (b->GetUserData() != NULL && weapon->getName() == "weapon")
+        {
+            continue;
+        }*/
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
-            myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
+            //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
 }

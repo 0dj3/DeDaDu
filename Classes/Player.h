@@ -8,15 +8,16 @@
 #include <Box2d/Box2d.h>
 #include "PhysicHelper.h"
 #include "InputListener.h"
+#include "Weapon.h"
 
-class Player : public Unit, b2ContactListener
+class Player : public Unit
 {
 public:
     Player();
     static Unit* create(cocos2d::Layer* scene, const cocos2d::Vec2& position);
 
 private:
-    cocos2d::Sprite* weaponSprite;
+    Weapon* _weapon;
 
     void CreateWeapon();
 
@@ -24,12 +25,6 @@ private:
 
     void move();
     void rotate();
-
-
-    void BeginContact(b2Contact* contact);
-    void EndContact(b2Contact* contact);
-    void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
 };
 

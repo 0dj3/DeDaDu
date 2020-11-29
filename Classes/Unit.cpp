@@ -10,6 +10,7 @@ Unit::Unit()
     sprite = new Sprite();
 	stats = new UnitStats();
 	this->addChild(sprite);
+	this->setName("unit");
 }
 
 void Unit::Damage(int value) {
