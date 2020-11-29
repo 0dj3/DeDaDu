@@ -79,7 +79,8 @@ void Player::move()
     b2Vec2 currentVel = body->GetLinearVelocity();
     //b2Vec2 thrust = desiredVel - currentVel;
     body->ApplyForceToCenter((LINEAR_ACCELERATION) * desiredVel, true);
-    log("%f %f", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
+    //log("%f %f", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
+    //log("X = %f, Y = %f", this->getPosition().x, this->getPosition().y);
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
