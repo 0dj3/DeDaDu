@@ -6,6 +6,7 @@
 #include "Goblin.h"
 #include "2d/CCFastTMXLayer.h"
 #include "AudioEngine.h"
+#include <ctime>
 //#include "Generation_map.h"
 
 USING_NS_CC;
