@@ -218,13 +218,13 @@ void GameScene::generHall(TMXTiledMap* PosMap, int direction) {
         break;
     case 3://right
         tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
-        tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height / 6.5) * 60));
+        tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height - 11) * 60));
         generMapOne(tileHall, direction);
         
         break;
     case 4://left
         tileHall = TMXTiledMap::create("maps/hall_horizont.tmx");
-        tileHall->setPosition(Point(MapX + (- tileHall->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height / 6.5) * 60));
+        tileHall->setPosition(Point(MapX + (- tileHall->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height - 11) * 60));
         
         generMapOne(tileHall, direction);
         break;
@@ -247,19 +247,23 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
     case 1://down
         tileMapOne = TMXTiledMap::create("maps/room_down.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width - 10) * 60, sizeMapY + (-tileMapOne->getMapSize().height) * 60));
+        
         break;
     case 2://up
         tileMapOne = TMXTiledMap::create("maps/room_up.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width - 10) * 60, sizeMapY + (PosMap->getMapSize().height) * 60));
+        
         break;
     case 3://right
         tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height - 11) * 60));
         //tileMapOne->setPosition(Point(sizeMapX + (tileMapOne->getMapSize().width) * 60, sizeMapX + (PosMap->getMapSize().height - 4) * 60));
+        
         break;
     case 4://left
         tileMapOne = TMXTiledMap::create("maps/room_left.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (-tileMapOne->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height- 11) * 60));
+        
         break;
     default:
         break;
@@ -269,6 +273,12 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
     tileMapOne->setScale(3.0);
     border(tileMapOne);
     this->addChild(tileMapOne);
+
+    if (direction == 1)
+        createDoor(tileMapOne, 2);
+    if (direction == 2)
+        createDoor(tileMapOne, 1);
+    createDoor(tileMapOne, direction);
 }
 
 void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
@@ -308,7 +318,6 @@ void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
     tileMainRoom->setScale(3.0);
     border(tileMainRoom);
     
-    createDoor(tileMainRoom, 1);
 
     this->addChild(tileMainRoom);
 }
@@ -323,19 +332,19 @@ void GameScene::createDoor(TMXTiledMap* tiled, int direction) {
     {
     case 1://down
         wall = TMXTiledMap::create("maps/wall_horizont.tmx");
-        wall->setPosition(Vec2(pos.x + (3) * 60, pos.y));
+        wall->setPosition(Vec2(pos.x + (size.width / 2 - 2) * 60, pos.y));
         break;
     case 2://up
         wall = TMXTiledMap::create("maps/wall_horizont.tmx");
-        wall->setPosition(Vec2(pos.x + (3) * 60, pos.y + (size.height - 1) * 60));
+        wall->setPosition(Vec2(pos.x + (size.width / 2 - 2) * 60, pos.y + (size.height - 1) * 60));
         break;
     case 3://right
         wall = TMXTiledMap::create("maps/wall_vertical.tmx");
-        wall->setPosition(Vec2(pos.x, pos.y + (4) * 60));
+        wall->setPosition(Vec2(pos.x, pos.y + (5) * 60));
         break;
     case 4://left
         wall = TMXTiledMap::create("maps/wall_vertical.tmx");
-        wall->setPosition(Vec2(pos.x + (size.width - 1) * 60, pos.y + (4) * 60));
+        wall->setPosition(Vec2(pos.x + (size.width - 1) * 60, pos.y + (5) * 60));
         break;
     default:
         break;
