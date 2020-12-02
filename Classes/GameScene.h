@@ -5,7 +5,8 @@
 #include "Slime.h"
 #include "InputListener.h"
 
-
+USING_NS_CC;
+#define SIZE_MAP 5;
 
 class GameScene : public cocos2d::Layer
 {
@@ -34,13 +35,17 @@ public:
     CREATE_FUNC(GameScene);
 
 private:
-    
-    cocos2d::TMXTiledMap* tileMap;
-    cocos2d::TMXTiledMap* tileHall;
-    cocos2d::TMXTiledMap* tileMapOne;
-    cocos2d::TMXTiledMap* tileMainRoom;
-    cocos2d::Node* edgeNode;
-    
+    TMXTiledMap* tileMap;
+    TMXTiledMap* tileHallML;
+    TMXTiledMap* tileHallMR;
+    TMXTiledMap* tileHallMU;
+    TMXTiledMap* tileHall;
+    TMXTiledMap* tileMapOne;
+    TMXTiledMap* tileMainRoom;
+    Node* edgeNode;
+    int** arrayMap;
+    int checkI = 1, sizeMap = 5;
+    int checkj;
     void update(float dt);
 
     cocos2d::PhysicsWorld* sceneWorld;
