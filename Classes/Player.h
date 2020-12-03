@@ -15,7 +15,6 @@ class Player : public Unit
 public:
     Player();
     static Unit* create(cocos2d::Layer* scene, const cocos2d::Vec2& position);
-
 private:
     Weapon* _weapon;
 

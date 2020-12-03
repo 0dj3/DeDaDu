@@ -1,3 +1,5 @@
+#pragma pointers_to_members(full_generality, multiple_inheritance)
+
 #include "ContactListener.h"
 #include "Definitions.h"
 #include "Unit.h"
@@ -6,25 +8,52 @@ USING_NS_CC;
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
-    auto a = contact->GetFixtureA()->GetBody()->GetUserData();
-    auto b = contact->GetFixtureB()->GetBody()->GetUserData();
-    //PhysicsBody* playerBody = (bodyA->getTag() == 4) ? bodyA : bodyB;
-    if (static_cast<Node*>(b)->getTag() == Unit::ENEMY) {
-        static_cast<Unit*> (b)->Damage(20);
+    b2Body* a = contact->GetFixtureA()->GetBody();
+    b2Body* b = contact->GetFixtureB()->GetBody(); 
+    if (b->GetUserData() != NULL && a->GetUserData() != NULL)
+    {
+        SelectReaction(a, b);
+        SelectReaction(b, a);
+        /*static_cast<Unit*>(a->GetUserData())->BeginContact(b);
+        static_cast<Unit*>(b->GetUserData())->BeginContact(a);*/
     }
 }
 
-void ContactListener::EndContact(b2Contact* contact)
+void ContactListener::SelectReaction(b2Body* bodyA, b2Body* bodyB)
+{
+    switch(static_cast<Node*>(bodyA->GetUserData())->getTag())
+    {
+    case PLAYER:
+        BeginPlayerContact(bodyA, bodyB);
+        break;
+    case ENEMY:
+        BeginEnemyContact(bodyA, bodyB);
+        break;
+    case WEAPON:
+        BeginWeaponContact(bodyA, bodyB);
+        break;
+    }
+}
+
+void ContactListener::BeginPlayerContact(b2Body* player, b2Body* body)
+{
+    
+}
+
+void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
 {
 
 }
 
-void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+void ContactListener::BeginWeaponContact(b2Body* weapon, b2Body* body)
 {
-
-}
-
-void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-{
-
+    if (static_cast<Unit*>(body->GetUserData())->getName() == "unit") {
+        Unit* unit = static_cast<Unit*>(body->GetUserData());
+        if (unit->getTag() == ENEMY) {
+            b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
+            direction.Normalize();
+            body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION) * direction, true);
+            unit->Damage(20);
+        }
+    }
 }

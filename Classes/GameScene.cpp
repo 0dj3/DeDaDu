@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Slime.h"
 #include "Fly.h"
+#include "HUD.h"
 #include "Goblin.h"
 #include "2d/CCFastTMXLayer.h"
 #include "AudioEngine.h"
@@ -37,7 +38,7 @@ bool GameScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Layer::init() )
+    if (!Layer::init())
     {
         return false;
     }
@@ -51,10 +52,12 @@ bool GameScene::init()
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
     generation();
 
-
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
-    
+
+    hud = HUD::create();
+    this->addChild(hud, 5);
+
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
 
@@ -78,19 +81,19 @@ bool GameScene::init()
     demo1->runAction(action1);
     spritesheet1->addChild(demo1);
     //
-    //auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
-    //this->addChild(fly);
+    auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
+    this->addChild(fly);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
     this->addChild(goblin);
-    
+
 
     auto eventListener = EventListenerKeyboard::create();
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)
     {
         if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
             CC_CALLBACK_1(GameScene::menuCloseCallback, this);
-        
+
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
     //----Close button
@@ -105,6 +108,7 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
+    hud->updatePos(player);
     int velocityIterations = 6;
     int positionIterations = 2;
 
@@ -136,11 +140,11 @@ void GameScene::update(float dt)
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
-        /*Weapon* weapon = (Weapon*)b->GetUserData();
+        Node* weapon = (Node*)b->GetUserData();
         if (b->GetUserData() != NULL && weapon->getName() == "weapon")
         {
             continue;
-        }*/
+        }
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
@@ -164,8 +168,8 @@ void GameScene::generation() {
     tileMap->setAnchorPoint(Point(0, 0));
     this->addChild(tileMap);
     border(tileMap);
-    
-    
+
+
     /*createDoor(tileMap, 1);
     createDoor(tileMap, 2);
     createDoor(tileMap, 3);
@@ -216,7 +220,7 @@ void GameScene::generation() {
                 generMapOne(tileHallML, 4);
         }
     }
-    
+
     for (int k = 2; k < sizeMap - 1; k++) {
         if (arrayMap[k][sizeMap / 2] == 2) {
             checkj = sizeMap / 2;
@@ -230,9 +234,9 @@ void GameScene::generation() {
                     generMainRoom(tileHallMR, 3);
                     if (arrayMap[k + 1][j] == 2)
                         generHall(tileMainRoom, 2);
-                    else 
+                    else
                         createDoor(tileMainRoom, 2);
-                    if (arrayMap[k - 1][j] != 2) 
+                    if (arrayMap[k - 1][j] != 2)
                         createDoor(tileMainRoom, 1);
                     generHall(tileMainRoom, 3);
                 }
@@ -261,7 +265,7 @@ void GameScene::generation() {
             }
         }
     }
-    
+
     generMapOne(tileHallMU, 2);
 
     delete[] arrayMap;
@@ -289,19 +293,19 @@ void GameScene::border(TMXTiledMap* tiled) {
         }
     }
 
-    
+
 }
 
 void GameScene::generHall(TMXTiledMap* PosMap, int direction) {
     auto MapX = PosMap->getPosition().x;
     auto MapY = PosMap->getPosition().y;
-    
+
     switch (direction)
     {
     case 1://down
         tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
         tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width / 5) * 60, MapY + (-tileHall->getMapSize().height) * 60));
-        
+
         generMapOne(tileHall, direction);
 
         tileHall->setScale(3.0);
@@ -325,7 +329,7 @@ void GameScene::generHall(TMXTiledMap* PosMap, int direction) {
         else {
             tileHall = TMXTiledMap::create("maps/hall_vertical.tmx");
             tileHall->setPosition(Point(MapX + (PosMap->getMapSize().width / 5) * 60, MapY + (PosMap->getMapSize().height) * 60));
-            
+
             tileHall->setScale(3.0);
             tileHall->setAnchorPoint(Point(0, 0));
             border(tileHall);
@@ -336,32 +340,32 @@ void GameScene::generHall(TMXTiledMap* PosMap, int direction) {
     case 3://right
         tileHallMR = TMXTiledMap::create("maps/hall_horizont.tmx");
         tileHallMR->setPosition(Point(MapX + (PosMap->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height - 11) * 60));
-        
+
         tileHallMR->setScale(3.0);
         tileHallMR->setAnchorPoint(Point(0, 0));
         border(tileHallMR);
         this->addChild(tileHallMR);
 
         //generMapOne(tileHall, direction);
-        
+
         break;
     case 4://left
         tileHallML = TMXTiledMap::create("maps/hall_horizont.tmx");
         tileHallML->setPosition(Point(MapX + (-tileHallML->getMapSize().width) * 60, MapY + (PosMap->getMapSize().height - 11) * 60));
-        
+
         tileHallML->setScale(3.0);
         tileHallML->setAnchorPoint(Point(0, 0));
         border(tileHallML);
         this->addChild(tileHallML);
-        
+
         //generMapOne(tileHall, direction);
-        
+
         break;
     default:
         break;
     }
 
-    
+
 }
 
 void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
@@ -373,23 +377,23 @@ void GameScene::generMapOne(TMXTiledMap* PosMap, int direction) {
     case 1://down
         tileMapOne = TMXTiledMap::create("maps/room_down.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width - 10) * 60, sizeMapY + (-tileMapOne->getMapSize().height) * 60));
-        
+
         break;
     case 2://up
         tileMapOne = TMXTiledMap::create("maps/room_up.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width - 10) * 60, sizeMapY + (PosMap->getMapSize().height) * 60));
-        
+
         break;
     case 3://right
         tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height - 11) * 60));
         //tileMapOne->setPosition(Point(sizeMapX + (tileMapOne->getMapSize().width) * 60, sizeMapX + (PosMap->getMapSize().height - 4) * 60));
-        
+
         break;
     case 4://left
         tileMapOne = TMXTiledMap::create("maps/room_left.tmx");
-        tileMapOne->setPosition(Point(sizeMapX + (-tileMapOne->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height- 11) * 60));
-        
+        tileMapOne->setPosition(Point(sizeMapX + (-tileMapOne->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height - 11) * 60));
+
         break;
     default:
         break;
@@ -446,7 +450,7 @@ void GameScene::generMainRoom(TMXTiledMap* PosMap, int direction) {
     tileMainRoom->setAnchorPoint(Point(0, 0));
     tileMainRoom->setScale(3.0);
     border(tileMainRoom);
-    
+
 
     this->addChild(tileMainRoom);
 }
@@ -478,7 +482,7 @@ void GameScene::createDoor(TMXTiledMap* tiled, int direction) {
     default:
         break;
     }
-    
+
     wall->setScale(3.0);
     border(wall);
     this->addChild(wall);
@@ -490,7 +494,7 @@ int** GameScene::generationArrayMap(int sizeMap) {
 
     int x = sizeMap, y = sizeMap;
 
-    int** a = new int*[sizeMap];
+    int** a = new int* [sizeMap];
     for (int i = 0; i < sizeMap; i++)
         a[i] = new int[sizeMap];
 

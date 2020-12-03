@@ -5,5 +5,5 @@ USING_NS_CC;
 
 Enemy::Enemy()
 {
-	tag = ENEMY;
+	tag = ContactListener::ENEMY;
 }

@@ -1,6 +1,5 @@
 #include "PhysicHelper.h"
 #include "Definitions.h"
-#include "Unit.h"
 
 USING_NS_CC;
 
@@ -26,7 +25,7 @@ b2Body* PhysicHelper::createDynamicPhysicBody(Node* node, const Size& size)
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
-    b2Fixture* ballFixture = body->CreateFixture(&shapeDef);
+    body->CreateFixture(&shapeDef);
 
     return body;
 }
@@ -46,7 +45,7 @@ b2Body* PhysicHelper::createWallPhysicBody(Node* node, const Size& size)
 
     b2FixtureDef shapeDef;
     shapeDef.shape = &box;
-    b2Fixture* boxFixture = body->CreateFixture(&shapeDef);
+    body->CreateFixture(&shapeDef);
 
     return body;
 }

@@ -14,44 +14,46 @@ Weapon::Weapon(cocos2d::Layer* layer, int damage, float speed)
     this->setName("weapon");
 }
 
-void Weapon::CreatePhysicBody()
+void Weapon::CreatePhysicBody(Vec2 position)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(this->getPosition().x / PPM, this->getPosition().y / PPM);
+    Vec2 pos = this->convertToWorldSpace(this->getPosition());
+    bodyDef.position.Set(position.x / PPM, position.y / PPM);
+    //bodyDef.angle = this->getRotation();
     bodyDef.linearDamping = 10.0f;
     bodyDef.angularDamping = 10.0f;
     bodyDef.userData = this;
 
-    b2Body* body = PhysicHelper::world->CreateBody(&bodyDef);
+    body = PhysicHelper::world->CreateBody(&bodyDef);
     assert(body != NULL);
 
     b2CircleShape circle;
-    circle.m_radius = this->getContentSize().width * this->getScale() / 2 / PPM;
-
+    circle.m_radius = this->getContentSize().width * this->getScale() / PPM / 2;
+    /*b2PolygonShape box;
+    box.SetAsBox(this->getContentSize().width * this->getScale() / PPM / 2, this->getContentSize().width * this->getScale() / PPM / 2);*/
     b2FixtureDef shapeDef;
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
-    body->CreateFixture(&shapeDef);
-    //log("%f", circle.m_radius);
+    shapeDef.isSensor = true;
+    body->CreateFixture(&shapeDef);    
+    log("%f %f", this->getContentSize().width * this->getScale() / PPM, this->getContentSize().width * this->getScale() / PPM);
 }
 
-void Weapon::Attack()
+void Weapon::Attack(Vec2 position)
 {
-    /*auto startRotate = cocos2d::RotateBy::create(_speed, 60);
-    auto endRotate = cocos2d::RotateBy::create(_speed, 0);
+    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.5);
 
-    auto startAttack = CallFunc::create([this]() {
+    auto startAttack = CallFunc::create([this, position]() {
         isActive = true;
-        CreatePhysicBody();
+        CreatePhysicBody(position);
     });
-
     auto endAttack = CallFunc::create([this]() {
         isActive = false;
     });
 
-    auto seq = cocos2d::Sequence::create(startAttack, startRotate, endAttack, endRotate, nullptr);
+    auto seq = cocos2d::Sequence::create(startAttack, delay, endAttack, nullptr);
 
-    this->runAction(seq);*/
+    this->runAction(seq);
 }
