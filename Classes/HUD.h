@@ -19,7 +19,7 @@ public:
     Menu* menubutton;
 private:
     void Init();
-    int health = 100;
+    int health = 80;
     void GoToMenu(cocos2d::Ref* sender);
     
 };
