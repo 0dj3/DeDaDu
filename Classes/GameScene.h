@@ -44,7 +44,7 @@ private:
     TMXTiledMap* tileMainRoom;
     Node* edgeNode;
     int** arrayMap;
-    int checkI = 1, sizeMap = 5;
+    int checkI = 1, sizeMap = SIZE_MAP;
     int checkj;
     void update(float dt);
 
