@@ -10,8 +10,6 @@ Slime::Slime()
     this->autorelease();
 }
 
-
-
 Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Slime* newSlime = new Slime();

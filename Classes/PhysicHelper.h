@@ -7,6 +7,7 @@
 #include "cocos2d.h"
 #include <Box2d/Box2d.h>
 #include "ContactListener.h"
+#include "Unit.h"
 
 class PhysicHelper
 {

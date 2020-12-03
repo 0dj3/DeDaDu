@@ -9,12 +9,12 @@ class Weapon : public cocos2d::Sprite
 {
 public:
     bool isActive;
-    b2Body* body;
     Weapon(cocos2d::Layer* layer, int damage, float speed);
 
     void Attack();
 
 private:
+    b2Body* body;
     cocos2d::Layer* _layer;
     int _damage = 0;
     int _speed = 0;

@@ -18,12 +18,13 @@ void Weapon::CreatePhysicBody()
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(this->getPosition().x / PPM, this->getPosition().y / PPM);
+    Vec2 pos = this->convertToWorldSpace(this->getPosition());
+    bodyDef.position.Set(pos.x / PPM, pos.y / PPM);
     bodyDef.linearDamping = 10.0f;
     bodyDef.angularDamping = 10.0f;
     bodyDef.userData = this;
 
-    b2Body* body = PhysicHelper::world->CreateBody(&bodyDef);
+    body = PhysicHelper::world->CreateBody(&bodyDef);
     assert(body != NULL);
 
     b2CircleShape circle;
@@ -33,25 +34,24 @@ void Weapon::CreatePhysicBody()
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
-    body->CreateFixture(&shapeDef);
-    //log("%f", circle.m_radius);
+    body->CreateFixture(&shapeDef);    
+    //log("%f %f", body->GetPosition().x, body->GetPosition().y);
 }
 
 void Weapon::Attack()
 {
-    /*auto startRotate = cocos2d::RotateBy::create(_speed, 60);
-    auto endRotate = cocos2d::RotateBy::create(_speed, 0);
+    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.1);
 
     auto startAttack = CallFunc::create([this]() {
         isActive = true;
         CreatePhysicBody();
     });
-
     auto endAttack = CallFunc::create([this]() {
+        log("weapon");
         isActive = false;
     });
 
-    auto seq = cocos2d::Sequence::create(startAttack, startRotate, endAttack, endRotate, nullptr);
+    auto seq = cocos2d::Sequence::create(startAttack, delay, endAttack, nullptr);
 
-    this->runAction(seq);*/
+    this->runAction(seq);
 }

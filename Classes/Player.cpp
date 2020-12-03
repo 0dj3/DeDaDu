@@ -6,10 +6,10 @@ USING_NS_CC;
 
 Player::Player()
 {
-    tag = PLAYER;
+    dmgsound = "res/sounds/hit/slime.mp3";
+    tag = ContactListener::PLAYER;
     this->autorelease();
 }
-
 
 Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 {
@@ -35,7 +35,7 @@ void Player::update(float dt)
 {
     move();
     rotate();
-    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
+    if (_weapon->isActive == false && InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
         _weapon->Attack();
 }
 
@@ -44,9 +44,9 @@ void Player::CreateWeapon() {
     if (_weapon && _weapon->initWithFile("res/weapon/sword.png")) {
         _weapon->getTexture()->setAliasTexParameters();
         _weapon->setScale(3.0);
+        _weapon->setTag(ContactListener::WEAPON);
         _weapon->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
         _weapon->setAnchorPoint(this->sprite->getPosition());
-        _weapon->setTag(5);
         this->addChild(_weapon);
         return;
     }
