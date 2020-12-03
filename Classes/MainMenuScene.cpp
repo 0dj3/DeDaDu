@@ -1,5 +1,6 @@
 #include "MainMenuScene.h"
 #include "GameScene.h"
+#include "Settings.h"
 #include "Definitions.h"
 #include "AudioEngine.h"
 
@@ -39,10 +40,12 @@ bool MainMenuScene::init()
     this->addChild(backgroundSprite);
 
     auto playItem = MenuItemImage::create("res/ui/menu_button.png", "res/ui/menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
-    playItem->setPosition(Point(0, 0));
 
-    auto menu = Menu::create(playItem, NULL);
-    menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+    auto settingsItem = MenuItemImage::create("res/ui/menu_button.png", "res/ui/menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
+
+    auto menu = Menu::create(playItem, settingsItem, NULL);
+    menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    menu->alignItemsVerticallyWithPadding(50);
     this->addChild(menu);
     
     return true;
@@ -52,6 +55,15 @@ void MainMenuScene::GoToGameScene(cocos2d::Ref* sender)
 {
     AudioEngine::stopAll();
     auto scene = GameScene::createScene();
+
+    Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+
+}
+
+void MainMenuScene::GoToSettings(cocos2d::Ref* sender)
+{
+    AudioEngine::stopAll();
+    auto scene = Settings::createScene();
 
     Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 
