@@ -14,12 +14,13 @@ Weapon::Weapon(cocos2d::Layer* layer, int damage, float speed)
     this->setName("weapon");
 }
 
-void Weapon::CreatePhysicBody()
+void Weapon::CreatePhysicBody(Vec2 position)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     Vec2 pos = this->convertToWorldSpace(this->getPosition());
-    bodyDef.position.Set(pos.x / PPM, pos.y / PPM);
+    bodyDef.position.Set(position.x / PPM, position.y / PPM);
+    //bodyDef.angle = this->getRotation();
     bodyDef.linearDamping = 10.0f;
     bodyDef.angularDamping = 10.0f;
     bodyDef.userData = this;
@@ -28,26 +29,27 @@ void Weapon::CreatePhysicBody()
     assert(body != NULL);
 
     b2CircleShape circle;
-    circle.m_radius = this->getContentSize().width * this->getScale() / 2 / PPM;
-
+    circle.m_radius = this->getContentSize().width * this->getScale() / PPM / 2;
+    /*b2PolygonShape box;
+    box.SetAsBox(this->getContentSize().width * this->getScale() / PPM / 2, this->getContentSize().width * this->getScale() / PPM / 2);*/
     b2FixtureDef shapeDef;
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
+    shapeDef.isSensor = true;
     body->CreateFixture(&shapeDef);    
-    //log("%f %f", body->GetPosition().x, body->GetPosition().y);
+    log("%f %f", this->getContentSize().width * this->getScale() / PPM, this->getContentSize().width * this->getScale() / PPM);
 }
 
-void Weapon::Attack()
+void Weapon::Attack(Vec2 position)
 {
-    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.1);
+    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.5);
 
-    auto startAttack = CallFunc::create([this]() {
+    auto startAttack = CallFunc::create([this, position]() {
         isActive = true;
-        CreatePhysicBody();
+        CreatePhysicBody(position);
     });
     auto endAttack = CallFunc::create([this]() {
-        log("weapon");
         isActive = false;
     });
 

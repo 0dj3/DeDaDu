@@ -35,8 +35,13 @@ void Player::update(float dt)
 {
     move();
     rotate();
-    if (_weapon->isActive == false && InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
-        _weapon->Attack();
+    if (_weapon->isActive == false && InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)]) 
+    {
+        Vec2 mousePos = InputListener::Instance()->mousePosition;
+        mousePos.normalize();
+        Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
+        _weapon->Attack(pos);
+    }
 }
 
 void Player::CreateWeapon() {
@@ -55,8 +60,7 @@ void Player::CreateWeapon() {
 }
 
 void Player::rotate() {
-    //if (_weapon->isActive == false)
-        _weapon->setRotation(CC_RADIANS_TO_DEGREES(-(_weapon->getPosition() - InputListener::Instance()->mousePosition).getAngle()) - 135);
+    _weapon->setRotation(CC_RADIANS_TO_DEGREES(-(_weapon->getPosition() - InputListener::Instance()->mousePosition).getAngle()) - 135);
 }
 
 void Player::move()

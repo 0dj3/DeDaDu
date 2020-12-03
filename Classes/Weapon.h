@@ -11,7 +11,7 @@ public:
     bool isActive;
     Weapon(cocos2d::Layer* layer, int damage, float speed);
 
-    void Attack();
+    void Attack(cocos2d::Vec2 position);
 
 private:
     b2Body* body;
@@ -19,7 +19,7 @@ private:
     int _damage = 0;
     int _speed = 0;
 
-    void CreatePhysicBody();
+    void CreatePhysicBody(cocos2d::Vec2 position);
 };
 
 #endif // __WEAPON_H__

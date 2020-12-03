@@ -34,14 +34,17 @@ void ContactListener::SelectReaction(b2Body* bodyA, b2Body* bodyB)
         break;
     }
 }
+
 void ContactListener::BeginPlayerContact(b2Body* player, b2Body* body)
 {
     
 }
+
 void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
 {
 
 }
+
 void ContactListener::BeginWeaponContact(b2Body* weapon, b2Body* body)
 {
     if (static_cast<Unit*>(body->GetUserData())->getName() == "unit") {
