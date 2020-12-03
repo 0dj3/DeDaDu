@@ -50,6 +50,9 @@ void ContactListener::BeginWeaponContact(b2Body* weapon, b2Body* body)
     if (static_cast<Unit*>(body->GetUserData())->getName() == "unit") {
         Unit* unit = static_cast<Unit*>(body->GetUserData());
         if (unit->getTag() == ENEMY) {
+            b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
+            direction.Normalize();
+            body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION) * direction, true);
             unit->Damage(20);
         }
     }
