@@ -31,9 +31,10 @@ public:
    
     char* dmgsound;
 
+    int hp = 100;
 private:
     bool isDead = false;
-    int hp = 100;
+    
 
 };
 

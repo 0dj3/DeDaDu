@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Slime.h"
 #include "InputListener.h"
+#include "HUD.h"
 
 USING_NS_CC;
 #define SIZE_MAP 5;
@@ -12,7 +13,7 @@ class GameScene : public cocos2d::Layer
 {
 public:
     Unit* player;
-
+    HUD* hud;
     Unit* slime;
 
     static cocos2d::Scene* createScene();

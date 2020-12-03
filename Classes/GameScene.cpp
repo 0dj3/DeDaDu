@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Slime.h"
 #include "Fly.h"
+#include "HUD.h"
 #include "Goblin.h"
 #include "2d/CCFastTMXLayer.h"
 #include "AudioEngine.h"
@@ -51,6 +52,8 @@ bool GameScene::init()
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
     generation();
 
+    hud = HUD::create();
+    this->addChild(hud, 5);
 
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
@@ -105,6 +108,7 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
+    hud->updatePos(player);
     int velocityIterations = 6;
     int positionIterations = 2;
 
