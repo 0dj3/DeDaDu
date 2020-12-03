@@ -14,8 +14,15 @@ Unit::Unit()
 }
 
 void Unit::Damage(int value) {
-	AudioEngine::preload(dmgsound);
-	AudioEngine::play2d(dmgsound, false, 0.5);
+	if (dmgsound != NULL)
+	{
+		AudioEngine::preload(dmgsound);
+		AudioEngine::play2d(dmgsound, false, 0.5);
+	}
+	else
+	{
+		CCLOG("Soundless Unit");
+	}
 	
 	if (hp <= value) {
 		Dead();

@@ -52,11 +52,11 @@ bool GameScene::init()
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
     generation();
 
-    hud = HUD::create();
-    this->addChild(hud, 5);
-
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
+
+    hud = HUD::create();
+    this->addChild(hud, 5);
 
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
@@ -81,8 +81,8 @@ bool GameScene::init()
     demo1->runAction(action1);
     spritesheet1->addChild(demo1);
     //
-    //auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
-    //this->addChild(fly);
+    auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
+    this->addChild(fly);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
     this->addChild(goblin);
