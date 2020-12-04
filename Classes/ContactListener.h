@@ -12,7 +12,8 @@ public:
     {
         PLAYER = 1,
         ENEMY,
-        WEAPON
+        WEAPON,
+        ITEM
     };
 
 private:

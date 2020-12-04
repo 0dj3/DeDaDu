@@ -2,6 +2,8 @@
 #include "Definitions.h"
 #include "Anime.h"
 #include "AudioEngine.h"
+#include "MainMenuScene.h"
+#include "InputListener.h"
 USING_NS_CC;
 
 Unit::Unit()
@@ -25,7 +27,18 @@ void Unit::Damage(int value) {
 	}
 	
 	if (hp <= value) {
-		Dead();
+		if (tag == ContactListener::PLAYER)
+		{
+			AudioEngine::stopAll();
+			Node::stopAllActions();
+			InputListener::Instance()->ReleaseAllKeys();
+			auto scene = MainMenuScene::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+		}
+		else
+		{
+			Dead();
+		}
 		return;
 	}
 	hp -= value;

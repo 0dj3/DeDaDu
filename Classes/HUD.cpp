@@ -48,11 +48,14 @@ void HUD::getHit(int damage, Unit* player) {
 
 void HUD::updatePos(Unit* player) 
 {
-	float x = player->getPosition().x;
-	float y = player->getPosition().y;
-	hBBackground->setPosition(Point(x - 620, y + 350));
-	healthBar->setPosition(Point(x - 620,y + 350));
-	menubutton->setPosition(Point(x + 600, y + 320));
+	if (player)
+	{
+		float x = player->getPosition().x;
+		float y = player->getPosition().y;
+		hBBackground->setPosition(Point(x - 620, y + 350));
+		healthBar->setPosition(Point(x - 620, y + 350));
+		menubutton->setPosition(Point(x + 600, y + 320));
+	}
 }
 
 void HUD::GoToMenu(cocos2d::Ref* sender)

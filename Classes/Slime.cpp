@@ -7,6 +7,7 @@ USING_NS_CC;
 Slime::Slime()
 {
     dmgsound = "res/sounds/hit/slime.mp3";
+    tag = ContactListener::ENEMY;
     this->autorelease();
 }
 

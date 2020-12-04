@@ -42,7 +42,15 @@ void ContactListener::BeginPlayerContact(b2Body* player, b2Body* body)
 
 void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
 {
-
+    if (static_cast<Unit*>(body->GetUserData())->getName() == "unit") {
+        Unit* unit = static_cast<Unit*>(body->GetUserData());
+        if (unit->getTag() == PLAYER) {
+            b2Vec2 direction = body->GetPosition() - enemy->GetPosition();
+            direction.Normalize();
+            body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
+            unit->Damage(20);
+        }
+    }
 }
 
 void ContactListener::BeginWeaponContact(b2Body* weapon, b2Body* body)
