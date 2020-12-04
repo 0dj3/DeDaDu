@@ -5,8 +5,7 @@
 USING_NS_CC;
 
 
-Generation_map* Generation_map::createScene()
-{
+Generation_map* Generation_map::createScene(){
     Generation_map* gener = new Generation_map();
     gener->init();
     return gener;
@@ -383,8 +382,6 @@ int** Generation_map::generationArrayMap(int sizeMap) {
             if (j == (x - 1))
                 a[i][j] = 1;
         }
-    }
-    for (int i = 0; i < y; i++) {
         for (int j = x / 2 - 1; j >= 0; j--) {
             if (a[i][j + 1] == 1)
                 break;
