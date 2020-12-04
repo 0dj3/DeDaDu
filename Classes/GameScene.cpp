@@ -109,25 +109,25 @@ void GameScene::update(float dt)
         if (b->GetUserData() == nullptr)
             continue;
 
-        Weapon* weapon = (Weapon*)b->GetUserData();
-        if (weapon->getName() == "weapon" && !weapon->isActive)
+        Node* n = (Node*)b->GetUserData();
+        if (n->getName() == DEAD_BODY_TAG)
         {
             PhysicHelper::world->DestroyBody(b);
             continue;
         }
 
-        Unit* unit = (Unit*)b->GetUserData();
-        if (unit->getName() == "unit" && unit->IsDead())
+        //Unit* unit = (Unit*)b->GetUserData();
+        if (n->getName() == DEAD_TAG)
         {
             PhysicHelper::world->DestroyBody(b);
-            unit->removeFromParentAndCleanup(true);
+            n->removeFromParentAndCleanup(true);
         }
     }
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
         Node* weapon = (Node*)b->GetUserData();
-        if (b->GetUserData() != NULL && weapon->getName() == "weapon")
+        if (b->GetUserData() != NULL && weapon->getTag() == ContactListener::WEAPON)
         {
             continue;
         }
@@ -140,7 +140,7 @@ void GameScene::update(float dt)
 
     //testMap
     auto pos = generation->getPosTileMapOne();
-    if ((player->getPosition() < Vec2(pos.x + 5 * 60, pos.y + 5 * 60)) && (player->getPosition() > Vec2(pos.x, pos.y))&&checkMap==true){
+    if ((player->getPosition() < Vec2(pos.x + 5 * 60, pos.y + 5 * 60)) && (player->getPosition() > Vec2(pos.x, pos.y)) && checkMap == true) {
         generation->generation(true);
         checkMap = false;
     }

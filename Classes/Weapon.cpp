@@ -11,7 +11,6 @@ Weapon::Weapon(cocos2d::Layer* layer, int damage, float speed)
     _damage = damage;
     _speed = speed;
     isActive = false;
-    this->setName("weapon");
 }
 
 void Weapon::CreatePhysicBody(Vec2 position)
@@ -37,7 +36,7 @@ void Weapon::CreatePhysicBody(Vec2 position)
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
     shapeDef.isSensor = true;
-    body->CreateFixture(&shapeDef);    
+    body->CreateFixture(&shapeDef);
     log("%f %f", this->getContentSize().width * this->getScale() / PPM, this->getContentSize().width * this->getScale() / PPM);
 }
 
@@ -47,10 +46,12 @@ void Weapon::Attack(Vec2 position)
 
     auto startAttack = CallFunc::create([this, position]() {
         isActive = true;
+        this->setName("");
         CreatePhysicBody(position);
     });
     auto endAttack = CallFunc::create([this]() {
         isActive = false;
+        this->setName(DEAD_BODY_TAG);
     });
 
     auto seq = cocos2d::Sequence::create(startAttack, delay, endAttack, nullptr);

@@ -2,6 +2,7 @@
 #ifndef __UNIT_H__
 #define __UNIT_H__
 
+#include "Definitions.h"
 #include "cocos2d.h"
 #include "UnitStats.h"
 #include "Anime.h"
@@ -17,7 +18,7 @@ public:
     cocos2d::Sprite* sprite;
     cocos2d::Layer* layer;
     UnitStats* stats;
-    bool IsDead() { return isDead; };
+    bool IsDead() { return this->getName() == DEAD_TAG ? true : false; };
 
     Unit();
 
@@ -29,7 +30,7 @@ public:
 
     int hp = 100;
 private:
-    bool isDead = false;
+    //bool isDead = false;
 
 };
 

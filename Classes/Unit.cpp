@@ -1,6 +1,4 @@
 #include "Unit.h"
-#include "Definitions.h"
-#include "Anime.h"
 #include "AudioEngine.h"
 #include "MainMenuScene.h"
 #include "InputListener.h"
@@ -47,5 +45,5 @@ void Unit::Damage(int value) {
 void Unit::Dead() 
 {	
 	//this->removeFromParentAndCleanup(true);
-	isDead = true;
+	this->setName(DEAD_TAG);
 }
