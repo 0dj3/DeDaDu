@@ -22,6 +22,11 @@ public:
 	bool mouseStates[15] = {};
 	cocos2d::Vec2 mousePosition;
 
+	void ReleaseAllKeys() {
+		std::fill(keyStates, keyStates + 256, false);
+		std::fill(mouseStates, mouseStates + 15, false);
+	};
+
 private:
 	static InputListener* instance;
 
