@@ -21,14 +21,6 @@ public:
     virtual bool init();
 
     cocos2d::Scene* scene;
-    
-    void generation();
-    void border(cocos2d::TMXTiledMap* tiled);
-    void generHall(cocos2d::TMXTiledMap* sizeMap, int direction);
-    void generMapOne(cocos2d::TMXTiledMap* sizeMap, int direction);
-    void generMainRoom(cocos2d::TMXTiledMap* tiled, int direction);
-    void createDoor(cocos2d::TMXTiledMap* tiled, int direction);
-    int** generationArrayMap(int sizeMap);
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     
