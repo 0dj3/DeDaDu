@@ -1,24 +1,32 @@
-#ifndef __MAP_H__
-#define __MAP_H__
-#include "cocos2d.h"
-#include "GameScene.h"
+#include <cocos2d.h>
 
-class Generation_map: public cocos2d::Scene {
+USING_NS_CC;
+#define SIZE_MAP 5;
+
+class Generation_map: public Sprite {
 public:
-	static cocos2d::Scene* createScene(Scene* scene);
-	
-	virtual bool init();
-	cocos2d::Scene* scene;
-	void create_hall();
-	void create_main_room();
-	void create_shop();
-	void create_room();
-private:
-	
-	cocos2d::TMXTiledMap* tileHall;
-	cocos2d::TMXTiledMap* tileMap;
-	cocos2d::PhysicsWorld* sceneWorld;
-	void SetPhysicsWorld1(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
-};
+	static Generation_map* createScene(void);
 
-#endif 
+    void generation();
+    void border(TMXTiledMap* tiled);
+    void generHall(TMXTiledMap* sizeMap, int direction);
+    void generMapOne(TMXTiledMap* sizeMap, int direction);
+    void generMainRoom(TMXTiledMap* tiled, int direction);
+    void createDoor(TMXTiledMap* tiled, int direction);
+    
+private:
+    bool init();
+    int** generationArrayMap(int sizeMap);
+    TMXTiledMap* tileMap;
+    TMXTiledMap* tileHallML;
+    TMXTiledMap* tileHallMR;
+    TMXTiledMap* tileHallMU;
+    TMXTiledMap* tileHall;
+    TMXTiledMap* tileMapOne;
+    TMXTiledMap* tileMainRoom;
+    Node* edgeNode;
+    int** arrayMap;
+    int checkI = 1, sizeMap = SIZE_MAP;
+    int checkj;
+    PhysicsWorld* sceneWorld;
+};

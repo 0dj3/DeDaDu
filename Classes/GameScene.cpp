@@ -50,7 +50,9 @@ bool GameScene::init()
 
     PhysicHelper::CreateWorld();
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
-    generation();
+    
+    generation = Generation_map::createScene();
+    this->addChild(generation);
 
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
@@ -136,7 +138,6 @@ void GameScene::update(float dt)
         }
     }
 }
-
 
 void GameScene::generation() {
     arrayMap = generationArrayMap(sizeMap);
@@ -520,4 +521,9 @@ int** GameScene::generationArrayMap(int sizeMap) {
         }
     }
     return a;
+}
+
+void GameScene::menuCloseCallback(Ref* pSender)
+{
+    Director::getInstance()->end();
 }

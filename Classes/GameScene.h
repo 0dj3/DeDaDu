@@ -5,9 +5,8 @@
 #include "Slime.h"
 #include "InputListener.h"
 #include "HUD.h"
-
+#include "Generation_map.h"
 USING_NS_CC;
-#define SIZE_MAP 5;
 
 class GameScene : public cocos2d::Layer
 {
@@ -15,6 +14,7 @@ public:
     Unit* player;
     HUD* hud;
     Unit* slime;
+    Generation_map* generation;
 
     static cocos2d::Scene* createScene();
 
@@ -29,21 +29,13 @@ public:
     void generMainRoom(cocos2d::TMXTiledMap* tiled, int direction);
     void createDoor(cocos2d::TMXTiledMap* tiled, int direction);
     int** generationArrayMap(int sizeMap);
+    // a selector callback
+    void menuCloseCallback(cocos2d::Ref* pSender);
+    
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
 
 private:
-    TMXTiledMap* tileMap;
-    TMXTiledMap* tileHallML;
-    TMXTiledMap* tileHallMR;
-    TMXTiledMap* tileHallMU;
-    TMXTiledMap* tileHall;
-    TMXTiledMap* tileMapOne;
-    TMXTiledMap* tileMainRoom;
-    Node* edgeNode;
-    int** arrayMap;
-    int checkI = 1, sizeMap = SIZE_MAP;
-    int checkj;
     void update(float dt);
 
     cocos2d::PhysicsWorld* sceneWorld;
