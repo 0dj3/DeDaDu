@@ -15,11 +15,13 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenuScene);
-
+    bool sound = true;
 private:
     void GoToGameScene(cocos2d::Ref* sender);
 
     void GoToSettings(cocos2d::Ref* sender);
+
+    void Exit(cocos2d::Ref* sender);
 };
 
 #endif // __MAIN_MENU_SCENE_H__

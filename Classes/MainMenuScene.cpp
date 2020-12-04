@@ -24,7 +24,11 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool MainMenuScene::init()
 {
-    AudioEngine::play2d("res/sounds/bgsound2.mp3", true, 0.1f);
+    Settings* settings = new Settings;
+    AudioEngine::play2d("res/sounds/bgsound2.mp3", true, settings->getVolume());
+    //char* asd = " ";
+    //sprintf(asd,"%lf",settings->getVolume());
+    //CCLOG(asd);
     //////////////////////////////
     // 1. super init first
     if ( !Scene::init() )
@@ -35,15 +39,15 @@ bool MainMenuScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    auto backgroundSprite = Sprite::create("res/menubg.png");
-    backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    this->addChild(backgroundSprite);
+    //auto backgroundSprite = Sprite::create("res/menubg.png");
+    //backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    //this->addChild(backgroundSprite);
 
-    auto playItem = MenuItemImage::create("res/ui/menu_button.png", "res/ui/menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
+    auto playItem = MenuItemImage::create("res/ui/start.png", "res/ui/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
+    auto settingsItem = MenuItemImage::create("res/ui/options.png", "res/ui/options_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
+    auto exitItem = MenuItemImage::create("res/ui/exit.png", "res/ui/exit_pressed.png", CC_CALLBACK_1(MainMenuScene::Exit, this));
 
-    auto settingsItem = MenuItemImage::create("res/ui/menu_button.png", "res/ui/menu_button_press.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
-
-    auto menu = Menu::create(playItem, settingsItem, NULL);
+    auto menu = Menu::create(playItem, settingsItem, exitItem, NULL);
     menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     menu->alignItemsVerticallyWithPadding(50);
     this->addChild(menu);
@@ -62,9 +66,11 @@ void MainMenuScene::GoToGameScene(cocos2d::Ref* sender)
 
 void MainMenuScene::GoToSettings(cocos2d::Ref* sender)
 {
-    AudioEngine::stopAll();
     auto scene = Settings::createScene();
-
     Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+}
 
+void MainMenuScene::Exit(cocos2d::Ref* sender)
+{
+    Director::getInstance()->end();
 }

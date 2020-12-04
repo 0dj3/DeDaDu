@@ -19,20 +19,18 @@ void HUD::Init() {
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
 	hBBackground->setPosition(Point(-50, 650));
-	hBBackground->setScale(2);
 	this->addChild(hBBackground);
 
 	healthBar = ui::LoadingBar::create("res/ui/hp.png");
 	healthBar->setAnchorPoint(Point(0, 1));
 	healthBar->setPosition(Point(-50, 650));
-	healthBar->setScale(2);
 	healthBar->setDirection(ui::LoadingBar::Direction::LEFT);
 	healthBar->setPercent(100);
 	this->addChild(healthBar);
 
 	auto playItem = MenuItemImage::create("res/ui/exitbutton.png", "res/ui/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
 	playItem->setPosition(Point(0, 0));
-	playItem->setScale(2);
+
 	menubutton = Menu::create(playItem, NULL);
 	menubutton->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
 	this->addChild(menubutton);
@@ -54,7 +52,7 @@ void HUD::updatePos(Unit* player)
 	float y = player->getPosition().y;
 	hBBackground->setPosition(Point(x - 620, y + 350));
 	healthBar->setPosition(Point(x - 620,y + 350));
-	menubutton->setPosition(Point(x + 620, y + 340));
+	menubutton->setPosition(Point(x + 600, y + 320));
 }
 
 void HUD::GoToMenu(cocos2d::Ref* sender)
