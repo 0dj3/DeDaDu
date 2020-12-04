@@ -137,6 +137,13 @@ void GameScene::update(float dt)
             //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
+
+    //testMap
+    auto pos = generation->getPosTileMapOne();
+    if ((player->getPosition() < Vec2(pos.x + 5 * 60, pos.y + 5 * 60)) && (player->getPosition() > Vec2(pos.x, pos.y))&&checkMap==true){
+        generation->generation(true);
+        checkMap = false;
+    }
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)

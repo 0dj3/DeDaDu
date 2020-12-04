@@ -29,7 +29,7 @@ public:
 
 private:
     void update(float dt);
-
+    bool checkMap = true;
     cocos2d::PhysicsWorld* sceneWorld;
 
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };

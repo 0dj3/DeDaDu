@@ -7,13 +7,14 @@ class Generation_map: public Sprite {
 public:
 	static Generation_map* createScene(void);
 
-    void generation();
+    void generation(bool checkLoc);
     void border(TMXTiledMap* tiled);
-    void generHall(TMXTiledMap* sizeMap, int direction);
-    void generMapOne(TMXTiledMap* sizeMap, int direction);
-    void generMainRoom(TMXTiledMap* tiled, int direction);
-    void createDoor(TMXTiledMap* tiled, int direction);
-    
+    void generHall(TMXTiledMap* sizeMap, int direction, bool checkLoc);
+    void generMapOne(TMXTiledMap* sizeMap, int direction, bool checkLoc);
+    void generMainRoom(TMXTiledMap* tiled, int direction, bool checkLoc);
+    void createDoor(TMXTiledMap* tiled, int direction, bool checkLoc);
+    void location2(TMXTiledMap* tiled, bool checkLoc);
+    Vec2 getPosTileMapOne();
 private:
     bool init();
     int** generationArrayMap(int sizeMap);
