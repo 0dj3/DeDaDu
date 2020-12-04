@@ -24,6 +24,10 @@ private:
     TMXTiledMap* tileHall;
     TMXTiledMap* tileMapOne;
     TMXTiledMap* tileMainRoom;
+
+    TMXTiledMap* wallLoc2;
+
+
     Node* edgeNode;
     int** arrayMap;
     int checkI = 1, sizeMap = SIZE_MAP;

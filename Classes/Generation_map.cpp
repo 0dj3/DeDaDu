@@ -21,6 +21,24 @@ void Generation_map::generation() {
     checkj = sizeMap / 2;
 
     tileMap = TMXTiledMap::create("maps/main_room.tmx");
+
+
+
+    auto layerCheck = tileMap->getLayer("walls");
+    auto loc2Wall = tileMap->getLayer("location2")->getTileGIDAt(Vec2(0, 0));
+
+    for (int i = 0; i < layerCheck->getLayerSize().width; i++) {
+        for (int j = 0; j < layerCheck->getLayerSize().height; j++) {
+            if (layerCheck->getTileGIDAt(Vec2(i, j)) != 0) {
+                layerCheck->setTileGID(loc2Wall, Vec2(i, j));
+            }
+        }
+    }
+
+
+
+
+
     tileMap->setScale(3.0);
     tileMap->setAnchorPoint(Point(0, 0));
     this->addChild(tileMap);
@@ -41,6 +59,11 @@ void Generation_map::generation() {
     generHall(tileMap, 4);
     generHall(tileMap, 3);
     generHall(tileMap, 2);
+
+
+
+
+
 
     for (int j = sizeMap / 2 + 1; j < sizeMap; j++) {
         checkj = j;
