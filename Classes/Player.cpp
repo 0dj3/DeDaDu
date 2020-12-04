@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Definitions.h"
-
+#include <cstdlib>
 
 USING_NS_CC;
 
@@ -42,11 +42,41 @@ void Player::update(float dt)
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
         _weapon->Attack(pos);
     }
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
+        InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
+        std::map<std::string, int> stats{
+            {"healing", -20 + rand() % 40}
+        };
+        Item* item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
+        layer->addChild(item);
+        item->DropItem(this->getPosition());
+    }
+    if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
+        InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
+        Damage(targetItem->stats.begin()->second);
+        log("%i", targetItem->stats.begin()->second);
+        targetItem->setName(DEAD_TAG);
+        targetItem = NULL;
+    }
+    
+    /*for (b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next)
+    {
+        b2Contact* contact = ce->contact;
+        b2Body* a = contact->GetFixtureA()->GetBody();
+        b2Body* b = contact->GetFixtureB()->GetBody();
+        if (b->GetUserData() != NULL && a->GetUserData() != NULL)
+        {
+            Node* node = static_cast<Node*>(a->GetUserData())->getTag() != ContactListener::PLAYER ? static_cast<Node*>(a->GetUserData()) : static_cast<Node*>(b->GetUserData());
+            if (node->getTag() == ContactListener::ITEM) {
+
+            }
+        }
+    }*/
 }
 
 void Player::CreateWeapon() {
     _weapon = new Weapon(layer, 20, 1);
-    if (_weapon && _weapon->initWithFile("res/weapon/sword.png")) {
+    if (_weapon->initWithFile("res/weapon/sword.png")) {
         _weapon->getTexture()->setAliasTexParameters();
         _weapon->setScale(3.0);
         _weapon->setTag(ContactListener::WEAPON);

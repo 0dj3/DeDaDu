@@ -18,12 +18,12 @@ void HUD::Init() {
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
-	hBBackground->setPosition(Point(-50, 650));
+	hBBackground->setPosition(Point(-620, 350));
 	this->addChild(hBBackground);
 
 	healthBar = ui::LoadingBar::create("res/ui/hp.png");
 	healthBar->setAnchorPoint(Point(0, 1));
-	healthBar->setPosition(Point(-50, 650));
+	healthBar->setPosition(Point(-620, 350));
 	healthBar->setDirection(ui::LoadingBar::Direction::LEFT);
 	healthBar->setPercent(100);
 	this->addChild(healthBar);
@@ -32,7 +32,7 @@ void HUD::Init() {
 	playItem->setPosition(Point(0, 0));
 
 	menubutton = Menu::create(playItem, NULL);
-	menubutton->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+	menubutton->setPosition(Point(600, 320));
 	this->addChild(menubutton);
 }
 
@@ -50,11 +50,13 @@ void HUD::updatePos(Unit* player)
 {
 	if (player)
 	{
-		float x = player->getPosition().x;
+		healthBar->setPercent(player->hp);
+		this->setPosition(player->getPosition());
+		/*float x = player->getPosition().x;
 		float y = player->getPosition().y;
 		hBBackground->setPosition(Point(x - 620, y + 350));
 		healthBar->setPosition(Point(x - 620, y + 350));
-		menubutton->setPosition(Point(x + 600, y + 320));
+		menubutton->setPosition(Point(x + 600, y + 320));*/
 	}
 }
 

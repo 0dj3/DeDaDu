@@ -37,7 +37,7 @@ void Weapon::CreatePhysicBody(Vec2 position)
     shapeDef.friction = 0.0f;
     shapeDef.isSensor = true;
     body->CreateFixture(&shapeDef);
-    log("%f %f", this->getContentSize().width * this->getScale() / PPM, this->getContentSize().width * this->getScale() / PPM);
+    //log("%f %f", this->getContentSize().width * this->getScale() / PPM, this->getContentSize().width * this->getScale() / PPM);
 }
 
 void Weapon::Attack(Vec2 position)

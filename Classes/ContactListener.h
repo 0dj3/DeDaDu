@@ -26,6 +26,7 @@ private:
     void BeginPlayerContact(b2Body* bodyA, b2Body* bodyB);
     void BeginEnemyContact(b2Body* bodyA, b2Body* bodyB);
     void BeginWeaponContact(b2Body* bodyA, b2Body* bodyB);
+    void BeginItemContact(b2Body* bodyA, b2Body* bodyB);
 
 };
 

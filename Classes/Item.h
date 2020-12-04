@@ -6,12 +6,13 @@
 #include <map>
 #include <string>
 
-class Item
+class Item : public cocos2d::Sprite
 {
 public:
     typedef enum ItemType
     {
-        POTION = 1,
+        GOLD = 1,
+        POTION,
         WEAPON
     };
 
@@ -25,6 +26,12 @@ public:
 
     static Item* create(ItemType type, std::string title, std::string description, std::string iconPath, std::map<std::string, int> stats);
     static Item* create(Item* item);
+
+    void DropItem(cocos2d::Vec2 position);
+
+    void PickUpItem();
+
+    void CreatePhysicBody(cocos2d::Vec2 position);
 
 private:
 

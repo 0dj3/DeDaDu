@@ -9,13 +9,16 @@
 #include "PhysicHelper.h"
 #include "InputListener.h"
 #include "Weapon.h"
+#include "Item.h"
 
 class Player : public Unit
 {
 public:
+    Item* targetItem = NULL;
     Player();
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
 private:
+    bool isFighting = false;
     Weapon* _weapon;
 
     void CreateWeapon();
