@@ -87,22 +87,6 @@ bool GameScene::init()
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
     this->addChild(goblin);
 
-
-    auto eventListener = EventListenerKeyboard::create();
-    eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)
-    {
-        if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
-            CC_CALLBACK_1(GameScene::menuCloseCallback, this);
-
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
-    //----Close button
-    /*auto closeItem = MenuItemImage::create( "pause_button.png", "pause_button_press.png", CC_CALLBACK_1(GameScene::menuCloseCallback, this));
-    closeItem->setPosition(Vec2(visibleSize.width, visibleSize.height));
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);*/
-
     return true;
 }
 
@@ -151,11 +135,6 @@ void GameScene::update(float dt)
             //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
-}
-
-void GameScene::menuCloseCallback(Ref* pSender)
-{
-    Director::getInstance()->end();
 }
 
 

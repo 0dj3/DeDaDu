@@ -22,9 +22,6 @@ public:
 
     cocos2d::Scene* scene;
     
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
     void generation();
     void border(cocos2d::TMXTiledMap* tiled);
     void generHall(cocos2d::TMXTiledMap* sizeMap, int direction);
