@@ -15,11 +15,16 @@ public:
     void generMapOne(TMXTiledMap* sizeMap, int direction, bool checkLoc);
     void generMainRoom(TMXTiledMap* tiled, int direction, bool checkLoc);
     void createDoor(TMXTiledMap* tiled, int direction, bool checkLoc);
-    void location2(TMXTiledMap* tiled, bool checkLoc);
+
     Vec2 getPosTileMapOne();
+
+    void location2(TMXTiledMap* tiled, bool checkLoc);
+    
+
 private:
     bool init();
     int** generationArrayMap(int sizeMap);
+
     TMXTiledMap* tileMap;
     TMXTiledMap* tileHallML;
     TMXTiledMap* tileHallMR;
@@ -27,9 +32,14 @@ private:
     TMXTiledMap* tileHall;
     TMXTiledMap* tileMapOne;
     TMXTiledMap* tileMainRoom;
-
     TMXTiledMap* wallLoc2;
-    std::vector<b2Body*> arrayPhysicBody;
+    
+    std::vector<TMXTiledMap*> allMainRoom;
+    std::vector<TMXTiledMap*> allMapOne;
+
+    std::vector<b2Body*> allPhysicBody;
+    std::vector<b2Body*> PhBoDoorRoom;
+
     Node* edgeNode;
     int** arrayMap;
     int checkI = 1, sizeMap = SIZE_MAP;

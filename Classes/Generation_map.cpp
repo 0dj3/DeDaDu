@@ -19,8 +19,8 @@ bool Generation_map::init() {
 void Generation_map::generation(bool checkLoc) {
     if (checkLoc == true) {
         this->removeAllChildren();
-        for (int i = 0; i < arrayPhysicBody.size(); i++) {
-            PhysicHelper::world->DestroyBody(arrayPhysicBody[i]);
+        for (int i = 0; i < allPhysicBody.size(); i++) {
+            PhysicHelper::world->DestroyBody(allPhysicBody[i]);
         }
     }
 
@@ -173,13 +173,11 @@ void Generation_map::border(TMXTiledMap* tiled) {
                 edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
                 //log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
                 auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
-                arrayPhysicBody.push_back(body);
+                allPhysicBody.push_back(body);
                 this->addChild(edgeNode);
             }
         }
     }
-
-
 }
 
 void Generation_map::generHall(TMXTiledMap* PosMap, int direction, bool checkLoc) {
@@ -197,7 +195,7 @@ void Generation_map::generHall(TMXTiledMap* PosMap, int direction, bool checkLoc
         tileHall->setScale(3.0);
         tileHall->setAnchorPoint(Point(0, 0));
         border(tileHall);
-        this->addChild(tileHall);
+        this->addChild(tileHall); 
         location2(tileHall, checkLoc);
         break;
     case 2://up
@@ -290,6 +288,7 @@ void Generation_map::generMapOne(TMXTiledMap* PosMap, int direction, bool checkL
     tileMapOne->setScale(3.0);
     border(tileMapOne);
     this->addChild(tileMapOne);
+    allMapOne.push_back(tileMapOne);
     location2(tileMapOne, checkLoc);
 }
 
@@ -324,6 +323,7 @@ void Generation_map::generMainRoom(TMXTiledMap* PosMap, int direction, bool chec
     border(tileMainRoom);
     
     this->addChild(tileMainRoom);
+    allMainRoom.push_back(tileMainRoom);
     location2(tileMainRoom, checkLoc);
 }
 
