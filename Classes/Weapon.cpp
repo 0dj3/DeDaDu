@@ -52,6 +52,7 @@ void Weapon::CreatePhysicBody(Vec2 position)
 
 void Weapon::Attack(Vec2 position)
 {
+    cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create(0.01);
     cocos2d::DelayTime* delay = cocos2d::DelayTime::create(5 / itemWeapon->stats.find("speed")->second);
 
     auto startAttack = CallFunc::create([this, position]() {
@@ -60,11 +61,13 @@ void Weapon::Attack(Vec2 position)
         CreatePhysicBody(position);
     });
     auto endAttack = CallFunc::create([this]() {
-        isActive = false;
         this->setName(DEAD_BODY_TAG);
     });
+    auto endActive = CallFunc::create([this]() {
+        isActive = false;
+    });
 
-    auto seq = cocos2d::Sequence::create(startAttack, delay, endAttack, nullptr);
+    auto seq = cocos2d::Sequence::create(startAttack, microDelay, endAttack, delay, endActive, nullptr);
 
     this->runAction(seq);
 }

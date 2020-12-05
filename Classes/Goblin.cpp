@@ -6,13 +6,14 @@
 USING_NS_CC;
 Goblin::Goblin()
 {
+    stats->speed = 1;
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }
 
 
 
-Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position)
+Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* player)
 {
     Goblin* newGoblin = new Goblin();
     if (newGoblin && newGoblin->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
@@ -25,6 +26,7 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position)
 
         newGoblin->setTag(newGoblin->tag);
         newGoblin->layer = layer;
+        newGoblin->_player = player;
         newGoblin->scheduleUpdate();
         return newGoblin;
     }
@@ -34,7 +36,11 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position)
 
 void Goblin::update(float dt)
 {   
-
+    Vec2 toTarget = _player->getPosition() - this->getPosition();
+    toTarget.normalize();
+    Vec2 desiredVel = stats->speed * toTarget;
+    b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
+    body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
 }
 
 void Goblin::move()

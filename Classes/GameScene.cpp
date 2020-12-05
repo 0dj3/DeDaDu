@@ -86,7 +86,7 @@ bool GameScene::init()
     auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
     this->addChild(fly);
 
-    auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100));
+    auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
     this->addChild(goblin);
 
     return true;
