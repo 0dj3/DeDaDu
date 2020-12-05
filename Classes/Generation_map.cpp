@@ -19,6 +19,9 @@ bool Generation_map::init() {
 void Generation_map::generation(bool checkLoc) {
     if (checkLoc == true) {
         this->removeAllChildren();
+        for (int i = 0; i < arrayPhysicBody.size(); i++) {
+            PhysicHelper::world->DestroyBody(arrayPhysicBody[i]);
+        }
     }
 
     arrayMap = generationArrayMap(sizeMap);
@@ -169,7 +172,8 @@ void Generation_map::border(TMXTiledMap* tiled) {
                 edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
                 edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
                 //log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
-                PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
+                auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
+                arrayPhysicBody.push_back(body);
                 this->addChild(edgeNode);
             }
         }

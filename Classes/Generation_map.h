@@ -1,4 +1,6 @@
 #include <cocos2d.h>
+#include "PhysicHelper.h"
+#include <vector>
 
 USING_NS_CC;
 #define SIZE_MAP 5;
@@ -27,8 +29,7 @@ private:
     TMXTiledMap* tileMainRoom;
 
     TMXTiledMap* wallLoc2;
-
-
+    std::vector<b2Body*> arrayPhysicBody;
     Node* edgeNode;
     int** arrayMap;
     int checkI = 1, sizeMap = SIZE_MAP;
