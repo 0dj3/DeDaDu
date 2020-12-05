@@ -48,6 +48,7 @@ void Player::update(float dt)
             {"healing", -20 + rand() % 40}
         };
         Item* item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
+        item->setColor(Color3B(rand() % 255, rand() % 255, rand() % 255));
         layer->addChild(item);
         item->DropItem(this->getPosition());
     }

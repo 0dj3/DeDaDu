@@ -12,6 +12,7 @@ Item* Item::create(ItemType type, std::string title, std::string description, st
 {
     Item* newItem = new Item();
     if (newItem->initWithFile(iconPath)) {
+        newItem->getTexture()->setAliasTexParameters();
         newItem->type = type;
         newItem->title = title;
         newItem->description = description;
