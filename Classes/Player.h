@@ -19,9 +19,9 @@ public:
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
 private:
     bool isFighting = false;
-    Weapon* _weapon;
+    Weapon* _weapon = NULL;
 
-    void CreateWeapon();
+    void CreateWeapon(Item* weapon);
 
     void update(float dt);
 

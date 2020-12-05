@@ -5,12 +5,22 @@
 
 USING_NS_CC;
 
-Weapon::Weapon(cocos2d::Layer* layer, int damage, float speed)
+Weapon::Weapon(cocos2d::Layer* layer, Item* weapon)
 {
     _layer = layer;
-    _damage = damage;
-    _speed = speed;
+    itemWeapon = weapon;
+    this->setTexture(weapon->filename);
+    this->getTexture()->setAliasTexParameters();
+    this->setScale(3.0);
+    this->setTag(ContactListener::WEAPON);
     isActive = false;
+}
+
+void Weapon::ChangeWeapon(Item* weapon)
+{
+    itemWeapon = weapon;
+    this->setTexture(weapon->filename);
+    this->getTexture()->setAliasTexParameters();
 }
 
 void Weapon::CreatePhysicBody(Vec2 position)
@@ -42,7 +52,7 @@ void Weapon::CreatePhysicBody(Vec2 position)
 
 void Weapon::Attack(Vec2 position)
 {
-    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.5);
+    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(5 / itemWeapon->stats.find("speed")->second);
 
     auto startAttack = CallFunc::create([this, position]() {
         isActive = true;

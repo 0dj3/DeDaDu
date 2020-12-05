@@ -69,7 +69,7 @@ void ContactListener::BeginWeaponContact(b2Body* weapon, b2Body* body)
 
     if (node->getTag() == ENEMY) {
         Unit* unit = static_cast<Unit*>(body->GetUserData());
-        unit->Damage(20);
+        unit->Damage(static_cast<Weapon*>(weapon->GetUserData())->GetDamage());
     }
 }
 

@@ -19,12 +19,12 @@ public:
     ItemType type;
     std::string title;
     std::string description;
-    std::string iconPath;
+    std::string filename;
     std::map<std::string, int> stats;
 
     Item();
 
-    static Item* create(ItemType type, std::string title, std::string description, std::string iconPath, std::map<std::string, int> stats);
+    static Item* create(ItemType type, std::string title, std::string description, std::string filename, std::map<std::string, int> stats);
     static Item* create(Item* item);
 
     void DropItem(cocos2d::Vec2 position);
