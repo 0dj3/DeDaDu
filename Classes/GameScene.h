@@ -31,7 +31,7 @@ private:
     void update(float dt);
     bool checkMap = true;
     cocos2d::PhysicsWorld* sceneWorld;
-
+    std::vector<Unit*> enemies;
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
 
 };

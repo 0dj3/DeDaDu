@@ -34,14 +34,9 @@ void Generation_map::generation(bool checkLoc) {
     tileMap->setScale(3.0);
     tileMap->setAnchorPoint(Point(0, 0));
     this->addChild(tileMap);
+    allMainRoom.push_back(tileMap);
     border(tileMap);
     
-
-    /*createDoor(tileMap, 1);
-    createDoor(tileMap, 2);
-    createDoor(tileMap, 3);
-    createDoor(tileMap, 4);*/
-
     //direction = 1;//["down"] 
     //direction = 2;//["up"]
     //direction = 3;//["right"]
@@ -60,9 +55,9 @@ void Generation_map::generation(bool checkLoc) {
             if (arrayMap[1 + 1][j] == 2)
                 generHall(tileMainRoom, 2, checkLoc);
             else
-                createDoor(tileMainRoom, 2, checkLoc);
+                createDoor(tileMainRoom, 2, checkLoc, false);
             if (arrayMap[1 - 1][j] != 2)
-                createDoor(tileMainRoom, 1, checkLoc);
+                createDoor(tileMainRoom, 1, checkLoc, false);
             generHall(tileMainRoom, 3, checkLoc);
         }
         else {
@@ -78,9 +73,9 @@ void Generation_map::generation(bool checkLoc) {
             if (arrayMap[1 + 1][j] == 2)
                 generHall(tileMainRoom, 2, checkLoc);
             else
-                createDoor(tileMainRoom, 2, checkLoc);
+                createDoor(tileMainRoom, 2, checkLoc, false);
             if (arrayMap[1 - 1][j] != 2)
-                createDoor(tileMainRoom, 1, checkLoc);
+                createDoor(tileMainRoom, 1, checkLoc, false);
             generHall(tileMainRoom, 4, checkLoc);
         }
         else {
@@ -103,9 +98,9 @@ void Generation_map::generation(bool checkLoc) {
                     if (arrayMap[k + 1][j] == 2)
                         generHall(tileMainRoom, 2, checkLoc);
                     else
-                        createDoor(tileMainRoom, 2, checkLoc);
+                        createDoor(tileMainRoom, 2, checkLoc, false);
                     if (arrayMap[k - 1][j] != 2)
-                        createDoor(tileMainRoom, 1, checkLoc);
+                        createDoor(tileMainRoom, 1, checkLoc, false);
                     generHall(tileMainRoom, 3, checkLoc);
                 }
                 else {
@@ -121,9 +116,9 @@ void Generation_map::generation(bool checkLoc) {
                     if (arrayMap[k + 1][j] == 2)
                         generHall(tileMainRoom, 2, checkLoc);
                     else
-                        createDoor(tileMainRoom, 2, checkLoc);
+                        createDoor(tileMainRoom, 2, checkLoc, false);
                     if (arrayMap[k - 1][j] != 2)
-                        createDoor(tileMainRoom, 1, checkLoc);
+                        createDoor(tileMainRoom, 1, checkLoc, false);
                     generHall(tileMainRoom, 4, checkLoc);
                 }
                 else {
@@ -174,6 +169,29 @@ void Generation_map::border(TMXTiledMap* tiled) {
                 //log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
                 auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
                 allPhysicBody.push_back(body);
+                this->addChild(edgeNode);
+            }
+        }
+    }
+}
+
+void Generation_map::borderForRoom(TMXTiledMap* tiled) {
+    auto layerCheck = tiled->getLayer("walls");
+    for (int i = 0; i < layerCheck->getLayerSize().width; i++) {
+        for (int j = 0; j < layerCheck->getLayerSize().height; j++) {
+            if (layerCheck->getTileGIDAt(Vec2(i, j)) != 0) {
+                /*auto X = layerCheck->getTileAt(Vec2(i, j))->getPosition().x;*/
+                auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
+                auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
+                edgeNode = Node::create();
+                edgeNode->setScale(2.0);
+                edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
+                edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
+                auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
+
+                //отличие от метода border() 
+                PhBoDoorRoom.push_back(body);
+
                 this->addChild(edgeNode);
             }
         }
@@ -327,7 +345,7 @@ void Generation_map::generMainRoom(TMXTiledMap* PosMap, int direction, bool chec
     location2(tileMainRoom, checkLoc);
 }
 
-void Generation_map::createDoor(TMXTiledMap* tiled, int direction, bool checkLoc) {
+void Generation_map::createDoor(TMXTiledMap* tiled, int direction, bool checkLoc, bool checkDelRoom) {
     auto size = tiled->getMapSize();
     auto pos = tiled->getPosition();
 
@@ -356,7 +374,9 @@ void Generation_map::createDoor(TMXTiledMap* tiled, int direction, bool checkLoc
     }
 
     wall->setScale(3.0);
-    border(wall);
+    if (checkDelRoom == true)
+        borderForRoom(wall);
+    else border(wall);
 
     this->addChild(wall);
 }
@@ -414,4 +434,34 @@ int** Generation_map::generationArrayMap(int sizeMap) {
 
 Vec2 Generation_map::getPosTileMapOne() {
     return tileMapOne->getPosition();
+}
+
+void Generation_map::checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc) {
+    if (checkDoorRoom == false) {
+        auto posPX = player->getPosition().x;
+        auto posPY = player->getPosition().x;
+        Size sizeMap;
+        Vec2 posMap;
+        int posAX, posAY, posBX, posBY;
+
+        for (int i = 0; i < allMainRoom.size(); i++) {
+            sizeMap = allMainRoom[i]->getMapSize();
+            posMap = allMainRoom[i]->getPosition();
+
+            posAX = posMap.x;
+            posAY = posMap.y + (sizeMap.height * 60);
+            posBX = posMap.x + (sizeMap.width * 60);
+            posBY = posMap.y;
+
+            if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+                for (int j = 1; j < 5; j++) {
+                    createDoor(allMainRoom[i], j, false, true);
+                }
+                checkDoorRoom = true;
+            }
+        }
+        for (int i = 0; i < allMapOne.size(); i++) {
+
+        }
+    }
 }

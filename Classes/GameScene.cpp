@@ -62,6 +62,7 @@ bool GameScene::init()
 
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime);
+    enemies.push_back(slime);
 
     //
     char str1[200] = { 0 };
@@ -88,7 +89,7 @@ bool GameScene::init()
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
     this->addChild(goblin);
-
+    enemies.push_back(goblin);
     return true;
 }
 
@@ -140,10 +141,11 @@ void GameScene::update(float dt)
 
     //testMap
     auto pos = generation->getPosTileMapOne();
-    if ((player->getPosition() < Vec2(pos.x + 5 * 60, pos.y + 5 * 60)) && (player->getPosition() > Vec2(pos.x, pos.y)) && checkMap == true) {
+    /*if ((player->getPosition() < Vec2(pos.x + 5 * 60, pos.y + 5 * 60)) && (player->getPosition() > Vec2(pos.x, pos.y)) && checkMap == true) {
         generation->generation(true);
         checkMap = false;
-    }
+    }*/
+    generation->checkRoom(player, enemies, false);
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)

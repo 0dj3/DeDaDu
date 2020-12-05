@@ -11,15 +11,16 @@ public:
 
     void generation(bool checkLoc);
     void border(TMXTiledMap* tiled);
+    void borderForRoom(TMXTiledMap* tiled);
     void generHall(TMXTiledMap* sizeMap, int direction, bool checkLoc);
     void generMapOne(TMXTiledMap* sizeMap, int direction, bool checkLoc);
     void generMainRoom(TMXTiledMap* tiled, int direction, bool checkLoc);
-    void createDoor(TMXTiledMap* tiled, int direction, bool checkLoc);
+    void createDoor(TMXTiledMap* tiled, int direction, bool checkLoc, bool checkDelRoom);
 
     Vec2 getPosTileMapOne();
 
     void location2(TMXTiledMap* tiled, bool checkLoc);
-    
+    void checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
 
 private:
     bool init();
@@ -44,5 +45,6 @@ private:
     int** arrayMap;
     int checkI = 1, sizeMap = SIZE_MAP;
     int checkj;
+    bool checkDoorRoom = false;
     PhysicsWorld* sceneWorld;
 };
