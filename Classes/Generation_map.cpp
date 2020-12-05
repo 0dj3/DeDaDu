@@ -17,6 +17,10 @@ bool Generation_map::init() {
 }
 
 void Generation_map::generation(bool checkLoc) {
+    if (checkLoc == true) {
+        this->removeAllChildren();
+    }
+
     arrayMap = generationArrayMap(sizeMap);
     checkj = sizeMap / 2;
 
@@ -164,7 +168,7 @@ void Generation_map::border(TMXTiledMap* tiled) {
                 edgeNode->setScale(2.0);
                 edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
                 edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
-                log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
+                //log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
                 PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
                 this->addChild(edgeNode);
             }
