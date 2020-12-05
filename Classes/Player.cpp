@@ -6,7 +6,7 @@ USING_NS_CC;
 
 Player::Player()
 {
-    dmgsound = "res/sounds/hit/slime.mp3";
+    dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     this->autorelease();
 }

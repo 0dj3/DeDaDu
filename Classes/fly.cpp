@@ -6,7 +6,7 @@ USING_NS_CC;
 
 Fly::Fly()
 {
-    dmgsound = "res/sounds/hit/hit.mp3";
+    dmgsound = "res/sounds/hit/fly.mp3";
     this->autorelease();
 }
 

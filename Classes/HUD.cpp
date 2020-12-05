@@ -52,11 +52,6 @@ void HUD::updatePos(Unit* player)
 	{
 		healthBar->setPercent(player->hp);
 		this->setPosition(player->getPosition());
-		/*float x = player->getPosition().x;
-		float y = player->getPosition().y;
-		hBBackground->setPosition(Point(x - 620, y + 350));
-		healthBar->setPosition(Point(x - 620, y + 350));
-		menubutton->setPosition(Point(x + 600, y + 320));*/
 	}
 }
 

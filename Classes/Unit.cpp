@@ -2,6 +2,7 @@
 #include "AudioEngine.h"
 #include "MainMenuScene.h"
 #include "InputListener.h"
+#include "DeathScreen.h"
 USING_NS_CC;
 
 Unit::Unit()
@@ -30,7 +31,8 @@ void Unit::Damage(int value) {
 			AudioEngine::stopAll();
 			Node::stopAllActions();
 			InputListener::Instance()->ReleaseAllKeys();
-			auto scene = MainMenuScene::createScene();
+			AudioEngine::preload("res/sounds/ds.mp3");
+			auto scene = DeathScreen::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 		}
 		else
