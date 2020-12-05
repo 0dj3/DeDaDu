@@ -23,7 +23,12 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 
         newPlayer->setTag(newPlayer->tag);
         newPlayer->layer = layer;
-        newPlayer->CreateWeapon();
+        std::map<std::string, int> stats{
+            {"damage", 20},
+            {"speed", 2}
+        };
+        Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
+        newPlayer->CreateWeapon(weapon);
         newPlayer->scheduleUpdate();
         return newPlayer;
     }
@@ -44,20 +49,36 @@ void Player::update(float dt)
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
-        std::map<std::string, int> stats{
+        Item* item;
+        if (rand() % 2) {
+            std::map<std::string, int> stats{
             {"healing", -20 + rand() % 40}
-        };
-        Item* item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
-        item->setColor(Color3B(rand() % 255, rand() % 255, rand() % 255));
+            };
+            item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
+            item->setColor(Color3B(rand() % 255, rand() % 255, rand() % 255));
+        }
+        else {
+            std::map<std::string, int> stats{
+            {"damage", 1 + rand() % 40},
+            {"speed", 1 + rand() % 8}
+            };
+            item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
+        }
         layer->addChild(item);
         item->DropItem(this->getPosition());
     }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
-        Damage(targetItem->stats.begin()->second);
-        log("%i", targetItem->stats.begin()->second);
-        targetItem->setName(DEAD_TAG);
-        targetItem = NULL;
+        if (targetItem->type == Item::POTION) {
+            Damage(targetItem->stats.begin()->second);
+            targetItem->setName(DEAD_TAG);
+            targetItem = NULL;
+        }
+        else {
+            _weapon->ChangeWeapon(Item::create(targetItem));
+            targetItem->setName(DEAD_TAG);
+            targetItem = NULL;
+        }
     }
     
     /*for (b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next)
@@ -75,12 +96,9 @@ void Player::update(float dt)
     }*/
 }
 
-void Player::CreateWeapon() {
-    _weapon = new Weapon(layer, 20, 1);
-    if (_weapon->initWithFile("res/weapon/sword.png")) {
-        _weapon->getTexture()->setAliasTexParameters();
-        _weapon->setScale(3.0);
-        _weapon->setTag(ContactListener::WEAPON);
+void Player::CreateWeapon(Item* weapon) {
+    _weapon = new Weapon(layer, weapon);
+    if (_weapon) {
         _weapon->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
         _weapon->setAnchorPoint(this->sprite->getPosition());
         this->addChild(_weapon);

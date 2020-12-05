@@ -8,15 +8,15 @@ Item::Item()
 
 }
 
-Item* Item::create(ItemType type, std::string title, std::string description, std::string iconPath, std::map<std::string, int> stats)
+Item* Item::create(ItemType type, std::string title, std::string description, std::string filename, std::map<std::string, int> stats)
 {
     Item* newItem = new Item();
-    if (newItem->initWithFile(iconPath)) {
+    if (newItem->initWithFile(filename)) {
         newItem->getTexture()->setAliasTexParameters();
         newItem->type = type;
         newItem->title = title;
         newItem->description = description;
-        newItem->iconPath = iconPath;
+        newItem->filename = filename;
         newItem->stats = stats;
         newItem->setTag(ContactListener::ITEM);
         return newItem;
@@ -27,7 +27,7 @@ Item* Item::create(ItemType type, std::string title, std::string description, st
 
 Item* Item::create(Item* item)
 {
-    return create(item->type, item->title, item->description, item->iconPath, item->stats);
+    return create(item->type, item->title, item->description, item->filename, item->stats);
 }
 
 void Item::DropItem(Vec2 position)
