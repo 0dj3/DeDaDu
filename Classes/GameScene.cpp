@@ -145,7 +145,7 @@ void GameScene::update(float dt)
         generation->generation(true);
         checkMap = false;
     }*/
-    generation->checkRoom(player, enemies, false);
+    enemies = generation->checkRoom(player, enemies, false);
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)

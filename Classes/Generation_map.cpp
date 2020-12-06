@@ -436,7 +436,8 @@ Vec2 Generation_map::getPosTileMapOne() {
     return tileMapOne->getPosition();
 }
 
-void Generation_map::checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc) {
+std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc) {
+    quantityEnemy = enemies.size();
     if (checkDoorRoom == false) {
         auto posPX = player->getPosition().x;
         auto posPY = player->getPosition().x;
@@ -458,10 +459,27 @@ void Generation_map::checkRoom(Unit* player, std::vector<Unit*> enemies, bool ch
                     createDoor(allMainRoom[i], j, false, true);
                 }
                 checkDoorRoom = true;
+                allMainRoom.erase(allMainRoom.begin() + i);
             }
         }
         for (int i = 0; i < allMapOne.size(); i++) {
 
         }
     }
+    else {
+        for (int i = 0; i < quantityEnemy; i++) {
+            if (enemies[i]->hp <= 0) {
+                enemies.erase(enemies.begin() + i);
+                break;
+            }
+        }
+        if (quantityEnemy == 0) {
+            log("asd");
+            for (int i = 0; i < PhBoDoorRoom.size(); i++) {
+                PhysicHelper::world->DestroyBody(PhBoDoorRoom[i]);
+            }
+            checkDoorRoom = false;
+        }
+    }
+    return enemies;
 }

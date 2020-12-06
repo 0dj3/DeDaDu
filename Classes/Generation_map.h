@@ -20,7 +20,7 @@ public:
     Vec2 getPosTileMapOne();
 
     void location2(TMXTiledMap* tiled, bool checkLoc);
-    void checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
+    std::vector<Unit*> checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
 
 private:
     bool init();
@@ -42,6 +42,7 @@ private:
     std::vector<b2Body*> PhBoDoorRoom;
 
     Node* edgeNode;
+    size_t quantityEnemy;
     int** arrayMap;
     int checkI = 1, sizeMap = SIZE_MAP;
     int checkj;
