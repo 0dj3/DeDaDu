@@ -517,17 +517,35 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 1 + rand() % 1;
+    int count = 1 + rand() % 8;
+    Enemy* enemy;
     for (int i = 0; i < count; i++) {
+        int enemyType = 1 + rand() % 3;
+        
+
         int rX = ((tiled->getMapSize().width - 2) * 60);
         int rY = ((tiled->getMapSize().height - 2) * 60);
 
         int randomX = (tiled->getPosition().x + 80) + rand() % rX;
         int randomY = (tiled->getPosition().y + 80) + rand() % rY;
 
-        slime = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
-        this->addChild(slime);
-        enemies.push_back(slime);
+        switch (enemyType)
+        {
+        case 1:
+            enemy = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+            break;
+        case 2:
+            enemy = Slime::create(this, Point(randomX, randomY));
+            break;
+        case 3:
+            enemy = Fly::create(this, Point(randomX, randomY));
+            break;
+        default:
+            break;
+        }
+
+        this->addChild(enemy);
+        enemies.push_back(enemy);
     }
     return enemies;
 }

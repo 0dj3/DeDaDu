@@ -43,8 +43,6 @@ private:
     std::vector<b2Body*> PhBoDoorRoom;
     std::vector<TMXTiledMap*> childDoorRoom;
 
-    Unit* slime;
-
     Node* edgeNode;
     size_t quantityEnemy;
     int** arrayMap;
