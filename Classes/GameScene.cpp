@@ -54,8 +54,10 @@ bool GameScene::init()
     generation = Generation_map::createScene();
     this->addChild(generation);
 
+    visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
+    log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);
 
     hud = HUD::create();
     this->addChild(hud, 5);
@@ -150,7 +152,7 @@ void GameScene::update(float dt)
     if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == true && enemies.size() == 0) {
         generation->generation(true);
         checkMap = false;
-        player->body->SetTransform(b2Vec2(20.f, 22.5f), player->body->GetAngle());
+        player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
     
 }
