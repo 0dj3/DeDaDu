@@ -30,7 +30,7 @@ public:
 
 private:
     void update(float dt);
-    bool checkMap = true;
+    bool checkMap = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     

@@ -51,7 +51,7 @@ bool GameScene::init()
     PhysicHelper::CreateWorld();
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
     
-    generation = Generation_map::createScene();
+    generation = Generation_map::createScene(checkMap);
     this->addChild(generation);
 
     visibleSize.height = -1250;
@@ -141,7 +141,7 @@ void GameScene::update(float dt)
             //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
-    enemies = generation->checkRoom(player, enemies, false);
+    enemies = generation->checkRoom(player, enemies, checkMap);
     //testMap
     auto pos = generation->getPosTileMapOneEnd();
     auto sizeEnd = generation->getSizeTileMapOneEnd();
@@ -149,9 +149,9 @@ void GameScene::update(float dt)
     auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
     auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
     auto posBY = pos.y + 80;
-    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == true && enemies.size() == 0) {
-        generation->generation(true);
-        checkMap = false;
+    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == false && enemies.size() == 0) {
+        checkMap = true;
+        generation->generation(checkMap);
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
     

@@ -6,14 +6,14 @@
 USING_NS_CC;
 
 
-Generation_map* Generation_map::createScene(){
+Generation_map* Generation_map::createScene(bool checkLoc){
     Generation_map* gener = new Generation_map();
-    gener->init();
+    gener->init(checkLoc);
     return gener;
 }
 
-bool Generation_map::init() {
-    generation(false);
+bool Generation_map::init(bool checkLoc) {
+    generation(checkLoc);
     return true;
 }
 
@@ -159,7 +159,6 @@ void Generation_map::border(TMXTiledMap* tiled) {
     for (int i = 0; i < layerCheck->getLayerSize().width; i++) {
         for (int j = 0; j < layerCheck->getLayerSize().height; j++) {
             if (layerCheck->getTileGIDAt(Vec2(i, j)) != 0) {
-                /*auto X = layerCheck->getTileAt(Vec2(i, j))->getPosition().x;*/
                 auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
                 auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
                 edgeNode = Node::create();
@@ -169,7 +168,6 @@ void Generation_map::border(TMXTiledMap* tiled) {
                 edgeNode->setScale(2.0);
                 edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
                 edgeNode->setPosition((PositionTile + Vec2(10, 10)) * 3 + tiled->getPosition());
-                //log("%f %f", edgeNode->getContentSize().width, edgeNode->getContentSize().height);
                 auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(Y.size));
                 allPhysicBody.push_back(body);
                 this->addChild(edgeNode);
@@ -183,7 +181,6 @@ void Generation_map::borderForRoom(TMXTiledMap* tiled) {
     for (int i = 0; i < layerCheck->getLayerSize().width; i++) {
         for (int j = 0; j < layerCheck->getLayerSize().height; j++) {
             if (layerCheck->getTileGIDAt(Vec2(i, j)) != 0) {
-                /*auto X = layerCheck->getTileAt(Vec2(i, j))->getPosition().x;*/
                 auto PositionTile = layerCheck->getTileAt(Vec2(i, j))->getPosition();
                 auto Y = layerCheck->getTileAt(Vec2(i, j))->getTextureRect();
                 edgeNode = Node::create();
@@ -382,8 +379,8 @@ void Generation_map::createDoor(TMXTiledMap* tiled, int direction, bool checkLoc
         childDoorRoom.push_back(wall);
     }
     else border(wall);
-
     this->addChild(wall);
+    location2(wall, checkLoc);
 }
 
 int** Generation_map::generationArrayMap(int sizeMap) {
@@ -464,9 +461,8 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             posBY = posMap.y + 80;
             
             if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
-                //log("AX = %d, AY = %d, BX = %d, BY = %d", posAX, posAY, posBX, posBY);
                 for (int j = 1; j < 5; j++) {
-                    createDoor(allMainRoom[i], j, false, true);
+                    createDoor(allMainRoom[i], j, checkLoc, true);
                 }
                 enemies = createEnemy(enemies, allMainRoom[i], player);
                 checkDoorRoom = true;
@@ -483,9 +479,8 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             posBY = posMap.y + 80;
 
             if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
-                //log("AX = %d, AY = %d, BX = %d, BY = %d", posAX, posAY, posBX, posBY);
                 for (int j = 1; j < 5; j++) {
-                    createDoor(allMapOne[i], j, false, true);
+                    createDoor(allMapOne[i], j, checkLoc, true);
                 }
                 enemies = createEnemy(enemies, allMapOne[i], player);
                 checkDoorRoom = true;

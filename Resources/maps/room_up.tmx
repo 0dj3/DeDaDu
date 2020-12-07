@@ -3,12 +3,12 @@
  <tileset firstgid="1" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
   <image source="full tilemap2.png" width="144" height="128"/>
  </tileset>
- <tileset firstgid="73" name="layer3" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="layer3.png" width="32" height="16"/>
+ <tileset firstgid="73" name="layer3" tilewidth="16" tileheight="16" tilecount="3" columns="3">
+  <image source="layer3.png" width="48" height="16"/>
  </tileset>
  <layer id="3" name="loc2" width="14" height="10">
   <data encoding="base64" compression="zlib">
-   eJzzZGBg8CQTe5GIR/UNLn2E4hObGgBo9ChR
+   eJzzZGBg8CQTe5GIR/UNLn3o2BsNY1MDAGlsKFU=
   </data>
  </layer>
  <layer id="1" name="background" width="14" height="10">

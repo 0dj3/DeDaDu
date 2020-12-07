@@ -8,7 +8,7 @@ USING_NS_CC;
 
 class Generation_map: public Layer {
 public:
-	static Generation_map* createScene(void);
+	static Generation_map* createScene(bool checkLoc);
 
     void generation(bool checkLoc);
     void border(TMXTiledMap* tiled);
@@ -24,7 +24,7 @@ public:
     std::vector<Unit*> createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player);
 
 private:
-    bool init();
+    bool init(bool checkLoc);
     int** generationArrayMap(int sizeMap);
 
     TMXTiledMap* tileMap;
