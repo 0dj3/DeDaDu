@@ -23,7 +23,7 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
         newGoblin->setPosition(position);
 
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
-
+        newGoblin->hp = 1;
         newGoblin->setTag(newGoblin->tag);
         newGoblin->layer = layer;
         newGoblin->_player = player;

@@ -18,7 +18,7 @@ Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
         newSlime->sprite->getTexture()->setAliasTexParameters();
         newSlime->sprite->setScale(3.0);
         newSlime->setPosition(position);
-
+        newSlime->hp = 1;
         newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
 
         newSlime->setTag(newSlime->tag);

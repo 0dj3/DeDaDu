@@ -440,7 +440,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
     quantityEnemy = enemies.size();
     if (checkDoorRoom == false) {
         auto posPX = player->getPosition().x;
-        auto posPY = player->getPosition().x;
+        auto posPY = player->getPosition().y;
         Size sizeMap;
         Vec2 posMap;
         int posAX, posAY, posBX, posBY;
@@ -449,15 +449,19 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             sizeMap = allMainRoom[i]->getMapSize();
             posMap = allMainRoom[i]->getPosition();
 
-            posAX = posMap.x;
-            posAY = posMap.y + (sizeMap.height * 60);
-            posBX = posMap.x + (sizeMap.width * 60);
-            posBY = posMap.y;
-
+            posAX = posMap.x + 60;
+            posAY = posMap.y + ((sizeMap.height - 1) * 60);
+            posBX = posMap.x + ((sizeMap.width - 1) * 60);
+            posBY = posMap.y + 60;
+            
             if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+                //log("AX = %d, AY = %d, BX = %d, BY = %d", posAX, posAY, posBX, posBY);
                 for (int j = 1; j < 5; j++) {
                     createDoor(allMainRoom[i], j, false, true);
                 }
+                slime = Slime::create(this, Point(posAX + 60 , posAY - 60));
+                this->addChild(slime);
+                enemies.push_back(slime);
                 checkDoorRoom = true;
                 allMainRoom.erase(allMainRoom.begin() + i);
             }
@@ -478,6 +482,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             for (int i = 0; i < PhBoDoorRoom.size(); i++) {
                 PhysicHelper::world->DestroyBody(PhBoDoorRoom[i]);
             }
+            PhBoDoorRoom.clear();
             checkDoorRoom = false;
         }
     }
