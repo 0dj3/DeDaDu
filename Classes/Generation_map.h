@@ -2,6 +2,7 @@
 #include "PhysicHelper.h"
 #include <vector>
 #include <Slime.h>
+#include <Goblin.h>
 
 USING_NS_CC;
 #define SIZE_MAP 7;
@@ -17,12 +18,11 @@ public:
     void generMapOne(TMXTiledMap* sizeMap, int direction, bool checkLoc);
     void generMainRoom(TMXTiledMap* tiled, int direction, bool checkLoc);
     void createDoor(TMXTiledMap* tiled, int direction, bool checkLoc, bool checkDelRoom);
-
     Vec2 getPosTileMapOne();
 
     void location2(TMXTiledMap* tiled, bool checkLoc);
     std::vector<Unit*> checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
-    void createEnemy(Unit* player);
+    std::vector<Unit*> createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player);
 
 private:
     bool init();
@@ -42,6 +42,7 @@ private:
 
     std::vector<b2Body*> allPhysicBody;
     std::vector<b2Body*> PhBoDoorRoom;
+    std::vector<TMXTiledMap*> childDoorRoom;
 
     Unit* slime;
 

@@ -14,7 +14,7 @@
  </layer>
  <layer id="1" name="background" width="10" height="14">
   <data encoding="base64" compression="zlib">
-   eJxLYGBgSKASZqCiWaOYvnGCDPDJAQDVeDGB
+   eJxLYGBgSIDiPDScQCJmIEMPtTAx7iXWX7RQR+/wgGEGEtTBAHo6QAYAzEcyYQ==
   </data>
  </layer>
  <layer id="2" name="walls" width="10" height="14">
