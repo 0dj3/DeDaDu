@@ -150,6 +150,7 @@ void GameScene::update(float dt)
     if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == true) {
         generation->generation(true);
         checkMap = false;
+        player->body->SetTransform(b2Vec2(20.f, 22.5f), player->body->GetAngle());
     }
     enemies = generation->checkRoom(player, enemies, false);
 }
