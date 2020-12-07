@@ -374,8 +374,10 @@ void Generation_map::createDoor(TMXTiledMap* tiled, int direction, bool checkLoc
     }
 
     wall->setScale(3.0);
-    if (checkDelRoom == true)
+    if (checkDelRoom == true) {
         borderForRoom(wall);
+        childDoorRoom.push_back(wall);
+    }
     else border(wall);
 
     this->addChild(wall);
@@ -449,19 +451,17 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             sizeMap = allMainRoom[i]->getMapSize();
             posMap = allMainRoom[i]->getPosition();
 
-            posAX = posMap.x + 60;
-            posAY = posMap.y + ((sizeMap.height - 1) * 60);
-            posBX = posMap.x + ((sizeMap.width - 1) * 60);
-            posBY = posMap.y + 60;
+            posAX = posMap.x + 80;
+            posAY = posMap.y + ((sizeMap.height - 1) * 60 - 20);
+            posBX = posMap.x + ((sizeMap.width - 1) * 60 - 20);
+            posBY = posMap.y + 80;
             
             if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
                 //log("AX = %d, AY = %d, BX = %d, BY = %d", posAX, posAY, posBX, posBY);
                 for (int j = 1; j < 5; j++) {
                     createDoor(allMainRoom[i], j, false, true);
                 }
-                slime = Slime::create(this, Point(posAX + 60 , posAY - 60));
-                this->addChild(slime);
-                enemies.push_back(slime);
+                enemies = createEnemy(enemies, allMainRoom[i], player);
                 checkDoorRoom = true;
                 allMainRoom.erase(allMainRoom.begin() + i);
             }
@@ -478,13 +478,33 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             }
         }
         if (quantityEnemy == 0) {
-            log("asd");
             for (int i = 0; i < PhBoDoorRoom.size(); i++) {
                 PhysicHelper::world->DestroyBody(PhBoDoorRoom[i]);
             }
+            for (int i = 0; i < childDoorRoom.size(); i++) {
+                this->removeChild(childDoorRoom[i], true);
+            }
+            childDoorRoom.clear();
             PhBoDoorRoom.clear();
             checkDoorRoom = false;
         }
+    }
+    return enemies;
+}
+
+std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
+    srand(time(0));
+    int count = 1 + rand() % 8;
+    for (int i = 0; i < count; i++) {
+        int rX = tiled->getMapSize().width * 60 - 200;
+        int rY = tiled->getMapSize().height * 60 - 200;
+
+        int randomX = (tiled->getPosition().x + 200) + rand() % rX;
+        int randomY = (tiled->getPosition().y + 200) + rand() % rY;
+
+        slime = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+        this->addChild(slime);
+        enemies.push_back(slime);
     }
     return enemies;
 }
