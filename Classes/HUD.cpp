@@ -28,7 +28,7 @@ void HUD::Init() {
 	healthBar->setPercent(100);
 	this->addChild(healthBar);
 
-	auto playItem = MenuItemImage::create("res/ui/exitbutton.png", "res/ui/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
+	auto playItem = MenuItemImage::create("res/ui/buttons/exitbutton.png", "res/ui/buttons/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
 	playItem->setPosition(Point(0, 0));
 
 	menubutton = Menu::create(playItem, NULL);

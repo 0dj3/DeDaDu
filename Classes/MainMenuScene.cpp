@@ -25,7 +25,7 @@ static void problemLoading(const char* filename)
 bool MainMenuScene::init()
 {
     Settings* settings = new Settings;
-    AudioEngine::play2d("res/sounds/bgsound2.mp3", true, settings->getVolume());
+    AudioEngine::play2d("res/sounds/bgsound2.mp3", true, settings->getMusicVolume());
     //char* asd = " ";
     //sprintf(asd,"%lf",settings->getVolume());
     //CCLOG(asd);
@@ -43,9 +43,9 @@ bool MainMenuScene::init()
     //backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     //this->addChild(backgroundSprite);
 
-    auto playItem = MenuItemImage::create("res/ui/start.png", "res/ui/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
-    auto settingsItem = MenuItemImage::create("res/ui/options.png", "res/ui/options_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
-    auto exitItem = MenuItemImage::create("res/ui/exit.png", "res/ui/exit_pressed.png", CC_CALLBACK_1(MainMenuScene::Exit, this));
+    auto playItem = MenuItemImage::create("res/ui/buttons/start.png", "res/ui/buttons/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
+    auto settingsItem = MenuItemImage::create("res/ui/buttons/options.png", "res/ui/buttons/options_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
+    auto exitItem = MenuItemImage::create("res/ui/buttons/exit.png", "res/ui/buttons/exit_pressed.png", CC_CALLBACK_1(MainMenuScene::Exit, this));
 
     auto menu = Menu::create(playItem, settingsItem, exitItem, NULL);
     menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
