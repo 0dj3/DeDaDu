@@ -24,33 +24,44 @@ bool Settings::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     this->scheduleUpdate();
-
-    auto vBackground = Sprite::create("res/ui/sound_bg.png");
-    vBackground->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    this->addChild(vBackground);
-
-    volumeBar = ui::LoadingBar::create("res/ui/sound.png");
-    volumeBar->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    volumeBar->setDirection(ui::LoadingBar::Direction::LEFT);
-    volumeBar->setPercent(volume*100);
-    this->addChild(volumeBar);
-
-    auto backItem = MenuItemImage::create("res/ui/back.png", "res/ui/back_pressed.png", CC_CALLBACK_1(Settings::GoToMainMenuScene, this));
+ 
+    auto backItem = MenuItemImage::create("res/ui/buttons/back.png", "res/ui/buttons/back_pressed.png", CC_CALLBACK_1(Settings::GoToMainMenuScene, this));
     backItem->setPosition(Point(0, 0));
 
-    auto volumeminusItem = MenuItemImage::create("res/ui/left.png", "res/ui/left.png", CC_CALLBACK_1(Settings::volumeMinus, this));
-    //volumeminusItem->setPosition(Point(-100, 0));
-    auto volumeplusItem = MenuItemImage::create("res/ui/right.png", "res/ui/right.png", CC_CALLBACK_1(Settings::volumePlus, this));
-    //volumeplusItem->setPosition(Point(100, 0));
+    auto mBackground = Sprite::create("res/ui/musicbg.png");
+    mBackground->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(mBackground);
+    musicBar = ui::LoadingBar::create("res/ui/musicbar.png");
+    musicBar->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    musicBar->setDirection(ui::LoadingBar::Direction::LEFT);
+    musicBar->setPercent(music * 100);
+    this->addChild(musicBar);
 
-    auto volumeMenu = Menu::create(volumeminusItem, volumeplusItem, NULL);
-    volumeMenu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    volumeMenu->alignItemsHorizontallyWithPadding(vBackground->getContentSize().width + 10);
-    this->addChild(volumeMenu);
+    auto musicminusItem = MenuItemImage::create("res/ui/buttons/left.png", "res/ui/buttons/left_pressed.png", CC_CALLBACK_1(Settings::musicMinus, this));
+    auto musicplusItem = MenuItemImage::create("res/ui/buttons/right.png", "res/ui/buttons/right_pressed.png", CC_CALLBACK_1(Settings::musicPlus, this));
+    auto musicMenu = Menu::create(musicminusItem, musicplusItem, NULL);
+    musicMenu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    musicMenu->alignItemsHorizontallyWithPadding(mBackground->getContentSize().width + 10);
+    this->addChild(musicMenu);
 
+    auto sBackground = Sprite::create("res/ui/sfxbg.png");
+    sBackground->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+    this->addChild(sBackground);
+    sfxBar = ui::LoadingBar::create("res/ui/sfxbar.png");
+    sfxBar->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+    sfxBar->setDirection(ui::LoadingBar::Direction::LEFT);
+    sfxBar->setPercent(sfx * 100);
+    this->addChild(sfxBar);
+
+    auto sfxminusItem = MenuItemImage::create("res/ui/buttons/left.png", "res/ui/buttons/left_pressed.png", CC_CALLBACK_1(Settings::sfxMinus, this));
+    auto sfxplusItem = MenuItemImage::create("res/ui/buttons/right.png", "res/ui/buttons/right_pressed.png", CC_CALLBACK_1(Settings::sfxPlus, this));
+    auto sfxMenu = Menu::create(sfxminusItem, sfxplusItem, NULL);
+    sfxMenu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+    sfxMenu->alignItemsHorizontallyWithPadding(sBackground->getContentSize().width + 10);
+    this->addChild(sfxMenu);
 
     auto menu = Menu::create(backItem, NULL);
-    menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+    menu->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 5 + origin.y));
     this->addChild(menu);
 
     return true;
@@ -63,28 +74,52 @@ void Settings::GoToMainMenuScene(cocos2d::Ref* sender)
     Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
-void Settings::volumePlus(cocos2d::Ref* sender)
+void Settings::musicPlus(cocos2d::Ref* sender)
 {
-    if (volume < 1.0)
+    if (music < 1.0)
     {
-        volume += 0.1f;
-        volumeBar->setPercent(volume*100);
+        music += 0.1f;
+        musicBar->setPercent(music *100);
     } 
 }
 
-void Settings::volumeMinus(cocos2d::Ref* sender)
+void Settings::musicMinus(cocos2d::Ref* sender)
 {
-    if (volume > 0.00f)
+    if (music > 0.00f)
     {
-        volume -= 0.1f;
-        volumeBar->setPercent(volume * 100);
+        music -= 0.1f;
+        musicBar->setPercent(music * 100);
     }
 }
 
-float Settings::getVolume()
+void Settings::sfxPlus(cocos2d::Ref* sender)
 {
-    return volume;
+    if (sfx < 1.0)
+    {
+        sfx += 0.1f;
+        sfxBar->setPercent(sfx * 100);
+    }
 }
+
+void Settings::sfxMinus(cocos2d::Ref* sender)
+{
+    if (sfx > 0.00f)
+    {
+        sfx -= 0.1f;
+        sfxBar->setPercent(sfx * 100);
+    }
+}
+
+float Settings::getMusicVolume()
+{
+    return music;
+}
+
+float Settings::getSFXVolume()
+{
+    return sfx;
+}
+
 
 double Settings::getDifficult()
 {

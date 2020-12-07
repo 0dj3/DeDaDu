@@ -16,16 +16,21 @@ public:
     virtual bool init();
     void menuCloseCallback(cocos2d::Ref* pSender);
     CREATE_FUNC(Settings);
-    ui::LoadingBar* volumeBar;
+    ui::LoadingBar* musicBar;
+    ui::LoadingBar* sfxBar;
     double difficult = 1.0;
     double getDifficult();
 
-    float getVolume();
+    float getMusicVolume();
+    float getSFXVolume();
 
 private:
-    float volume = 0.5;
-    void volumePlus(cocos2d::Ref* pSender);
-    void volumeMinus(cocos2d::Ref* pSender);
+    float music = 0.5;
+    float sfx = 0.5;
+    void musicPlus(cocos2d::Ref* pSender);
+    void musicMinus(cocos2d::Ref* pSender);
+    void sfxPlus(cocos2d::Ref* pSender);
+    void sfxMinus(cocos2d::Ref* pSender);
     void GoToMainMenuScene(cocos2d::Ref* pSender);
     void update(float dt);
 };
