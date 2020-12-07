@@ -467,7 +467,23 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
             }
         }
         for (int i = 0; i < allMapOne.size(); i++) {
+            sizeMap = allMapOne[i]->getMapSize();
+            posMap = allMapOne[i]->getPosition();
 
+            posAX = posMap.x + 80;
+            posAY = posMap.y + ((sizeMap.height - 1) * 60 - 20);
+            posBX = posMap.x + ((sizeMap.width - 1) * 60 - 20);
+            posBY = posMap.y + 80;
+
+            if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+                //log("AX = %d, AY = %d, BX = %d, BY = %d", posAX, posAY, posBX, posBY);
+                for (int j = 1; j < 5; j++) {
+                    createDoor(allMapOne[i], j, false, true);
+                }
+                enemies = createEnemy(enemies, allMapOne[i], player);
+                checkDoorRoom = true;
+                allMapOne.erase(allMapOne.begin() + i);
+            }
         }
     }
     else {
@@ -496,11 +512,11 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
     srand(time(0));
     int count = 1 + rand() % 8;
     for (int i = 0; i < count; i++) {
-        int rX = tiled->getMapSize().width * 60 - 200;
-        int rY = tiled->getMapSize().height * 60 - 200;
+        int rX = tiled->getPosition().x + tiled->getMapSize().width * 60 - 80;
+        int rY = tiled->getPosition().y + tiled->getMapSize().height * 60 - 80;
 
-        int randomX = (tiled->getPosition().x + 200) + rand() % rX;
-        int randomY = (tiled->getPosition().y + 200) + rand() % rY;
+        int randomX = (tiled->getPosition().x + 80) + rand() % rX;
+        int randomY = (tiled->getPosition().y + 80) + rand() % rY;
 
         slime = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
         this->addChild(slime);

@@ -21,7 +21,7 @@ Enemy* Fly::create(cocos2d::Layer* layer, const Vec2& position)
         newFly->setPosition(position);
 
         newFly->body = PhysicHelper::createDynamicPhysicBody(newFly, newFly->sprite->getContentSize());
-
+        newFly->hp = 1;
         newFly->setTag(newFly->tag);
         newFly->layer = layer;
         newFly->scheduleUpdate();
