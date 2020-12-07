@@ -2,6 +2,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include <ctime>
 #include "Fly.h"
+
 USING_NS_CC;
 
 
@@ -516,7 +517,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 1 + rand() % 8;
+    int count = 1 + rand() % 1;
     for (int i = 0; i < count; i++) {
         int rX = ((tiled->getMapSize().width - 2) * 60);
         int rY = ((tiled->getMapSize().height - 2) * 60);
