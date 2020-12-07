@@ -19,6 +19,8 @@ bool Generation_map::init() {
 void Generation_map::generation(bool checkLoc) {
     if (checkLoc == true) {
         this->removeAllChildren();
+        allMainRoom.clear();
+        allMapOne.clear();
         for (int i = 0; i < allPhysicBody.size(); i++) {
             PhysicHelper::world->DestroyBody(allPhysicBody[i]);
         }
@@ -434,8 +436,12 @@ int** Generation_map::generationArrayMap(int sizeMap) {
     return a;
 }
 
-Vec2 Generation_map::getPosTileMapOne() {
+Vec2 Generation_map::getPosTileMapOneEnd() {
     return tileMapOne->getPosition();
+}
+
+Size Generation_map::getSizeTileMapOneEnd() {
+    return tileMapOne->getMapSize();
 }
 
 std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc) {
@@ -512,8 +518,8 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
     srand(time(0));
     int count = 1 + rand() % 8;
     for (int i = 0; i < count; i++) {
-        int rX = tiled->getPosition().x + tiled->getMapSize().width * 60 - 80;
-        int rY = tiled->getPosition().y + tiled->getMapSize().height * 60 - 80;
+        int rX = ((tiled->getMapSize().width - 2) * 60);
+        int rY = ((tiled->getMapSize().height - 2) * 60);
 
         int randomX = (tiled->getPosition().x + 80) + rand() % rX;
         int randomY = (tiled->getPosition().y + 80) + rand() % rY;
