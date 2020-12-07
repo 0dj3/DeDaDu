@@ -139,17 +139,21 @@ void GameScene::update(float dt)
             //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
-
+    
     //testMap
-    auto pos = generation->getPosTileMapOne();
-    /*if ((player->getPosition() < Vec2(pos.x + 5 * 60, pos.y + 5 * 60)) && (player->getPosition() > Vec2(pos.x, pos.y)) && checkMap == true) {
+    auto pos = generation->getPosTileMapOneEnd();
+    auto sizeEnd = generation->getSizeTileMapOneEnd();
+    auto posAX = pos.x + 80;
+    auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
+    auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
+    auto posBY = pos.y + 80;
+    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == true) {
         generation->generation(true);
         checkMap = false;
-    }*/
+    }
     enemies = generation->checkRoom(player, enemies, false);
 }
 
-void GameScene::menuCloseCallback(Ref* pSender)
-{
+void GameScene::menuCloseCallback(Ref* pSender){
     Director::getInstance()->end();
 }
