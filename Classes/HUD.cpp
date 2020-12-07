@@ -13,9 +13,21 @@ HUD* HUD::create() {
 	return hud;
 }
 
-void HUD::Init() {
+void HUD::Init() 
+{
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	weaponSlot = Sprite::create("res/ui/selected_slot.png");
+	weaponSlot->setPosition(Point(-620, -350));
+	weaponSlot->setAnchorPoint(Point(0, 0));
+	this->addChild(weaponSlot);
+
+	hBBackground = Sprite::create("res/ui/hpbg.png");
+	hBBackground->setAnchorPoint(Point(0, 1));
+	hBBackground->setPosition(Point(-620, 350));
+	this->addChild(hBBackground);
+
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
 	hBBackground->setPosition(Point(-620, 350));

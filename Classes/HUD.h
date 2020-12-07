@@ -14,6 +14,7 @@ public:
     static HUD* create();
     ui::LoadingBar* healthBar;
     Sprite* hBBackground;
+    Sprite* weaponSlot;
     void getHit(int damage, Unit* player);
     void updatePos(Unit* player);
     Menu* menubutton;
