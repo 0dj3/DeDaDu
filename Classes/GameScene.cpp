@@ -139,11 +139,11 @@ void GameScene::update(float dt)
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
-        Node* weapon = (Node*)b->GetUserData();
-        if (b->GetUserData() != NULL && weapon->getTag() == ContactListener::WEAPON)
+        /*Node* weapon = (Node*)b->GetUserData();
+        if (b->GetUserData() != NULL && weapon->getTag() == ContactListener::ATTACK)
         {
             continue;
-        }
+        }*/
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));

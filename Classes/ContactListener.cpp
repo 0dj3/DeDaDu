@@ -4,6 +4,7 @@
 #include "Definitions.h"
 #include "Unit.h"
 #include "Player.h"
+#include "Attack.h"
 
 USING_NS_CC;
 
@@ -30,8 +31,8 @@ void ContactListener::SelectReaction(b2Body* bodyA, b2Body* bodyB)
     case ENEMY:
         BeginEnemyContact(bodyA, bodyB);
         break;
-    case WEAPON:
-        BeginWeaponContact(bodyA, bodyB);
+    case ATTACK:
+        BeginAttackContact(bodyA, bodyB);
         break;
     case ITEM:
         BeginItemContact(bodyA, bodyB);
@@ -57,19 +58,20 @@ void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
     }
 }
 
-void ContactListener::BeginWeaponContact(b2Body* weapon, b2Body* body)
+void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
 {
     Node* node = static_cast<Node*>(body->GetUserData());
-    if (node->getTag() == PLAYER)
+    Attack* attack = static_cast<Attack*>(weapon->GetUserData());
+    if (node->getTag() == attack->GetCreatorTag())
         return;
 
     b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
     direction.Normalize();
     body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
 
-    if (node->getTag() == ENEMY) {
+    if (node->getName() == "unit") {
         Unit* unit = static_cast<Unit*>(body->GetUserData());
-        unit->Damage(static_cast<Weapon*>(weapon->GetUserData())->GetDamage());
+        unit->Damage(attack->GetDamage());
     }
 }
 

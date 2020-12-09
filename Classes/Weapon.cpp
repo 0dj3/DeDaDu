@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "PhysicHelper.h"
 #include "Unit.h"
+#include "InputListener.h"
 
 USING_NS_CC;
 
@@ -11,8 +12,8 @@ Weapon::Weapon(cocos2d::Layer* layer, Item* weapon)
     itemWeapon = weapon;
     this->setTexture(weapon->filename);
     this->getTexture()->setAliasTexParameters();
-    this->setScale(3.0);
-    this->setTag(ContactListener::WEAPON);
+    this->setScale(2.0);
+    //this->setTag(ContactListener::WEAPON);
     isActive = false;
 }
 
@@ -23,22 +24,21 @@ void Weapon::ChangeWeapon(Item* weapon)
     this->getTexture()->setAliasTexParameters();
 }
 
-void Weapon::CreatePhysicBody(Vec2 position)
+void Weapon::CreatePhysicBody(Sprite* sprite)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    Vec2 pos = this->convertToWorldSpace(this->getPosition());
-    bodyDef.position.Set(position.x / PPM, position.y / PPM);
-    //bodyDef.angle = this->getRotation();
+    bodyDef.position.Set(sprite->getPosition().x / PPM, sprite->getPosition().y / PPM);
+    //bodyDef.angle = CC_DEGREES_TO_RADIANS(sprite->getRotation());
     bodyDef.linearDamping = 10.0f;
     bodyDef.angularDamping = 10.0f;
-    bodyDef.userData = this;
+    bodyDef.userData = sprite;
 
     body = PhysicHelper::world->CreateBody(&bodyDef);
     assert(body != NULL);
 
     b2CircleShape circle;
-    circle.m_radius = this->getContentSize().width * this->getScale() / PPM / 2;
+    circle.m_radius = sprite->getContentSize().width * sprite->getScale() / PPM / 2;
     /*b2PolygonShape box;
     box.SetAsBox(this->getContentSize().width * this->getScale() / PPM / 2, this->getContentSize().width * this->getScale() / PPM / 2);*/
     b2FixtureDef shapeDef;
@@ -47,27 +47,33 @@ void Weapon::CreatePhysicBody(Vec2 position)
     shapeDef.friction = 0.0f;
     shapeDef.isSensor = true;
     body->CreateFixture(&shapeDef);
-    //log("%f %f", this->getContentSize().width * this->getScale() / PPM, this->getContentSize().width * this->getScale() / PPM);
 }
 
 void Weapon::Attack(Vec2 position)
 {
     cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create(0.01);
-    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(5 / itemWeapon->stats.find("speed")->second);
-
-    auto startAttack = CallFunc::create([this, position]() {
+    //cocos2d::DelayTime* delay = cocos2d::DelayTime::create(5 / itemWeapon->stats.find("speed")->second);
+    cocos2d::Sprite* attack = new Sprite();
+    attack->initWithFile("res/effects/hit/slash_1.png");
+    attack->setPosition(position);
+    //attack->setTag(ContactListener::WEAPON);
+    attack->setRotation(CC_RADIANS_TO_DEGREES(-InputListener::Instance()->mousePosition.getAngle()));
+    attack->setScale(2);
+    Director::getInstance()->getRunningScene()->addChild(attack);
+    log("%f %f", attack->getPosition().x, attack->getPosition().y);
+    auto startAttack = CallFunc::create([this, attack]() {
         isActive = true;
-        this->setName("");
-        CreatePhysicBody(position);
+        attack->setName("");
+        CreatePhysicBody(attack);
     });
-    auto endAttack = CallFunc::create([this]() {
-        this->setName(DEAD_BODY_TAG);
+    auto endAttack = CallFunc::create([attack]() {
+        attack->setName(DEAD_TAG);
     });
-    auto endActive = CallFunc::create([this]() {
+    /*auto endActive = CallFunc::create([this]() {
         isActive = false;
-    });
+    });*/
 
-    auto seq = cocos2d::Sequence::create(startAttack, microDelay, endAttack, delay, endActive, nullptr);
+    auto seq = cocos2d::Sequence::create(startAttack, microDelay, endAttack, nullptr);
 
-    this->runAction(seq);
+    attack->runAction(seq);
 }
