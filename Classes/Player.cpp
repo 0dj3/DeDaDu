@@ -25,7 +25,7 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->layer = layer;
         std::map<std::string, int> stats{
             {"damage", 20},
-            {"speed", 2}
+            {"speed", 8}
         };
         Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
         newPlayer->CreateWeapon(weapon);
