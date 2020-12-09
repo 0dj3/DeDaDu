@@ -489,12 +489,6 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
         }
     }
     else {
-        for (int i = 0; i < quantityEnemy; i++) {
-            if (enemies[i]->hp <= 0) {
-                enemies.erase(enemies.begin() + i);
-                break;
-            }
-        }
         if (quantityEnemy == 0) {
             for (int i = 0; i < PhBoDoorRoom.size(); i++) {
                 PhysicHelper::world->DestroyBody(PhBoDoorRoom[i]);

@@ -124,6 +124,12 @@ void GameScene::update(float dt)
         if (n->getName() == DEAD_TAG)
         {
             PhysicHelper::world->DestroyBody(b);
+            for (int i = 0; i < enemies.size(); i++) {
+                if (enemies[i] == n) {
+                    enemies.erase(enemies.begin() + i);
+                    break;
+                }
+            }
             n->removeFromParentAndCleanup(true);
         }
     }
