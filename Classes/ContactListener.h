@@ -12,7 +12,7 @@ public:
     {
         PLAYER = 1,
         ENEMY,
-        WEAPON,
+        ATTACK,
         ITEM
     };
 
@@ -25,7 +25,7 @@ private:
     void SelectReaction(b2Body* bodyA, b2Body* bodyB);
     void BeginPlayerContact(b2Body* bodyA, b2Body* bodyB);
     void BeginEnemyContact(b2Body* bodyA, b2Body* bodyB);
-    void BeginWeaponContact(b2Body* bodyA, b2Body* bodyB);
+    void BeginAttackContact(b2Body* bodyA, b2Body* bodyB);
     void BeginItemContact(b2Body* bodyA, b2Body* bodyB);
 
 };

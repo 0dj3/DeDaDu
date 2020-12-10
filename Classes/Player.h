@@ -19,9 +19,11 @@ public:
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
 private:
     bool isFighting = false;
-    Weapon* _weapon = NULL;
+    Item* hends = NULL;
 
-    void CreateWeapon(Item* weapon);
+    cocos2d::Sprite* handsSprite;
+
+    void PutInHands(Item* item);
 
     void update(float dt);
 

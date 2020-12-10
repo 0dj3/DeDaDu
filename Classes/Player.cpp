@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Definitions.h"
 #include <cstdlib>
+#include "Attack.h"
 
 USING_NS_CC;
 
@@ -18,17 +19,24 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->sprite->getTexture()->setAliasTexParameters();
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
+        newPlayer->setTag(newPlayer->tag);
+        newPlayer->layer = layer;
+
+        newPlayer->handsSprite = new Sprite();
+        newPlayer->handsSprite->setScale(2);
+        newPlayer->handsSprite->setPosition(Vec2(newPlayer->sprite->getContentSize().width / 2, -15));
+        newPlayer->handsSprite->setAnchorPoint(newPlayer->sprite->getPosition());
+        newPlayer->addChild(newPlayer->handsSprite);
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
-        newPlayer->setTag(newPlayer->tag);
-        newPlayer->layer = layer;
         std::map<std::string, int> stats{
             {"damage", 20},
-            {"speed", 2}
+            {"speed", 5}
         };
         Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
-        newPlayer->CreateWeapon(weapon);
+        newPlayer->PutInHands(weapon);
+
         newPlayer->scheduleUpdate();
         return newPlayer;
     }
@@ -36,16 +44,25 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
     return NULL;
 }
 
+void Player::PutInHands(Item* item)
+{
+    hends = item;
+    handsSprite->setTexture(hends->filename);
+    handsSprite->getTexture()->setAliasTexParameters();
+}
+
 void Player::update(float dt)
 {
     move();
     rotate();
-    if (_weapon->isActive == false && InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)]) 
+    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
+        InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] = false;
+        log("%f %f", this->getPosition().x, this->getPosition().y);
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
-        _weapon->Attack(pos);
+        Attack::StartMeleeAttack(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER, hends);
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
@@ -75,12 +92,12 @@ void Player::update(float dt)
             targetItem = NULL;
         }
         else {
-            _weapon->ChangeWeapon(Item::create(targetItem));
+            PutInHands(Item::create(targetItem));
             targetItem->setName(DEAD_TAG);
             targetItem = NULL;
         }
     }
-    
+
     /*for (b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next)
     {
         b2Contact* contact = ce->contact;
@@ -96,20 +113,8 @@ void Player::update(float dt)
     }*/
 }
 
-void Player::CreateWeapon(Item* weapon) {
-    _weapon = new Weapon(layer, weapon);
-    if (_weapon) {
-        _weapon->setPosition(Vec2(this->sprite->getContentSize().width / 2, 0));
-        _weapon->setAnchorPoint(this->sprite->getPosition());
-        this->addChild(_weapon);
-        return;
-    }
-    CC_SAFE_DELETE(_weapon);
-    return;
-}
-
 void Player::rotate() {
-    _weapon->setRotation(CC_RADIANS_TO_DEGREES(-(_weapon->getPosition() - InputListener::Instance()->mousePosition).getAngle()) - 135);
+
 }
 
 void Player::move()
@@ -131,11 +136,7 @@ void Player::move()
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
     b2Vec2 desiredVel = stats->speed * toTarget;
-    //b2Vec2 currentVel = body->GetLinearVelocity();
-    //b2Vec2 thrust = desiredVel - currentVel;
     body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
-    //log("%f %f", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
-    //log("X = %f, Y = %f", this->getPosition().x, this->getPosition().y);
 
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());

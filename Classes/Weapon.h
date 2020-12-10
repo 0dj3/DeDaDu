@@ -27,7 +27,7 @@ private:
     /*int _damage = 0;
     int _speed = 0;*/
 
-    void CreatePhysicBody(cocos2d::Vec2 position);
+    void CreatePhysicBody(cocos2d::Sprite* sprite);
 };
 
 #endif // __WEAPON_H__

@@ -51,11 +51,13 @@ bool GameScene::init()
     PhysicHelper::CreateWorld();
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
     
-    generation = Generation_map::createScene();
+    generation = Generation_map::createScene(checkMap);
     this->addChild(generation);
 
+    visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
+    log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);
 
     hud = HUD::create();
     this->addChild(hud, 5);
@@ -122,24 +124,33 @@ void GameScene::update(float dt)
         if (n->getName() == DEAD_TAG)
         {
             PhysicHelper::world->DestroyBody(b);
+            if (n->getTag() == ContactListener::ENEMY) {
+                for (int i = 0; i < enemies.size(); i++) {
+                    if (enemies[i] == n) {
+                        enemies.erase(enemies.begin() + i);
+                        break;
+                    }
+                }
+            }
+            
             n->removeFromParentAndCleanup(true);
         }
     }
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
-        Node* weapon = (Node*)b->GetUserData();
-        if (b->GetUserData() != NULL && weapon->getTag() == ContactListener::WEAPON)
+        /*Node* weapon = (Node*)b->GetUserData();
+        if (b->GetUserData() != NULL && weapon->getTag() == ContactListener::ATTACK)
         {
             continue;
-        }
+        }*/
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
             //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
-    
+    enemies = generation->checkRoom(player, enemies, checkMap);
     //testMap
     auto pos = generation->getPosTileMapOneEnd();
     auto sizeEnd = generation->getSizeTileMapOneEnd();
@@ -147,11 +158,12 @@ void GameScene::update(float dt)
     auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
     auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
     auto posBY = pos.y + 80;
-    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == true) {
-        generation->generation(true);
-        checkMap = false;
+    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == false && enemies.size() == 0) {
+        checkMap = true;
+        generation->generation(checkMap);
+        player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
-    enemies = generation->checkRoom(player, enemies, false);
+    
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){
