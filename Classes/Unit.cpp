@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cmath>
 USING_NS_CC;
 
 Unit::Unit()
@@ -32,7 +33,22 @@ void Unit::Damage(int value) {
 	{
 		CCLOG("Soundless Unit");
 	}
-	
+
+	// всплывающий урон (временно)
+	std::string str = std::to_string(value);
+	Label* counter = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 15);
+	counter->setPosition(Vec2(this->getPosition().x - 30 + rand() % 60, this->getPosition().y - 5 + rand() % 10));
+	Director::getInstance()->getRunningScene()->addChild(counter);
+	auto moveBy = MoveBy::create(2, Vec2(0, 40));
+	auto fadeOut = FadeOut::create(3.0f);
+	auto spawn = cocos2d::Spawn::create(moveBy, fadeOut, nullptr);
+	auto end = CallFunc::create([counter]() {
+		counter->removeFromParentAndCleanup(true);
+		});
+	auto seq = cocos2d::Sequence::create(spawn, end, nullptr);
+	counter->runAction(seq);
+	// ---------------
+
 	if (hp <= value) {
 		if (tag == ContactListener::PLAYER)
 		{

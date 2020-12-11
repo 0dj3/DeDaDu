@@ -36,6 +36,19 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
 
 void Goblin::update(float dt)
 {   
+    if (!getNumberOfRunningActions()) {
+        cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 1);
+        auto startAttack = CallFunc::create([this]() {
+            b2Vec2 toTarget = b2Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
+            toTarget.Normalize();
+            b2Vec2 desiredVel = 50 * toTarget;
+            body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
+        });
+
+        auto seq = cocos2d::Sequence::create(startAttack, microDelay, nullptr);
+
+        this->runAction(seq);
+    }
     Vec2 toTarget = _player->getPosition() - this->getPosition();
     toTarget.normalize();
     Vec2 desiredVel = stats->speed * toTarget;
