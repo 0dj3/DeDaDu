@@ -3,13 +3,14 @@
 #include <vector>
 #include <Slime.h>
 #include <Goblin.h>
+#include <Store.h>
 USING_NS_CC;
 #define SIZE_MAP 5;
 
 class Generation_map: public Layer {
 public:
 	static Generation_map* createScene(bool checkLoc);
-
+    
     void generation(bool checkLoc);
     void border(TMXTiledMap* tiled);
     void borderForRoom(TMXTiledMap* tiled);
@@ -26,9 +27,13 @@ public:
     std::vector<Unit*> checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
     std::vector<Unit*> createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player);
 
+    void createStore();
+
 private:
     bool init(bool checkLoc);
     int** generationArrayMap(int sizeMap);
+
+    Store* store;
 
     TMXTiledMap* tileMap;
     TMXTiledMap* tileHallML;

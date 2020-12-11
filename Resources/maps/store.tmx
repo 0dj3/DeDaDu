@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="3" height="3" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
- <tileset firstgid="1" name="box" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="box.png" width="32" height="16"/>
- </tileset>
- <tileset firstgid="3" source="full tilemap.tsx"/>
- <layer id="3" name="background" width="3" height="3">
+ <tileset firstgid="1" source="full tilemap.tsx"/>
+ <layer id="3" name="walls" width="3" height="3">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYIViQQYIYAJiRiDmAWJeIAYABDgAPA==
-  </data>
- </layer>
- <layer id="4" name="item" width="3" height="3">
-  <data encoding="base64" compression="zlib">
-   eJxjYCAMAAAkAAE=
+   eJxjYmBgYIZifgYI0AdiPSDmAmJuIAYACBwAig==
   </data>
  </layer>
 </map>

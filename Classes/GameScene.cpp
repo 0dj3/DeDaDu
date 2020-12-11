@@ -42,7 +42,7 @@ bool GameScene::init()
     {
         return false;
     }
-    srand(time(0));
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -53,12 +53,6 @@ bool GameScene::init()
     
     generation = Generation_map::createScene(checkMap);
     this->addChild(generation);
-
-    auto mappppp = generation->getAllMapOne();
-    auto countMap = mappppp.size();
-    auto mapLocation = 2 + rand() % (countMap - 2);
-    store = Store::createScene(mappppp[mapLocation], countMap);
-    this->addChild(store);
 
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
