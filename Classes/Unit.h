@@ -9,6 +9,7 @@
 #include <Box2d/Box2d.h>
 #include "IContact.h"
 #include "ContactListener.h"
+#include <cstdlib>
 
 class Unit : public cocos2d::Node
 {

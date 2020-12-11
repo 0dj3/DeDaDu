@@ -53,7 +53,7 @@ void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
             b2Vec2 direction = body->GetPosition() - enemy->GetPosition();
             direction.Normalize();
             body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
-            unit->Damage(20);
+            unit->Damage(5);
         }
     }
 }
