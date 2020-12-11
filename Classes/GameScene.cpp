@@ -59,7 +59,7 @@ bool GameScene::init()
     this->addChild(player);
     log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);
 
-    hud = HUD::create();
+    hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
 
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
@@ -98,7 +98,6 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
-    hud->updatePos(player);
     int velocityIterations = 6;
     int positionIterations = 2;
 

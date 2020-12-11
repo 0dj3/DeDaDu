@@ -17,7 +17,7 @@ public:
     Item* targetItem = NULL;
     Player();
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
-    int gold = 0;
+    int gold = 10;
 private:
     bool isFighting = false;
     Item* hends = NULL;

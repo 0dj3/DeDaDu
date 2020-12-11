@@ -5,11 +5,11 @@
 
 USING_NS_CC;
 
-HUD* HUD::create() {
+HUD* HUD::create(Player* player) {
 	HUD* hud = new HUD();
-
+	hud->playerHUD = player;
 	hud->Init();
-
+	hud->scheduleUpdate();
 	return hud;
 }
 
@@ -35,7 +35,7 @@ void HUD::Init()
 	this->addChild(coinBar);
 
 	char str[200] = { 0 };
-	sprintf(str, "%d", gold);
+	sprintf(str, "%d", playerHUD->gold);
 	counter = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 27);
 	counter->setAnchorPoint(Point(0, 1));
 	counter->setPosition(Point(-580, 303));
@@ -50,7 +50,7 @@ void HUD::Init()
 	healthBar->setAnchorPoint(Point(0, 1));
 	healthBar->setPosition(Point(-620, 350));
 	healthBar->setDirection(ui::LoadingBar::Direction::LEFT);
-	healthBar->setPercent(100);
+	healthBar->setPercent(playerHUD->hp);
 	this->addChild(healthBar);
 
 	auto playItem = MenuItemImage::create("res/ui/buttons/exitbutton.png", "res/ui/buttons/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
@@ -71,14 +71,10 @@ void HUD::getHit(int damage, Unit* player) {
 	}
 }
 
-void HUD::updatePos(Unit* player) 
-{
-	if (player)
-	{
-		healthBar->setPercent(player->hp);
-		this->setPosition(player->getPosition());
-	}
-}
+//void HUD::updatePos(Unit* player) 
+//{
+//	
+//}
 
 void HUD::GoToMenu(cocos2d::Ref* sender)
 {
@@ -92,4 +88,13 @@ void HUD::GoToMenu(cocos2d::Ref* sender)
 void HUD::setGold(int x)
 {
 	gold += x;
+}
+
+void HUD::update(float dt)
+{
+	if (playerHUD)
+	{
+		healthBar->setPercent(playerHUD->hp);
+		this->setPosition(playerHUD->getPosition());
+	}
 }
