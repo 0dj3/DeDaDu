@@ -78,8 +78,13 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
 void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
 {
     Node* node = static_cast<Node*>(body->GetUserData());
+    Item* itemNode = static_cast<Item*>(item->GetUserData());
     if (node->getTag() == PLAYER) {
         Player* player = static_cast<Player*>(body->GetUserData());
+        if (itemNode->type == Item::GOLD) {
+            player->setGold(itemNode->stats.begin()->second);
+            itemNode->setName(DEAD_TAG);
+        }
         player->targetItem = static_cast<Item*>(item->GetUserData());
     }
 }

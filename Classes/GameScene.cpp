@@ -126,6 +126,14 @@ void GameScene::update(float dt)
             if (n->getTag() == ContactListener::ENEMY) {
                 for (int i = 0; i < enemies.size(); i++) {
                     if (enemies[i] == n) {
+                        Item* item;
+                        std::map<std::string, int> stats{
+                            {"value", 1},
+                            {"damage", 100}
+                        };
+                        item = Item::create(Item::GOLD, "Gold", "Gold", "res/items/coin.png", stats);
+                        Director::getInstance()->getRunningScene()->addChild(item);
+                        item->DropItem(enemies[i]->getPosition());
                         enemies.erase(enemies.begin() + i);
                         break;
                     }
@@ -138,15 +146,9 @@ void GameScene::update(float dt)
 
     for (b2Body* b = PhysicHelper::world->GetBodyList(); b; b = b->GetNext())
     {
-        /*Node* weapon = (Node*)b->GetUserData();
-        if (b->GetUserData() != NULL && weapon->getTag() == ContactListener::ATTACK)
-        {
-            continue;
-        }*/
         if (b->GetUserData() != NULL) {
             Sprite* myActor = (Sprite*)b->GetUserData();
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
-            //myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
         }
     }
     enemies = generation->checkRoom(player, enemies, checkMap);

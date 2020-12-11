@@ -13,6 +13,7 @@ Item* Item::create(ItemType type, std::string title, std::string description, st
     Item* newItem = new Item();
     if (newItem->initWithFile(filename)) {
         newItem->getTexture()->setAliasTexParameters();
+        newItem->setScale(2.0);
         newItem->type = type;
         newItem->title = title;
         newItem->description = description;
@@ -32,9 +33,11 @@ Item* Item::create(Item* item)
 
 void Item::DropItem(Vec2 position)
 {
-    this->setPosition(position);
-    this->setName("");
-    b2Body* body = PhysicHelper::createDynamicPhysicBody(this, this->getContentSize());
+    setPosition(position);
+    setName("");
+    CreatePhysicBody();
+
+    //b2Body* body = PhysicHelper::createDynamicPhysicBody(this, this->getContentSize());
 }
 
 void Item::PickUpItem()
@@ -42,7 +45,25 @@ void Item::PickUpItem()
     this->setName(DEAD_BODY_TAG);
 }
 
-void Item::CreatePhysicBody(Vec2 position)
+void Item::CreatePhysicBody()
 {
-    
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.fixedRotation = true;
+    bodyDef.position.Set(this->getPosition().x / PPM, this->getPosition().y / PPM);
+    bodyDef.linearDamping = 10.0f;
+    bodyDef.angularDamping = 10.0f;
+    bodyDef.userData = this;
+
+    b2Body* body = PhysicHelper::world->CreateBody(&bodyDef);
+    assert(body != NULL);
+
+    b2CircleShape circle;
+    circle.m_radius = this->getContentSize().width * this->getScale() / PPM / 2;
+
+    b2FixtureDef shapeDef;
+    shapeDef.shape = &circle;
+    shapeDef.density = 1.0f;
+    shapeDef.friction = 0.0f;
+    body->CreateFixture(&shapeDef);
 }

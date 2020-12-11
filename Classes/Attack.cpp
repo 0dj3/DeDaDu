@@ -43,7 +43,6 @@ void Attack::StartMeleeAttack(Vec2 position, Vec2 target, ContactListener::BodyT
         auto seq = cocos2d::Sequence::create(startAttack, microDelay, endAttack, nullptr);
 
         attack->runAction(seq);
-        log("111");
         return;
     }
     CC_SAFE_DELETE(attack);
@@ -71,5 +70,4 @@ void Attack::CreatePhysicBody() {
     shapeDef.friction = 0.0f;
     shapeDef.isSensor = true;
     body->CreateFixture(&shapeDef);
-    log("222");
 }

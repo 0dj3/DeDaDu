@@ -31,7 +31,7 @@ public:
 
     void PickUpItem();
 
-    void CreatePhysicBody(cocos2d::Vec2 position);
+    void CreatePhysicBody();
 
 private:
 
