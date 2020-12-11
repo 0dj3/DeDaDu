@@ -4,6 +4,12 @@
 #include "InputListener.h"
 #include "DeathScreen.h"
 #include "HUD.h"
+#include "rapidjson/document.h"
+#include "rapidjson/error/en.h"
+#include <rapidjson/istreamwrapper.h>
+#include <fstream>
+#include <sstream>
+#include <string>
 USING_NS_CC;
 
 Unit::Unit()
@@ -13,6 +19,7 @@ Unit::Unit()
 	stats = new UnitStats();
 	this->addChild(sprite);
 	this->setName("unit");
+	loadStats();
 }
 
 void Unit::Damage(int value) {
@@ -49,4 +56,18 @@ void Unit::Dead()
 {	
 	//this->removeFromParentAndCleanup(true);
 	this->setName(DEAD_TAG);
+}
+
+void Unit::loadStats() {
+	std::ifstream ifs("properties/balance.json");
+	rapidjson::IStreamWrapper isw(ifs);
+
+	rapidjson::Document stats;
+	stats.ParseStream(isw);
+	assert(stats.IsObject());
+
+	assert(stats.HasMember("player_hp"));
+	assert(stats["player_hp"].IsInt());
+
+	hp = stats["player_hp"].GetInt();
 }

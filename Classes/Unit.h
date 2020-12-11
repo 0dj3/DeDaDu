@@ -28,8 +28,9 @@ public:
 
     char* dmgsound;
 
-    int hp = 100;
+    int hp;
 private:
+    void loadStats();
     //bool isDead = false;
 
 };
