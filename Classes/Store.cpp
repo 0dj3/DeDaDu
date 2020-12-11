@@ -1,19 +1,15 @@
 #include "Store.h"
-#include <ctime>
 USING_NS_CC;
 
-Store* Store::createScene() {
+Store* Store::createScene(TMXTiledMap* map, int countMap) {
 	Store* store = new Store();
-	store->init();
+	store->init(map, countMap);
 	return store;
 }
 
-bool Store::init() {
-	Generation_map* gener = new Generation_map();
-	allMapOne = gener->getAllMainMap();
-	int storeLoc = 2 + rand() % (allMapOne.size() - 2);
-	auto posMap = allMapOne[storeLoc]->getPosition();
-	auto sizeMap = allMapOne[storeLoc]->getMapSize();
+bool Store::init(TMXTiledMap* map, int countMap) {
+	auto posMap = map->getPosition();
+	auto sizeMap = map->getMapSize();
 
 	store = TMXTiledMap::create("maps/store.tmx");
 	store->setScale(3.0);

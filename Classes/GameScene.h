@@ -6,6 +6,7 @@
 #include "InputListener.h"
 #include "HUD.h"
 #include "Generation_map.h"
+#include "Store.h"
 
 USING_NS_CC;
 
@@ -16,6 +17,7 @@ public:
     HUD* hud;
     Unit* slime;
     Generation_map* generation;
+    Store* store;
 
     static cocos2d::Scene* createScene();
 

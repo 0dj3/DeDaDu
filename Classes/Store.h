@@ -1,14 +1,13 @@
 #pragma once
 #include <cocos2d.h>
-#include <Generation_map.h>
 #include "2d/CCFastTMXLayer.h"
 USING_NS_CC;
 
 class Store : public Layer {
 public:
-	static Store* createScene();
+	static Store* createScene(TMXTiledMap* map, int countMap);
 private:
-	bool init();
+	bool init(TMXTiledMap* map, int countMap);
 	TMXTiledMap* store;
-	std::vector<TMXTiledMap*> allMapOne;
+	TMXTiledMap* MapOne;
 };

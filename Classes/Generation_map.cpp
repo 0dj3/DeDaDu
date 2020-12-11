@@ -442,7 +442,7 @@ Size Generation_map::getSizeTileMapOneEnd() {
     return tileMapOne->getMapSize();
 }
 
-std::vector<TMXTiledMap*> Generation_map::getAllMainMap() {
+std::vector<TMXTiledMap*> Generation_map::getAllMapOne() {
     return allMapOne;
 }
 

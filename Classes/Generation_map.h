@@ -20,7 +20,7 @@ public:
     
     Vec2 getPosTileMapOneEnd();
     Size getSizeTileMapOneEnd();
-    std::vector<TMXTiledMap*> getAllMainMap();
+    std::vector<TMXTiledMap*> getAllMapOne();
 
     void location2(TMXTiledMap* tiled, bool checkLoc);
     std::vector<Unit*> checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
