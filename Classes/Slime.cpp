@@ -31,19 +31,18 @@ Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
 }
 
 void Slime::update(float dt)
-{   
-    /*move();*/
-}
-
-void Slime::move()
 {
-   /* Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    ccBezierConfig bezier;
-    bezier.controlPoint_1 = Point(, targetY);
-    bezier.controlPoint_2 = Point(visibleSize.width / 2 + origin.x - 100, visibleSize.height / 2 + origin.y);
-    bezier.endPosition = Point(targetX, targetY);
+    if (!getNumberOfRunningActions()) {
+        cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 1);
+        auto startAttack = CallFunc::create([this]() {
+            b2Vec2 toTarget = b2Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
+            toTarget.Normalize();
+            b2Vec2 desiredVel = 50 * toTarget;
+            body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
+        });
 
-    auto move = BezierTo::create(100, bezier);
-    this->runAction(move);*/
-}   
+        auto seq = cocos2d::Sequence::create(startAttack, microDelay, nullptr);
+
+        this->runAction(seq);
+    }
+}  

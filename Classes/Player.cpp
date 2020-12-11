@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Definitions.h"
-#include <cstdlib>
 #include "Attack.h"
 
 USING_NS_CC;
