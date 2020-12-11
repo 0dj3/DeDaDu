@@ -67,24 +67,24 @@ bool GameScene::init()
     enemies.push_back(slime);
 
     //
-    char str1[200] = { 0 };
-    auto spritecache1 = SpriteFrameCache::getInstance();
-    spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
-    auto spritesheet1 = SpriteBatchNode::create("res/enemy/goblin/goblin.png");
-    this->addChild(spritesheet1);
+    //char str1[200] = { 0 };
+    //auto spritecache1 = SpriteFrameCache::getInstance();
+    //spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
+    //auto spritesheet1 = SpriteBatchNode::create("res/enemy/goblin/goblin.png");
+    //this->addChild(spritesheet1);
 
-    Vector<SpriteFrame*> idleAnimFrames1(4);
-    for (int i = 1; i <= 6; i++) {
-        sprintf(str1, "idle_%i.png", i);
-        idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
-    }
-    auto idleAnimation1 = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
-    auto demo1 = Sprite::createWithSpriteFrameName("idle_1.png");
-    demo1->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
-    demo1->setScale(3.0);
-    Action* action1 = RepeatForever::create(Animate::create(idleAnimation1));
-    demo1->runAction(action1);
-    spritesheet1->addChild(demo1);
+    //Vector<SpriteFrame*> idleAnimFrames1(4);
+    //for (int i = 1; i <= 6; i++) {
+    //    sprintf(str1, "idle_%i.png", i);
+    //    idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
+    //}
+    //auto idleAnimation1 = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
+    //auto demo1 = Sprite::createWithSpriteFrameName("idle_1.png");
+    //demo1->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
+    //demo1->setScale(3.0);
+    //Action* action1 = RepeatForever::create(Animate::create(idleAnimation1));
+    //demo1->runAction(action1);
+    //spritesheet1->addChild(demo1);
     //
     auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
     this->addChild(fly);

@@ -28,6 +28,19 @@ void HUD::Init()
 	hBBackground->setPosition(Point(-620, 350));
 	this->addChild(hBBackground);
 
+	coinBar = Sprite::create("res/ui/coins.png");
+	coinBar->setAnchorPoint(Point(0, 1));
+	coinBar->setScale(0.8);
+	coinBar->setPosition(Point(-620, 315));
+	this->addChild(coinBar);
+
+	char str[200] = { 0 };
+	sprintf(str, "%d", gold);
+	counter = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 27);
+	counter->setAnchorPoint(Point(0, 1));
+	counter->setPosition(Point(-580, 303));
+	this->addChild(counter, 5);
+
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
 	hBBackground->setPosition(Point(-620, 350));
@@ -74,4 +87,9 @@ void HUD::GoToMenu(cocos2d::Ref* sender)
 
 	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 
+}
+
+void HUD::setGold(int x)
+{
+	gold += x;
 }

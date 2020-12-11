@@ -15,14 +15,18 @@ public:
     ui::LoadingBar* healthBar;
     Sprite* hBBackground;
     Sprite* weaponSlot;
+    Sprite* coinBar;
+    Label* counter;
+    
     void getHit(int damage, Unit* player);
     void updatePos(Unit* player);
+    void setGold(int plus);
     Menu* menubutton;
+    int gold = 0;
 private:
     void Init();
     int health = 80;
     void GoToMenu(cocos2d::Ref* sender);
-    
 };
 
 #endif // __HUD_H__

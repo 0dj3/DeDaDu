@@ -3,6 +3,7 @@
 #include "MainMenuScene.h"
 #include "InputListener.h"
 #include "DeathScreen.h"
+#include "HUD.h"
 USING_NS_CC;
 
 Unit::Unit()
