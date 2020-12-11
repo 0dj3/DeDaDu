@@ -82,7 +82,7 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
     if (node->getTag() == PLAYER) {
         Player* player = static_cast<Player*>(body->GetUserData());
         if (itemNode->type == Item::GOLD) {
-            player->setGold(itemNode->stats.begin()->second);
+            player->setGold(itemNode->stats.find("value")->second);
             itemNode->setName(DEAD_TAG);
         }
         player->targetItem = static_cast<Item*>(item->GetUserData());
