@@ -8,6 +8,7 @@ Player::Player()
 {
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
+    this->gold = 100;
     this->autorelease();
 }
 
@@ -81,19 +82,22 @@ void Player::update(float dt)
             item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
         }
         layer->addChild(item);
-        item->DropItem(this->getPosition());
+        item->Sell(this->getPosition(), 10);
     }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
-        if (targetItem->type == Item::POTION) {
-            Damage(targetItem->stats.begin()->second);
-            targetItem->setName(DEAD_TAG);
-            targetItem = NULL;
-        }
-        else {
-            PutInHands(Item::create(targetItem));
-            targetItem->setName(DEAD_TAG);
-            targetItem = NULL;
+        if (targetItem->IsForSale() && gold >= targetItem->price) {
+            gold -= targetItem->price;
+            if (targetItem->type == Item::POTION) {
+                Damage(targetItem->stats.begin()->second);
+                targetItem->setName(DEAD_TAG);
+                targetItem = NULL;
+            }
+            else {
+                PutInHands(Item::create(targetItem));
+                targetItem->setName(DEAD_TAG);
+                targetItem = NULL;
+            }
         }
     }
 

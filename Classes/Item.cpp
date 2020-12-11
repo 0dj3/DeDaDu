@@ -1,6 +1,5 @@
 #include "Item.h"
 #include "Definitions.h"
-#include "PhysicHelper.h"
 USING_NS_CC;
 
 Item::Item()
@@ -40,12 +39,20 @@ void Item::DropItem(Vec2 position)
     //b2Body* body = PhysicHelper::createDynamicPhysicBody(this, this->getContentSize());
 }
 
+void Item::Sell(cocos2d::Vec2 position, int price) {
+    setPosition(position);
+    isForSale = true;
+    this->price = price;
+    b2Body* body = CreatePhysicBody();
+    body->SetType(b2_staticBody);
+}
+
 void Item::PickUpItem()
 {
     this->setName(DEAD_BODY_TAG);
 }
 
-void Item::CreatePhysicBody()
+b2Body* Item::CreatePhysicBody()
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -66,4 +73,6 @@ void Item::CreatePhysicBody()
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
     body->CreateFixture(&shapeDef);
+
+    return body;
 }

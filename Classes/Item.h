@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include <map>
 #include <string>
+#include "PhysicHelper.h"
 
 class Item : public cocos2d::Sprite
 {
@@ -21,6 +22,7 @@ public:
     std::string description;
     std::string filename;
     std::map<std::string, int> stats;
+    int price = 0;
 
     Item();
 
@@ -31,9 +33,14 @@ public:
 
     void PickUpItem();
 
-    void CreatePhysicBody();
+    b2Body* CreatePhysicBody();
+
+    void Sell(cocos2d::Vec2 position, int price);
+
+    bool IsForSale() { return isForSale; };
 
 private:
+    bool isForSale = false;
 
 };
 
