@@ -17,8 +17,11 @@ public:
     void generMapOne(TMXTiledMap* sizeMap, int direction, bool checkLoc);
     void generMainRoom(TMXTiledMap* tiled, int direction, bool checkLoc);
     void createDoor(TMXTiledMap* tiled, int direction, bool checkLoc, bool checkDelRoom);
+    
     Vec2 getPosTileMapOneEnd();
     Size getSizeTileMapOneEnd();
+    std::vector<TMXTiledMap*> getAllMainMap();
+
     void location2(TMXTiledMap* tiled, bool checkLoc);
     std::vector<Unit*> checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
     std::vector<Unit*> createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player);

@@ -442,6 +442,10 @@ Size Generation_map::getSizeTileMapOneEnd() {
     return tileMapOne->getMapSize();
 }
 
+std::vector<TMXTiledMap*> Generation_map::getAllMainMap() {
+    return allMapOne;
+}
+
 std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc) {
     quantityEnemy = enemies.size();
     if (checkDoorRoom == false) {
