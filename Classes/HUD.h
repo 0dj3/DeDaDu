@@ -26,7 +26,6 @@ public:
     /*void updatePos(Unit* player);*/
     void setGold(int plus);
     Menu* menubutton;
-    int gold = 0;
 private:
     void Init();
     int health = 80;

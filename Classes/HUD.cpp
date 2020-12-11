@@ -39,7 +39,7 @@ void HUD::Init()
 	counter = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 27);
 	counter->setAnchorPoint(Point(0, 1));
 	counter->setPosition(Point(-580, 303));
-	this->addChild(counter, 5);
+	this->addChild(counter);
 
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
@@ -71,11 +71,6 @@ void HUD::getHit(int damage, Unit* player) {
 	}
 }
 
-//void HUD::updatePos(Unit* player) 
-//{
-//	
-//}
-
 void HUD::GoToMenu(cocos2d::Ref* sender)
 {
 	AudioEngine::stopAll();
@@ -87,7 +82,7 @@ void HUD::GoToMenu(cocos2d::Ref* sender)
 
 void HUD::setGold(int x)
 {
-	gold += x;
+	playerHUD->gold += x;
 }
 
 void HUD::update(float dt)
@@ -96,5 +91,13 @@ void HUD::update(float dt)
 	{
 		healthBar->setPercent(playerHUD->hp);
 		this->setPosition(playerHUD->getPosition());
+
+		removeChild(counter, true);
+		char str[200] = { 0 };
+		sprintf(str, "%d", playerHUD->gold);
+		counter = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 27);
+		counter->setAnchorPoint(Point(0, 1));
+		counter->setPosition(Point(-580, 303));
+		this->addChild(counter);
 	}
 }

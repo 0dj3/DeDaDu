@@ -16,6 +16,7 @@ class Player : public Unit
 public:
     Item* targetItem = NULL;
     Player();
+    void setGold(int x);
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
     int gold = 10;
 private:

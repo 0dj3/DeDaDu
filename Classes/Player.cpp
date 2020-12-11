@@ -141,3 +141,8 @@ void Player::move()
     auto cam = Camera::getDefaultCamera();
     cam->setPosition(this->getPosition());
 }
+
+void Player::setGold(int x)
+{
+    gold += x;
+}
