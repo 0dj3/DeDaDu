@@ -512,7 +512,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 0 + rand() % 1;
+    int count = 1 + rand() % 8;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
         int enemyType = 1 + rand() % 3;
@@ -547,11 +547,11 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
 
 void Generation_map::createStore() {
     srand(time(0));
-    auto countMap = allMapOne.size();
-    auto mapLocation = 2 + rand() % (countMap - 2);
-    store = Store::createScene(allMapOne[2], countMap);
+    auto countMap = allMapOne.size() - 1;
+    auto mapLocation = 1 + rand() % (countMap - 1);
+    store = Store::createScene(allMapOne[mapLocation], countMap);
     this->addChild(store);
-
+    allMapOne.erase(allMapOne.begin() + mapLocation);
     auto storeMap = store->getMap();
 
     border(storeMap);
