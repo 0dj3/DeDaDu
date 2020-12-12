@@ -52,12 +52,15 @@ void Goblin::update(float dt)
         Attack::StartMeleeAttack(pos, _player->getPosition(), ContactListener::ENEMY, hands->GetItem());
     }*/
     if (!getNumberOfRunningActions()) {
-        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 2);
+        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
         auto startAttack = CallFunc::create([this]() {
-            b2Vec2 toTarget = b2Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
-            toTarget.Normalize();
-            b2Vec2 desiredVel = 75 * toTarget;
-            body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
+            Vec2 toTarget;
+            //toTarget = Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
+            toTarget = _player->getPosition() - this->getPosition();
+            toTarget.normalize();
+            Vec2 desiredVel = 50 * toTarget * (rand() % 2);
+            b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
+            body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
         });
 
         auto seq = cocos2d::Sequence::create(delay, startAttack, nullptr);
