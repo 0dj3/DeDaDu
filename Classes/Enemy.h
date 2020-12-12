@@ -19,6 +19,8 @@ public:
         return this->getPosition().distance(_player->getPosition()) <= range ? true : false;  
     };
 
+    static void DropItems(cocos2d::Vec2 position);
+
     int range = 100;
 
 private:
