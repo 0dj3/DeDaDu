@@ -17,7 +17,7 @@ public:
     CREATE_FUNC(MainMenuScene);
     bool sound = true;
 private:
-    void GoToGameScene(cocos2d::Ref* sender);
+    void GoToCutScene(cocos2d::Ref* sender);
 
     void GoToSettings(cocos2d::Ref* sender);
 

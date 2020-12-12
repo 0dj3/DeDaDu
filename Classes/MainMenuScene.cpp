@@ -1,5 +1,6 @@
 #include "MainMenuScene.h"
 #include "GameScene.h"
+#include "CutScene.h"
 #include "Settings.h"
 #include "Definitions.h"
 #include "AudioEngine.h"
@@ -43,7 +44,7 @@ bool MainMenuScene::init()
     //backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     //this->addChild(backgroundSprite);
 
-    auto playItem = MenuItemImage::create("res/ui/buttons/start.png", "res/ui/buttons/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
+    auto playItem = MenuItemImage::create("res/ui/buttons/start.png", "res/ui/buttons/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToCutScene,this));
     auto settingsItem = MenuItemImage::create("res/ui/buttons/options.png", "res/ui/buttons/options_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
     auto exitItem = MenuItemImage::create("res/ui/buttons/exit.png", "res/ui/buttons/exit_pressed.png", CC_CALLBACK_1(MainMenuScene::Exit, this));
 
@@ -55,10 +56,10 @@ bool MainMenuScene::init()
     return true;
 }
 
-void MainMenuScene::GoToGameScene(cocos2d::Ref* sender)
+void MainMenuScene::GoToCutScene(cocos2d::Ref* sender)
 {
     AudioEngine::stopAll();
-    auto scene = GameScene::createScene();
+    auto scene = CutScene::createScene();
 
     Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 
