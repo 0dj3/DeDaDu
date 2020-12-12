@@ -19,9 +19,9 @@ public:
     Player();
     void setGold(int x);
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
+    Hands* hands;
     int gold = 10;
 private:
-    Hands* hands;
     bool isDelay = false;
 
     void update(float dt);
