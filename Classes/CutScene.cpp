@@ -43,7 +43,6 @@ bool CutScene::init()
     auto fadeOut = FadeOut::create(0.5f);
     label->runAction(fadeOut);
 
-
     return true;
 }
 
