@@ -2,6 +2,8 @@
 #include "HUD.h"
 #include "MainMenuScene.h"
 #include "AudioEngine.h"
+#include "Hands.h"
+#include "Item.h"
 
 USING_NS_CC;
 
@@ -93,12 +95,26 @@ void HUD::update(float dt)
 		this->setPosition(playerHUD->getPosition());
 
 		removeChild(counter, true);
-		char str[200] = { 0 };
-		sprintf(str, "%d", playerHUD->gold);
-		counter = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 27);
+		char counter_str[200] = { 0 };
+		sprintf(counter_str, "%d", playerHUD->gold);
+		counter = Label::createWithTTF(counter_str, "fonts/Pixel Times.ttf", 27);
 		counter->setAnchorPoint(Point(0, 1));
 		counter->setPosition(Point(-580, 303));
 		this->addChild(counter);
+
+		removeChild(damagestats, true);
+		char damage_str[200] = { 0 };
+		sprintf(damage_str, "%d", playerHUD->hands->GetItem()->stats.find("damage")->second);
+		
+		damagestats = Label::createWithTTF(damage_str, "fonts/Pixel Times.ttf", 40);
+		damagestats->setAnchorPoint(Point(0, 1));
+		damagestats->setPosition(Point(-540, -210));
+		this->addChild(damagestats);
+
+		weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename); 
+		weaponSprite->setScale(3.0);
+		weaponSprite->setPosition(Point(-540, -275));
+		this->addChild(weaponSprite);
 	}
 }
 

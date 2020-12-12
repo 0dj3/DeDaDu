@@ -17,12 +17,13 @@ public:
 
     static void DisplayString(Vec2 position, std::string value, int fontSize, Color3B color);
     
-    ui::LoadingBar* healthBar;
     Sprite* hBBackground;
-    Sprite* weaponSlot;
+    ui::LoadingBar* healthBar;
     Sprite* coinBar;
     Label* counter;
-
+    Sprite* weaponSprite;
+    Sprite* weaponSlot;
+    Label* damagestats;
     Player* playerHUD;
     
     void getHit(int damage, Unit* player);

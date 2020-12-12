@@ -4,9 +4,9 @@
 #include "InputListener.h"
 #include "DeathScreen.h"
 #include "HUD.h"
-#include "rapidjson/document.h"
-#include "rapidjson/error/en.h"
-#include <rapidjson/istreamwrapper.h>
+#include "include/rapidjson/document.h"
+#include "include/rapidjson/error/en.h"
+#include <include/rapidjson/istreamwrapper.h>
 #include <fstream>
 #include <sstream>
 #include <string>
