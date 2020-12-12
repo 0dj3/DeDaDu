@@ -46,8 +46,6 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(tray->getContentSize()));
 		this->addChild(edgeNode);
 
-		Item* tray1;
-
 		Item* item;
 		if (rand() % 2) {
 			std::map<std::string, int> stats{
@@ -64,7 +62,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 			item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
 		}
 		this->addChild(item);
-		item->SellShop(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), 40, 1.0f);
+		item->SellShop(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), 8, 1.0f);
 	}
 }
 
