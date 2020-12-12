@@ -58,11 +58,6 @@ void HUD::Init()
 	auto playItem = MenuItemImage::create("res/ui/buttons/exitbutton.png", "res/ui/buttons/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
 	playItem->setPosition(Point(0, 0));
 
-	weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename);
-	weaponSprite->setScale(3.0);
-	weaponSprite->setPosition(Point(-540, -275));
-	this->addChild(weaponSprite);
-
 	menubutton = Menu::create(playItem, NULL);
 	menubutton->setPosition(Point(600, 320));
 	this->addChild(menubutton);
@@ -109,12 +104,25 @@ void HUD::update(float dt)
 
 		removeChild(damagestats, true);
 		char damage_str[200] = { 0 };
-		sprintf(damage_str, "%d", playerHUD->hands->GetItem()->stats.find("damage")->second);
-		
-		damagestats = Label::createWithTTF(damage_str, "fonts/Pixel Times.ttf", 40);
+		sprintf(damage_str, "dmg: %d", playerHUD->hands->GetItem()->stats.find("damage")->second);
+		damagestats = Label::createWithTTF(damage_str, "fonts/Pixel Times.ttf", 30);
 		damagestats->setAnchorPoint(Point(0, 1));
-		damagestats->setPosition(Point(-540, -210));
+		damagestats->setPosition(Point(500, -240));
 		this->addChild(damagestats);
+
+		removeChild(delaystats, true);
+		char delay_str[200] = { 0 };
+		sprintf(delay_str, "del: %d", playerHUD->hands->GetItem()->stats.find("delay")->second);
+		delaystats = Label::createWithTTF(delay_str, "fonts/Pixel Times.ttf", 30);
+		delaystats->setAnchorPoint(Point(0, 1));
+		delaystats->setPosition(Point(500, -275));
+		this->addChild(delaystats);
+
+		removeChild(weaponSprite, true);
+		weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename);
+		weaponSprite->setScale(3.0);
+		weaponSprite->setPosition(Point(-540, -275));
+		this->addChild(weaponSprite);
 	}
 }
 
