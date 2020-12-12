@@ -64,7 +64,7 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
 {
     Node* node = static_cast<Node*>(body->GetUserData());
     Attack* attack = static_cast<Attack*>(weapon->GetUserData());
-    if (node->getTag() == attack->GetCreatorTag())
+    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM)
         return;
     log("%i", attack->GetCreatorTag());
     b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
@@ -89,6 +89,7 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
             AudioEngine::play2d("res/sounds/coin.mp3", false, 0.5);
             player->setGold(itemNode->stats.find("value")->second);
             itemNode->setName(DEAD_TAG);
+            return;
         }
         player->targetItem = static_cast<Item*>(item->GetUserData());
     }

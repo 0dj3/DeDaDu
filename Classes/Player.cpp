@@ -64,7 +64,7 @@ void Player::update(float dt)
         auto seq = cocos2d::Sequence::create(startCD, delay, endCD, nullptr);
         this->runAction(seq);
     }
-    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
+    /*if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
         Item* item;
         if (rand() % 2) {
@@ -83,7 +83,7 @@ void Player::update(float dt)
         }
         layer->addChild(item);
         item->Sell(this->getPosition(), 5);
-    }
+    }*/
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
         if (targetItem->IsForSale()) {
