@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Attack.h"
 #include "HUD.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 
@@ -84,6 +85,8 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
         Player* player = static_cast<Player*>(body->GetUserData());
         if (itemNode->type == Item::GOLD) {
             HUD::DisplayString(itemNode->getPosition(), std::to_string(itemNode->stats.find("value")->second), 15, Color3B(255, 255, 0));
+            AudioEngine::preload("res/sounds/coin.mp3");
+            AudioEngine::play2d("res/sounds/coin.mp3", false, 0.5);
             player->setGold(itemNode->stats.find("value")->second);
             itemNode->setName(DEAD_TAG);
         }

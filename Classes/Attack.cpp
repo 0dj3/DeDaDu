@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "PhysicHelper.h"
 #include "InputListener.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 
@@ -41,10 +42,12 @@ void Attack::StartMeleeAttack(Vec2 position, Vec2 target, ContactListener::BodyT
         });
 
         auto seq = cocos2d::Sequence::create(startAttack, microDelay, endAttack, nullptr);
-
+        AudioEngine::preload("res/sounds/swoosh.mp3");
+        AudioEngine::play2d("res/sounds/swoosh.mp3", false, 0.1);
         attack->runAction(seq);
         return;
     }
+    
     CC_SAFE_DELETE(attack);
 }
 
