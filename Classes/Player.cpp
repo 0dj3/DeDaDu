@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Definitions.h"
 #include "Attack.h"
+#include "HUD.h"
 
 USING_NS_CC;
 
@@ -8,7 +9,7 @@ Player::Player()
 {
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
-    this->gold = 100;
+    this->gold = 20;
     this->autorelease();
 }
 
@@ -22,20 +23,16 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->setTag(newPlayer->tag);
         newPlayer->layer = layer;
 
-        newPlayer->handsSprite = new Sprite();
-        newPlayer->handsSprite->setScale(2);
-        newPlayer->handsSprite->setPosition(Vec2(newPlayer->sprite->getContentSize().width / 2, -15));
-        newPlayer->handsSprite->setAnchorPoint(newPlayer->sprite->getPosition());
-        newPlayer->addChild(newPlayer->handsSprite);
-
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
+        newPlayer->hands = new Hands();
+        newPlayer->addChild(newPlayer->hands);
         std::map<std::string, int> stats{
             {"damage", 20},
-            {"speed", 5}
+            {"delay", 5}
         };
         Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
-        newPlayer->PutInHands(weapon);
+        newPlayer->hands->PutInHands(weapon);
 
         newPlayer->scheduleUpdate();
         return newPlayer;
@@ -44,25 +41,28 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
     return NULL;
 }
 
-void Player::PutInHands(Item* item)
-{
-    hends = item;
-    handsSprite->setTexture(hends->filename);
-    handsSprite->getTexture()->setAliasTexParameters();
-}
-
 void Player::update(float dt)
 {
     move();
     rotate();
-    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
+    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] && !isDelay)
     {
-        InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] = false;
-        log("%f %f", this->getPosition().x, this->getPosition().y);
+        //InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] = false;
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
-        Attack::StartMeleeAttack(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER, hends);
+        Attack::StartMeleeAttack(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER, hands->GetItem());
+
+        // cooldown
+        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)hands->GetItem()->stats.find("delay")->second / 10);
+        auto startCD = CallFunc::create([this]() {
+            isDelay = true;
+        });
+        auto endCD = CallFunc::create([this]() {
+            isDelay = false;
+        });
+        auto seq = cocos2d::Sequence::create(startCD, delay, endCD, nullptr);
+        this->runAction(seq);
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
@@ -77,12 +77,12 @@ void Player::update(float dt)
         else {
             std::map<std::string, int> stats{
             {"damage", 1 + rand() % 40},
-            {"speed", 1 + rand() % 8}
+            {"delay", 1 + rand() % 10}
             };
             item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
         }
         layer->addChild(item);
-        item->Sell(this->getPosition(), 10);
+        item->Sell(this->getPosition(), 5);
     }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
@@ -94,26 +94,12 @@ void Player::update(float dt)
                 targetItem = NULL;
             }
             else {
-                PutInHands(Item::create(targetItem));
+                hands->PutInHands(Item::create(targetItem));
                 targetItem->setName(DEAD_TAG);
                 targetItem = NULL;
             }
         }
     }
-
-    /*for (b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next)
-    {
-        b2Contact* contact = ce->contact;
-        b2Body* a = contact->GetFixtureA()->GetBody();
-        b2Body* b = contact->GetFixtureB()->GetBody();
-        if (b->GetUserData() != NULL && a->GetUserData() != NULL)
-        {
-            Node* node = static_cast<Node*>(a->GetUserData())->getTag() != ContactListener::PLAYER ? static_cast<Node*>(a->GetUserData()) : static_cast<Node*>(b->GetUserData());
-            if (node->getTag() == ContactListener::ITEM) {
-
-            }
-        }
-    }*/
 }
 
 void Player::rotate() {

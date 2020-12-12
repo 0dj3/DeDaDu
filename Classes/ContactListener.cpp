@@ -5,6 +5,7 @@
 #include "Unit.h"
 #include "Player.h"
 #include "Attack.h"
+#include "HUD.h"
 
 USING_NS_CC;
 
@@ -64,7 +65,7 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
     Attack* attack = static_cast<Attack*>(weapon->GetUserData());
     if (node->getTag() == attack->GetCreatorTag())
         return;
-
+    log("%i", attack->GetCreatorTag());
     b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
     direction.Normalize();
     body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
@@ -82,6 +83,7 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
     if (node->getTag() == PLAYER) {
         Player* player = static_cast<Player*>(body->GetUserData());
         if (itemNode->type == Item::GOLD) {
+            HUD::DisplayString(itemNode->getPosition(), std::to_string(itemNode->stats.find("value")->second), 15, Color3B(255, 255, 0));
             player->setGold(itemNode->stats.find("value")->second);
             itemNode->setName(DEAD_TAG);
         }

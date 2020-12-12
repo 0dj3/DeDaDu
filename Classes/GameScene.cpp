@@ -128,7 +128,7 @@ void GameScene::update(float dt)
                     if (enemies[i] == n) {
                         Item* item;
                         std::map<std::string, int> stats{
-                            {"value", 1},
+                            {"value", 1 + rand() % 5},
                             {"damage", 100}
                         };
                         item = Item::create(Item::GOLD, "Gold", "Gold", "res/items/coin.png", stats);

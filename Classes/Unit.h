@@ -30,6 +30,7 @@ public:
     char* dmgsound;
 
     int hp;
+    int maxHp;
 private:
     void loadStats();
     //bool isDead = false;

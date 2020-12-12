@@ -6,6 +6,7 @@
 #include "ui/CocosGUI.h"
 #include "Unit.h"
 #include "Player.h"
+#include <string>
 
 USING_NS_CC;
 
@@ -13,6 +14,8 @@ class HUD : public Sprite
 {
 public:
     static HUD* create(Player* player);
+
+    static void DisplayString(Vec2 position, std::string value, int fontSize, Color3B color);
     
     ui::LoadingBar* healthBar;
     Sprite* hBBackground;

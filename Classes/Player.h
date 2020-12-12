@@ -10,6 +10,7 @@
 #include "InputListener.h"
 #include "Weapon.h"
 #include "Item.h"
+#include "Hands.h"
 
 class Player : public Unit
 {
@@ -20,12 +21,9 @@ public:
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
     int gold = 10;
 private:
-    bool isFighting = false;
-    Item* hends = NULL;
+    Hands* hands;
+    bool isDelay = false;
 
-    cocos2d::Sprite* handsSprite;
-
-    void PutInHands(Item* item);
     void update(float dt);
 
     void move();

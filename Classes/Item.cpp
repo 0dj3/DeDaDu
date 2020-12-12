@@ -72,6 +72,7 @@ b2Body* Item::CreatePhysicBody()
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
+    shapeDef.isSensor = true;
     body->CreateFixture(&shapeDef);
 
     return body;

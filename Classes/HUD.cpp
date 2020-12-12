@@ -67,7 +67,7 @@ void HUD::getHit(int damage, Unit* player) {
 	}
 	else {
 		player->hp -= damage;
-		healthBar->setPercent(player->hp);
+		healthBar->setPercent(player->hp / player->maxHp);
 	}
 }
 
@@ -100,4 +100,20 @@ void HUD::update(float dt)
 		counter->setPosition(Point(-580, 303));
 		this->addChild(counter);
 	}
+}
+
+void HUD::DisplayString(Vec2 position, std::string value, int fontSize, Color3B color)
+{
+	Label* counter = Label::createWithTTF(value, "fonts/Pixel Times.ttf", fontSize);
+	counter->setColor(color);
+	counter->setPosition(Vec2(position.x - 30 + rand() % 60, position.y - 5 + rand() % 10));
+	Director::getInstance()->getRunningScene()->addChild(counter);
+	auto moveBy = MoveBy::create(2, Vec2(0, 40));
+	auto fadeOut = FadeOut::create(3.0f);
+	auto spawn = cocos2d::Spawn::create(moveBy, fadeOut, nullptr);
+	auto end = CallFunc::create([counter]() {
+		counter->removeFromParentAndCleanup(true);
+	});
+	auto seq = cocos2d::Sequence::create(spawn, end, nullptr);
+	counter->runAction(seq);
 }

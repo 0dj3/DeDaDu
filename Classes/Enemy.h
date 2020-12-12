@@ -15,6 +15,12 @@ public:
 
     Enemy();
 
+    bool IsPlayerWithinRange() { 
+        return this->getPosition().distance(_player->getPosition()) <= range ? true : false;  
+    };
+
+    int range = 100;
+
 private:
 
 };

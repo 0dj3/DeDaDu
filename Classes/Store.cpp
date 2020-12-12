@@ -59,7 +59,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		else {
 			std::map<std::string, int> stats{
 			{"damage", 1 + rand() % 40},
-			{"speed", 1 + rand() % 8}
+			{"delay", 1 + rand() % 8}
 			};
 			item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
 		}

@@ -15,6 +15,8 @@ public:
    
     static Enemy* create(cocos2d::Layer* scene, const cocos2d::Vec2& position, Player* player);
 private:
+    Hands* hands;
+
     void update(float dt);
     void move();
 };

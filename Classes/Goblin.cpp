@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "Player.h"
 #include "Anime.h"
+#include "Attack.h"
 
 USING_NS_CC;
 Goblin::Goblin()
@@ -10,8 +11,6 @@ Goblin::Goblin()
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }
-
-
 
 Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* player)
 {
@@ -23,10 +22,20 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
         newGoblin->setPosition(position);
 
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
-        newGoblin->hp = 1;
+        newGoblin->hp = 50;
         newGoblin->setTag(newGoblin->tag);
         newGoblin->layer = layer;
         newGoblin->_player = player;
+
+        newGoblin->hands = new Hands();
+        newGoblin->addChild(newGoblin->hands);
+        std::map<std::string, int> stats{
+            {"damage", 15},
+            {"speed", 5}
+        };
+        Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/knife.png", stats);
+        newGoblin->hands->PutInHands(weapon);
+
         newGoblin->scheduleUpdate();
         return newGoblin;
     }
@@ -35,27 +44,34 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
 }
 
 void Goblin::update(float dt)
-{   
+{
+    /*if (IsPlayerWithinRange()) {
+        Vec2 playerPos = _player->getPosition() - this->getPosition();
+        playerPos.normalize();
+        Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
+        Attack::StartMeleeAttack(pos, _player->getPosition(), ContactListener::ENEMY, hands->GetItem());
+    }*/
     if (!getNumberOfRunningActions()) {
-        cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 1);
+        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 2);
         auto startAttack = CallFunc::create([this]() {
             b2Vec2 toTarget = b2Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
             toTarget.Normalize();
-            b2Vec2 desiredVel = 50 * toTarget;
+            b2Vec2 desiredVel = 75 * toTarget;
             body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
         });
 
-        auto seq = cocos2d::Sequence::create(startAttack, microDelay, nullptr);
+        auto seq = cocos2d::Sequence::create(delay, startAttack, nullptr);
 
         this->runAction(seq);
     }
-    Vec2 toTarget = _player->getPosition() - this->getPosition();
-    toTarget.normalize();
-    Vec2 desiredVel = stats->speed * toTarget;
-    b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
-    body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
+    move();
 }
 
 void Goblin::move()
 {
-}   
+     Vec2 toTarget = _player->getPosition() - this->getPosition();
+     toTarget.normalize();
+     Vec2 desiredVel = stats->speed * toTarget;
+     b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
+     body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
+}
