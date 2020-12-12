@@ -7,6 +7,7 @@ USING_NS_CC;
 Enemy::Enemy()
 {
 	tag = ContactListener::ENEMY;
+    this->maxHp = 100;
 }
 
 void Enemy::DropItems(Vec2 position) {

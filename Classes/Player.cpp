@@ -10,6 +10,8 @@ Player::Player()
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     this->gold = 20;
+    this->maxHp = 100;
+    this->hp = 100;
     this->autorelease();
 }
 

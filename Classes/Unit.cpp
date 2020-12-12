@@ -81,6 +81,6 @@ void Unit::loadStats() {
 	assert(stats.HasMember("player_hp"));
 	assert(stats["player_hp"].IsInt());
 
-	maxHp = stats["player_hp"].GetInt();
-	hp = maxHp;
+	/*maxHp = stats["player_hp"].GetInt();
+	hp = maxHp;*/
 }

@@ -519,7 +519,7 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
         
 
         int rX = ((tiled->getMapSize().width - 3) * 60);
-        int rY = ((tiled->getMapSize().height - 2) * 60);
+        int rY = ((tiled->getMapSize().height - 3) * 60);
 
         int randomX = (tiled->getPosition().x + 100) + rand() % rX;
         int randomY = (tiled->getPosition().y + 80) + rand() % rY;
