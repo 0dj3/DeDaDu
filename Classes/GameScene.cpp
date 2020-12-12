@@ -124,16 +124,9 @@ void GameScene::update(float dt)
         {
             PhysicHelper::world->DestroyBody(b);
             if (n->getTag() == ContactListener::ENEMY) {
+                Enemy::DropItems(n->getPosition());
                 for (int i = 0; i < enemies.size(); i++) {
                     if (enemies[i] == n) {
-                        Item* item;
-                        std::map<std::string, int> stats{
-                            {"value", 1 + rand() % 5},
-                            {"damage", 100}
-                        };
-                        item = Item::create(Item::GOLD, "Gold", "Gold", "res/items/coin.png", stats);
-                        Director::getInstance()->getRunningScene()->addChild(item);
-                        item->DropItem(enemies[i]->getPosition());
                         enemies.erase(enemies.begin() + i);
                         break;
                     }

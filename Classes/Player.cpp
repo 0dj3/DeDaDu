@@ -86,8 +86,22 @@ void Player::update(float dt)
     }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
-        if (targetItem->IsForSale() && gold >= targetItem->price) {
-            gold -= targetItem->price;
+        if (targetItem->IsForSale()) {
+            if (gold >= targetItem->price) {
+                gold -= targetItem->price;
+                if (targetItem->type == Item::POTION) {
+                    Damage(targetItem->stats.begin()->second);
+                    targetItem->setName(DEAD_TAG);
+                    targetItem = NULL;
+                }
+                else {
+                    hands->PutInHands(Item::create(targetItem));
+                    targetItem->setName(DEAD_TAG);
+                    targetItem = NULL;
+                }
+            }
+        }
+        else {
             if (targetItem->type == Item::POTION) {
                 Damage(targetItem->stats.begin()->second);
                 targetItem->setName(DEAD_TAG);
