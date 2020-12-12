@@ -24,6 +24,7 @@ public:
     Sprite* weaponSprite;
     Sprite* weaponSlot;
     Label* damagestats;
+    Label* delaystats;
     Player* playerHUD;
     
     void getHit(int damage, Unit* player);

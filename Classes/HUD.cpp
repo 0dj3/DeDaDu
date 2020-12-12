@@ -58,6 +58,11 @@ void HUD::Init()
 	auto playItem = MenuItemImage::create("res/ui/buttons/exitbutton.png", "res/ui/buttons/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
 	playItem->setPosition(Point(0, 0));
 
+	weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename);
+	weaponSprite->setScale(3.0);
+	weaponSprite->setPosition(Point(-540, -275));
+	this->addChild(weaponSprite);
+
 	menubutton = Menu::create(playItem, NULL);
 	menubutton->setPosition(Point(600, 320));
 	this->addChild(menubutton);
@@ -110,11 +115,6 @@ void HUD::update(float dt)
 		damagestats->setAnchorPoint(Point(0, 1));
 		damagestats->setPosition(Point(-540, -210));
 		this->addChild(damagestats);
-
-		weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename); 
-		weaponSprite->setScale(3.0);
-		weaponSprite->setPosition(Point(-540, -275));
-		this->addChild(weaponSprite);
 	}
 }
 
