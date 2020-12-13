@@ -29,6 +29,8 @@ public:
 
     void createStore();
 
+    void generBarrel();
+
 private:
     bool init(bool checkLoc);
     int** generationArrayMap(int sizeMap);

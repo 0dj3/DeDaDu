@@ -135,7 +135,7 @@ void Generation_map::generation(bool checkLoc) {
     generMapOne(tileHallMU, 2, checkLoc);
 
     createStore();
-
+    generBarrel();
     delete[] arrayMap;
 }
 
@@ -555,4 +555,35 @@ void Generation_map::createStore() {
     auto storeMap = store->getMap();
 
     border(storeMap);
+}
+
+void Generation_map::generBarrel() {
+    srand(time(0));
+    
+    
+    int count = 1 + rand() % 8;
+
+    for (int i = 0; i < allMainRoom.size(); i++) {
+        for (int j = 0; j < count; j++) {
+            int rX = ((allMainRoom[i]->getMapSize().width - 3) * 60);
+            int rY = ((allMainRoom[i]->getMapSize().height - 3) * 60);
+
+            int randomX = (allMainRoom[i]->getPosition().x + 100) + rand() % rX;
+            int randomY = (allMainRoom[i]->getPosition().y + 80) + rand() % rY;
+
+            auto barrel = new Sprite();
+            barrel->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/props_itens/barrel.png");
+            barrel->getTexture()->setAliasTexParameters();
+            barrel->setScale(3.0);
+            barrel->setPosition(Vec2(randomX, randomY));
+            this->addChild(barrel);
+
+            auto edgeNode = Node::create();
+            edgeNode->setScale(2.0);
+            edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
+            edgeNode->setPosition(barrel->getPosition());
+            auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
+            this->addChild(edgeNode);
+        }
+    }
 }
