@@ -158,6 +158,7 @@ void GameScene::update(float dt)
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
     
+    generation->miniMap(static_cast<Player*>(player));
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){
