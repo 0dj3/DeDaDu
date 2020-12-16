@@ -32,6 +32,7 @@ public:
     int hp;
     int maxHp;
 private:
+    bool isDelay = false;
     void loadStats();
     //bool isDead = false;
 

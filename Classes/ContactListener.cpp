@@ -66,7 +66,6 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
     Attack* attack = static_cast<Attack*>(weapon->GetUserData());
     if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM)
         return;
-    log("%i", attack->GetCreatorTag());
     b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
     direction.Normalize();
     body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);

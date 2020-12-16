@@ -4,6 +4,7 @@
 
 #include "cocos2d.h"
 #include "Item.h"
+#include "Attack.h"
 
 class Hands : public cocos2d::Node
 {
@@ -22,9 +23,27 @@ public:
 		this->handsSprite->getTexture()->setAliasTexParameters();
 	};
 
+	void UseItem(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag) {
+		if (isDelay)
+			return;
+		cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)item->stats.find("delay")->second / 10);
+		auto startCD = cocos2d::CallFunc::create([this]() {
+			isDelay = true;
+			});
+		auto endCD = cocos2d::CallFunc::create([this]() {
+			isDelay = false;
+			});
+		auto seq = cocos2d::Sequence::create(startCD, delay, endCD, nullptr);
+		this->runAction(seq);
+		Attack::StartMeleeAttack(position, localTarget, creatorTag, item);
+	};
+
 	Item* GetItem() { return item; };
 
+	bool IsDelay() { return isDelay; };
+
 protected:
+	bool isDelay = false;
 	cocos2d::Sprite* handsSprite;
 	Item* item = NULL;
 

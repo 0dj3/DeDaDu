@@ -47,24 +47,12 @@ void Player::update(float dt)
 {
     move();
     rotate();
-    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] && !isDelay)
+    if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
-        //InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] = false;
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
-        Attack::StartMeleeAttack(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER, hands->GetItem());
-
-        // cooldown
-        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)hands->GetItem()->stats.find("delay")->second / 10);
-        auto startCD = CallFunc::create([this]() {
-            isDelay = true;
-        });
-        auto endCD = CallFunc::create([this]() {
-            isDelay = false;
-        });
-        auto seq = cocos2d::Sequence::create(startCD, delay, endCD, nullptr);
-        this->runAction(seq);
+        hands->UseItem(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER);
     }
     /*if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
