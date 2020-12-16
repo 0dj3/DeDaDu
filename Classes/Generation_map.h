@@ -56,6 +56,7 @@ private:
     std::vector<TMXTiledMap*> allMapOne;
 
     std::vector<b2Body*> allPhysicBody;
+    std::vector<b2Body*> allPhysicBarrel;
     std::vector<b2Body*> PhBoDoorRoom;
     std::vector<TMXTiledMap*> childDoorRoom;
 

@@ -22,9 +22,10 @@ void Generation_map::generation(bool checkLoc) {
         this->removeAllChildren();
         allMainRoom.clear();
         allMapOne.clear();
-        for (int i = 0; i < allPhysicBody.size(); i++) {
+        for (int i = 0; i < allPhysicBody.size(); i++) 
             PhysicHelper::world->DestroyBody(allPhysicBody[i]);
-        }
+        for (int i = 0; i < allPhysicBarrel.size(); i++)
+            PhysicHelper::world->DestroyBody(allPhysicBarrel[i]);
     }
 
     arrayMap = generationArrayMap(sizeMap);
@@ -583,6 +584,7 @@ void Generation_map::generBarrel() {
             edgeNode->setPosition(barrel->getPosition());
             auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
             this->addChild(edgeNode);
+            allPhysicBarrel.push_back(body);
         }
     }
 }
@@ -683,4 +685,5 @@ void Generation_map::miniMap(Player* player) {
 
     this->addChild(drawOne2);
     this->addChild(drawMain2);
+
 }

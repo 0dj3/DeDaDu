@@ -17,4 +17,7 @@ private:
 	Sprite* sprite;
 	Sprite* shopMan;
 	Sprite* tray;
+
+	std::vector<b2Body*> allPhysicTray;
+	std::vector<Item*> items;
 };

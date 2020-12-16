@@ -11,6 +11,9 @@ bool Store::init(TMXTiledMap* map, int countMap) {
 	auto posMap = map->getPosition();
 	auto sizeMap = map->getMapSize();
 
+	for (int i = 0; i < allPhysicTray.size(); i++)
+		PhysicHelper::world->DestroyBody(allPhysicTray[i]);
+
 	store = TMXTiledMap::create("maps/store.tmx");
 	store->setScale(3.0);
 	store->setPosition(Vec2(posMap.x + ((sizeMap.width / 2 - 2) * 60), posMap.y + ((sizeMap.height / 2 + 1) * 60)));
@@ -45,6 +48,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		edgeNode->setPosition(tray->getPosition());
 		auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(tray->getContentSize()));
 		this->addChild(edgeNode);
+		allPhysicTray.push_back(body);
 
 		Item* item;
 		if (rand() % 2) {
@@ -63,6 +67,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		}
 		this->addChild(item);
 		item->SellShop(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), 8, 1.0f);
+		items.push_back(item);
 	}
 }
 
