@@ -12,9 +12,9 @@ class Attack : public cocos2d::Sprite
 public:
 	Attack();
 
-	static void StartMeleeAttack(cocos2d::Vec2 position, cocos2d::Vec2 target, ContactListener::BodyTag creatorTag, Item* weapon);
+	static void StartMeleeAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag, Item* weapon);
 
-	bool GetCreatorTag() { return tag; };
+	ContactListener::BodyTag GetCreatorTag() { return tag; };
 	int GetDamage() { return weapon->stats.find("damage")->second; };
 
 private:

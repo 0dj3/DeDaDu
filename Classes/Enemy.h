@@ -21,7 +21,7 @@ public:
 
     static void DropItems(cocos2d::Vec2 position);
 
-    int range = 100;
+    int range = 50;
 
 private:
 

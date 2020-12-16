@@ -30,8 +30,8 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
         newGoblin->hands = new Hands();
         newGoblin->addChild(newGoblin->hands);
         std::map<std::string, int> stats{
-            {"damage", 15},
-            {"speed", 5}
+            {"damage", 10},
+            {"delay", 10}
         };
         Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/knife.png", stats);
         newGoblin->hands->PutInHands(weapon);
@@ -45,12 +45,15 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
 
 void Goblin::update(float dt)
 {
-    /*if (IsPlayerWithinRange()) {
+    if (hands->IsDelay())
+        return;
+    if (IsPlayerWithinRange()) {
         Vec2 playerPos = _player->getPosition() - this->getPosition();
         playerPos.normalize();
         Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
-        Attack::StartMeleeAttack(pos, _player->getPosition(), ContactListener::ENEMY, hands->GetItem());
-    }*/
+        assert(hands != NULL);
+        hands->UseItem(pos, playerPos, ContactListener::ENEMY);
+    }
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
         auto startAttack = CallFunc::create([this]() {
@@ -72,6 +75,7 @@ void Goblin::update(float dt)
 
 void Goblin::move()
 {
+
      Vec2 toTarget = _player->getPosition() - this->getPosition();
      toTarget.normalize();
      Vec2 desiredVel = stats->speed * toTarget;

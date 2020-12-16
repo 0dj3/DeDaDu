@@ -10,11 +10,11 @@ Attack::Attack() {
 
 }
 
-void Attack::StartMeleeAttack(Vec2 position, Vec2 target, ContactListener::BodyTag creatorTag, Item* weapon) {
+void Attack::StartMeleeAttack(Vec2 position, Vec2 localTarget, ContactListener::BodyTag creatorTag, Item* weapon) {
     Attack* attack = new Attack();
     if (attack && attack->initWithFile("res/effects/hit/slash_1.png")) {
         attack->setPosition(position);
-        attack->setRotation(CC_RADIANS_TO_DEGREES(-InputListener::Instance()->mousePosition.getAngle()));
+        attack->setRotation(CC_RADIANS_TO_DEGREES(-localTarget.getAngle()));
         attack->setTag(ContactListener::ATTACK);
         attack->tag = creatorTag;
         attack->setScale(2);
