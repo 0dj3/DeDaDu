@@ -13,15 +13,11 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     void update(float dt);
 
-    cocos2d::EventListenerMouse* mouse;
-
     CREATE_FUNC(MainMenuScene);
 private:
     void GoToCutScene(cocos2d::Ref* sender);
 
     void GoToSettings(cocos2d::Ref* sender);
-
-    void onMouseMove(cocos2d::Event *event);
 
     void Exit(cocos2d::Ref* sender);
 };

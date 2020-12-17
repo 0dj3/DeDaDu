@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "Definitions.h"
 #include "AudioEngine.h"
+#include "InputListener.h"
 
 USING_NS_CC;
 
@@ -28,8 +29,6 @@ bool MainMenuScene::init()
 {
     Settings* settings = new Settings;
     AudioEngine::play2d("res/sounds/bgsound2.mp3", true, settings->getMusicVolume());
-
-    mouse = EventListenerMouse::create();
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -68,11 +67,6 @@ void MainMenuScene::Exit(cocos2d::Ref* sender)
 
 void MainMenuScene::update(float dt)
 {
-    mouse->onMouseDown = CC_CALLBACK_1(MainMenuScene::onMouseMove, this);
-}
-
-void MainMenuScene::onMouseMove(cocos2d::Event* event)
-{
-    EventMouse* e = (EventMouse*)event;
-    CCLOG("mouse move %f, %f", e->getCursorX(), e->getCursorY());
+    InputListener::Instance()->Init(this);
+    CCLOG("mouse move %f, %f", InputListener::Instance()->mousePosition.x, InputListener::Instance()->mousePosition.y);
 }
