@@ -70,4 +70,6 @@ private:
 
     bool checkPl = false;
     Vec2 FirstPosPl = Vec2(0, 0);
+    Node* layer;
+    Sprite* miniRoom;
 };
