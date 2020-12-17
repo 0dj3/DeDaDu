@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "Attack.h"
 #include "HUD.h"
+#include "Weapon.h"
 
 USING_NS_CC;
 
@@ -27,13 +28,10 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
-        newPlayer->hands = new Hands();
+        newPlayer->hands = new Hands(newPlayer);
         newPlayer->addChild(newPlayer->hands);
-        std::map<std::string, int> stats{
-            {"damage", 20},
-            {"delay", 5}
-        };
-        Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
+
+        Item* weapon = Weapon::createRange("res/weapon/sword.png", ContactListener::PLAYER, "res/effects/explosion/idle_3.png", "res/sounds/swoosh.mp3", 10, 1, 10, 10);
         newPlayer->hands->PutInHands(weapon);
 
         newPlayer->scheduleUpdate();
@@ -49,57 +47,48 @@ void Player::update(float dt)
     rotate();
     if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
+        InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] = false;
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
         hands->UseItem(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER);
     }
-    /*if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
         Item* item;
         if (rand() % 2) {
-            std::map<std::string, int> stats{
-            {"healing", -20 + rand() % 40}
-            };
-            item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
-            item->setColor(Color3B(rand() % 255, rand() % 255, rand() % 255));
+            item = Weapon::createRange("res/weapon/sword.png", ContactListener::PLAYER, "res/effects/explosion/idle_3.png", "res/sounds/swoosh.mp3", 10, 1, 10, 10);
         }
         else {
-            std::map<std::string, int> stats{
-            {"damage", 1 + rand() % 40},
-            {"delay", 1 + rand() % 10}
-            };
-            item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
+            item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);
         }
-        layer->addChild(item);
+        Director::getInstance()->getRunningScene()->addChild(item);
         item->Sell(this->getPosition(), 5);
-    }*/
+    }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
         if (targetItem->IsForSale()) {
             if (gold >= targetItem->price) {
                 gold -= targetItem->price;
                 if (targetItem->type == Item::POTION) {
-                    Damage(targetItem->stats.begin()->second);
+                    static_cast<Potion*>(targetItem)->Drink(this);
                     targetItem->setName(DEAD_TAG);
                     targetItem = NULL;
                 }
                 else {
-                    hands->PutInHands(Item::create(targetItem));
-                    targetItem->setName(DEAD_TAG);
+                    hands->PutInHands(targetItem);
                     targetItem = NULL;
                 }
             }
         }
         else {
             if (targetItem->type == Item::POTION) {
-                Damage(targetItem->stats.begin()->second);
+                static_cast<Potion*>(targetItem)->Drink(this);
                 targetItem->setName(DEAD_TAG);
                 targetItem = NULL;
             }
             else {
-                hands->PutInHands(Item::create(targetItem));
-                targetItem->setName(DEAD_TAG);
+                hands->PutInHands(targetItem);
                 targetItem = NULL;
             }
         }

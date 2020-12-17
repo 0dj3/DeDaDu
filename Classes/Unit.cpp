@@ -27,7 +27,7 @@ Unit::Unit()
 }
 
 void Unit::Damage(int value) {
-	if (dmgsound != NULL)
+	if (dmgsound != nullptr)
 	{
 		AudioEngine::preload(dmgsound);
 		AudioEngine::play2d(dmgsound, false, settings->getSFXVolume());
