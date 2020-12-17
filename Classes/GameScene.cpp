@@ -60,7 +60,7 @@ bool GameScene::init()
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
-    log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);
+    /*log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);*/
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
@@ -96,6 +96,9 @@ bool GameScene::init()
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
     this->addChild(goblin);
     enemies.push_back(goblin);
+
+
+   
     return true;
 }
 
@@ -162,8 +165,9 @@ void GameScene::update(float dt)
     }
     if (layerMiniMap != nullptr)
         layerMiniMap->removeAllChildren();
-    layerMiniMap = generation->miniMap(static_cast<Player*>(player));
+    layerMiniMap = generation->miniMap(static_cast<Player*>(player), player->getPosition());
     this->addChild(layerMiniMap);
+    
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){

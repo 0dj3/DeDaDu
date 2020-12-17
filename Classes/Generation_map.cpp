@@ -512,7 +512,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 1 + rand() % 8;
+    int count = 0 + rand() % 1;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
         int enemyType = 1 + rand() % 3;
@@ -589,39 +589,42 @@ void Generation_map::generBarrel() {
     }
 }
 
-Node* Generation_map::miniMap(Player* player) {
-    Layer* layer = new Layer();
+Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
+    Node* layer = new Node();
     layer->setPosition(player->getPosition());
 
-    drawOne = DrawNode::create();
-    auto posPl = Vec2(0, 0);
-    Vec2 *point = new Vec2[4];
-
+    
+    
+    Sprite* miniHall = new Sprite();
+    miniHall->initWithFile("miniMap/miniHall.png");
+    miniHall->getTexture()->setAliasTexParameters();
+    
+    drawPlayer = DrawNode::create();
+    int konMap;
     int k = 0, z = 0;
     int sizeX = 0, sizeY = 0;
-    int posMapX = 450, posMapY = 70;
+    int posMapX = 500, posMapY = -70;
 
     for (int i = 0; i < sizeMap; i++) {
         for (int j = sizeMap / 2; j < sizeMap; j++) {
             if (arrayMap[i][j] != 0 ) {
-                point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                k++;
-                point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                k++;
-                point[k] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                k++;
-                point[k] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                k++;
+                Sprite* miniRoom = new Sprite();
+                miniRoom->initWithFile("miniMap/miniRoom.png");
+                miniRoom->getTexture()->setAliasTexParameters();
+                miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                miniRoom->setScale(2.5);
+                layer->addChild(miniRoom);
+                allDrawRoom.push_back(miniRoom);
+                konMap = allDrawRoom.size();
                 sizeX += 50;
-                drawOne->drawPolygon(point, k, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
             }
             k = 0;
             z = 0;
         }
-        sizeY -= 50;
+        sizeY += 50;
         sizeX = 0;
     }
-
+    
     k = 0;
     z = 0;
     sizeX -= 50;
@@ -630,26 +633,49 @@ Node* Generation_map::miniMap(Player* player) {
     for (int i = 0; i < sizeMap; i++) {
         for (int j = sizeMap / 2 - 1; j >= 0; j--) {
             if (arrayMap[i][j] != 0) {
-                point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                k++;
-                point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                k++;
-                point[k] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                k++;
-                point[k] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                k++;
-                
+                Sprite* miniRoom = new Sprite();
+                miniRoom->initWithFile("miniMap/miniRoom.png");
+                miniRoom->getTexture()->setAliasTexParameters();
+                miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                miniRoom->setScale(2.5);
+                layer->addChild(miniRoom);
+                allDrawRoom.push_back(miniRoom);
                 sizeX -= 50;
-                drawOne->drawPolygon(point, k, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
             }
             k = 0;
             z = 0;
         }
-        sizeY -= 50;
+        sizeY += 50;
         sizeX = -50;
     }
 
-    layer->addChild(drawOne);
+    if (checkPl == false) {
+        FirstPosPl = Vec2(posHero.x / 18, posHero.y / 23);
+        checkPl = true;
+    }
+    Sprite* dotPlayer = new Sprite();
+    dotPlayer->initWithFile("miniMap/dotPlayer.png");
+    dotPlayer->setPosition(Vec2(allDrawRoom[1 - 1]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawRoom[1 - 1]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5));
+    
+    layer->addChild(dotPlayer);
+    
 
+    for (int i = 0; i < allDrawRoom.size(); i++) {
+
+        auto posPX = dotPlayer->getPosition().x;
+        auto posPY = dotPlayer->getPosition().y;
+
+        auto posAX = allDrawRoom[i]->getPosition().x - 20;
+        auto posAY = allDrawRoom[i]->getPosition().y + 20;
+
+        auto posBX = allDrawRoom[i]->getPosition().x + 20;
+        auto posBY = allDrawRoom[i]->getPosition().y - 20;
+
+        log("Px=%f Py=%f BX=%f BY=%f", posPX, posPY, allDrawRoom[1 - 1]->getPosition().x, allDrawRoom[1 - 1]->getPosition().y);
+        if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+            allDrawRoom[i]->setColor(Color3B::GRAY);
+        }
+    }
+    allDrawRoom.clear();
     return layer;
 }
