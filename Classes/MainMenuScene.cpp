@@ -11,6 +11,7 @@ Scene* MainMenuScene::createScene()
 {
     auto scene = Scene::create();
     auto layer = MainMenuScene::create();
+    layer->scheduleUpdate();
     scene->addChild(layer);
     return scene;
 }

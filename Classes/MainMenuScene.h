@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class MainMenuScene : public cocos2d::Scene
+class MainMenuScene : public cocos2d::Layer
 {
 public:
     static cocos2d::Scene* createScene();
