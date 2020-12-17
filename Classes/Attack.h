@@ -5,23 +5,25 @@
 #include "cocos2d.h"
 #include <Box2d/Box2d.h>
 #include "Unit.h"
+#include "Weapon.h"
 #include "Item.h"
+#include "ContactListener.h"
 
 class Attack : public cocos2d::Sprite
 {
 public:
 	Attack();
 
-	static void StartMeleeAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag, Item* weapon);
+	static void CreateProjectile(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag, Weapon* weapon);
 
-	ContactListener::BodyTag GetCreatorTag() { return tag; };
-	int GetDamage() { return weapon->stats.find("damage")->second; };
+	ContactListener::BodyTag GetCreatorTag() { return creatorTag; };
+	int GetDamage() { return weapon->damage; };
 
 private:
-	Item* weapon;
-	ContactListener::BodyTag tag;
+	Weapon* weapon;
+	ContactListener::BodyTag creatorTag;
 
-	void CreatePhysicBody();
+	b2Body* CreatePhysicBody();
 
 };
 

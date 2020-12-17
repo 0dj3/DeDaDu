@@ -27,13 +27,10 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
         newGoblin->layer = layer;
         newGoblin->_player = player;
 
-        newGoblin->hands = new Hands();
+        newGoblin->hands = new Hands(newGoblin);
         newGoblin->addChild(newGoblin->hands);
-        std::map<std::string, int> stats{
-            {"damage", 10},
-            {"delay", 10}
-        };
-        Item* weapon = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/knife.png", stats);
+
+        Item* weapon = Weapon::createMelee("res/weapon/knife.png", ContactListener::ENEMY, "res/effects/hit/slash_1.png", "res/sounds/swoosh.mp3", 10, 1);
         newGoblin->hands->PutInHands(weapon);
 
         newGoblin->scheduleUpdate();
@@ -51,7 +48,6 @@ void Goblin::update(float dt)
         Vec2 playerPos = _player->getPosition() - this->getPosition();
         playerPos.normalize();
         Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
-        assert(hands != NULL);
         hands->UseItem(pos, playerPos, ContactListener::ENEMY);
     }
     if (!getNumberOfRunningActions()) {

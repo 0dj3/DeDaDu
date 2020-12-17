@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "AudioEngine.h"
 #include "Item.h"
+#include "Gold.h"
 USING_NS_CC;
 
 Enemy::Enemy()
@@ -12,22 +13,15 @@ Enemy::Enemy()
 
 void Enemy::DropItems(Vec2 position) {
     if (rand() % 2) {
-        Item* item;
         if (rand() % 10 > 8) {
-            std::map<std::string, int> stats{
-            {"healing", -20 + rand() % 40}
-            };
-            item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
+            Item* item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 15 - 15);
             item->setColor(Color3B(rand() % 255, rand() % 255, rand() % 255));
+            item->DropItem(position);
+            Director::getInstance()->getRunningScene()->addChild(item);
         }
         else {
-            std::map<std::string, int> stats{
-                {"value", 1 + rand() % 5},
-                {"damage", 100}
-            };
-            item = Item::create(Item::GOLD, "Gold", "Gold", "res/items/coin.png", stats);
+            Gold* gold = Gold::create(position, 1 + rand() % 5);
+            Director::getInstance()->getRunningScene()->addChild(gold);
         }
-        Director::getInstance()->getRunningScene()->addChild(item);
-        item->DropItem(position);
     }
 }

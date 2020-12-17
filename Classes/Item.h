@@ -6,9 +6,13 @@
 #include <map>
 #include <string>
 #include "PhysicHelper.h"
+#include "AudioEngine.h"
 
 class Item : public cocos2d::Sprite
 {
+protected:
+    Item();
+
 public:
     typedef enum ItemType
     {
@@ -18,16 +22,11 @@ public:
     };
 
     ItemType type;
-    std::string title;
-    std::string description;
+    //std::string title;
+    //std::string description;
     std::string filename;
-    std::map<std::string, int> stats;
+    double delay;
     int price = 0;
-
-    Item();
-
-    static Item* create(ItemType type, std::string title, std::string description, std::string filename, std::map<std::string, int> stats);
-    static Item* create(Item* item);
 
     void DropItem(cocos2d::Vec2 position);
 
