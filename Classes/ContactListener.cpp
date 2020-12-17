@@ -7,6 +7,7 @@
 #include "Attack.h"
 #include "HUD.h"
 #include "AudioEngine.h"
+#include "Gold.h"
 
 USING_NS_CC;
 
@@ -30,6 +31,9 @@ void ContactListener::SelectReaction(b2Body* bodyA, b2Body* bodyB)
     case PLAYER:
         BeginPlayerContact(bodyA, bodyB);
         break;
+    case GOLD:
+        BeginGoldContact(bodyA, bodyB);
+        break;
     case ENEMY:
         BeginEnemyContact(bodyA, bodyB);
         break;
@@ -45,6 +49,19 @@ void ContactListener::SelectReaction(b2Body* bodyA, b2Body* bodyB)
 void ContactListener::BeginPlayerContact(b2Body* player, b2Body* body)
 {
     
+}
+
+void ContactListener::BeginGoldContact(b2Body* gold, b2Body* body)
+{
+    Gold* goldNode = static_cast<Gold*>(gold->GetUserData());
+    if (static_cast<Node*>(body->GetUserData())->getTag() == PLAYER) {
+        Player* player = static_cast<Player*>(body->GetUserData());
+        HUD::DisplayString(goldNode->getPosition(), std::to_string(goldNode->value), 15, Color3B(255, 255, 0));
+        AudioEngine::preload("res/sounds/coin.mp3");
+        AudioEngine::play2d("res/sounds/coin.mp3", false, 0.5);
+        player->setGold(goldNode->value);
+        goldNode->setName(DEAD_TAG);
+    }
 }
 
 void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
@@ -64,7 +81,7 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
 {
     Node* node = static_cast<Node*>(body->GetUserData());
     Attack* attack = static_cast<Attack*>(weapon->GetUserData());
-    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM)
+    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG)
         return;
     b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
     direction.Normalize();
@@ -74,6 +91,7 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
         Unit* unit = static_cast<Unit*>(body->GetUserData());
         unit->Damage(attack->GetDamage());
     }
+    attack->setName(DEAD_TAG);
 }
 
 void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
@@ -83,10 +101,10 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
     if (node->getTag() == PLAYER) {
         Player* player = static_cast<Player*>(body->GetUserData());
         if (itemNode->type == Item::GOLD) {
-            HUD::DisplayString(itemNode->getPosition(), std::to_string(itemNode->stats.find("value")->second), 15, Color3B(255, 255, 0));
+            HUD::DisplayString(itemNode->getPosition(), std::to_string(itemNode->price), 15, Color3B(255, 255, 0));
             AudioEngine::preload("res/sounds/coin.mp3");
             AudioEngine::play2d("res/sounds/coin.mp3", false, 0.5);
-            player->setGold(itemNode->stats.find("value")->second);
+            player->setGold(itemNode->price);
             itemNode->setName(DEAD_TAG);
             return;
         }

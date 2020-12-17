@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "Definitions.h"
 #include "AudioEngine.h"
+#include "InputListener.h"
 
 USING_NS_CC;
 
@@ -11,6 +12,7 @@ Scene* MainMenuScene::createScene()
 {
     auto scene = Scene::create();
     auto layer = MainMenuScene::create();
+    layer->scheduleUpdate();
     scene->addChild(layer);
     return scene;
 }
@@ -27,22 +29,9 @@ bool MainMenuScene::init()
 {
     Settings* settings = new Settings;
     AudioEngine::play2d("res/sounds/bgsound2.mp3", true, settings->getMusicVolume());
-    //char* asd = " ";
-    //sprintf(asd,"%lf",settings->getVolume());
-    //CCLOG(asd);
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    //auto backgroundSprite = Sprite::create("res/menubg.png");
-    //backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    //this->addChild(backgroundSprite);
 
     auto playItem = MenuItemImage::create("res/ui/buttons/start.png", "res/ui/buttons/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToCutScene,this));
     auto settingsItem = MenuItemImage::create("res/ui/buttons/options.png", "res/ui/buttons/options_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
@@ -74,4 +63,10 @@ void MainMenuScene::GoToSettings(cocos2d::Ref* sender)
 void MainMenuScene::Exit(cocos2d::Ref* sender)
 {
     Director::getInstance()->end();
+}
+
+void MainMenuScene::update(float dt)
+{
+    InputListener::Instance()->Init(this);
+    CCLOG("mouse move %f, %f", InputListener::Instance()->mousePosition.x, InputListener::Instance()->mousePosition.y);
 }

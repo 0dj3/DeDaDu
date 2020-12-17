@@ -50,7 +50,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		this->addChild(edgeNode);
 		allPhysicTray.push_back(body);
 
-		Item* item;
+		/*Item* item;
 		if (rand() % 2) {
 			std::map<std::string, int> stats{
 			{"healing", -20 + rand() % 40}
@@ -67,7 +67,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		}
 		this->addChild(item);
 		item->SellShop(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), 8, 1.0f);
-		items.push_back(item);
+		items.push_back(item);*/
 	}
 }
 

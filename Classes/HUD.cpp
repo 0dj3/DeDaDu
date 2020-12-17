@@ -102,7 +102,7 @@ void HUD::update(float dt)
 		counter->setPosition(Point(-580, 303));
 		this->addChild(counter);
 
-		removeChild(damagestats, true);
+		/*removeChild(damagestats, true);
 		char damage_str[200] = { 0 };
 		sprintf(damage_str, "dmg: %d", playerHUD->hands->GetItem()->stats.find("damage")->second);
 		damagestats = Label::createWithTTF(damage_str, "fonts/Pixel Times.ttf", 30);
@@ -116,7 +116,7 @@ void HUD::update(float dt)
 		delaystats = Label::createWithTTF(delay_str, "fonts/Pixel Times.ttf", 30);
 		delaystats->setAnchorPoint(Point(0, 1));
 		delaystats->setPosition(Point(500, -275));
-		this->addChild(delaystats);
+		this->addChild(delaystats);*/
 
 		removeChild(weaponSprite, true);
 		weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename);
