@@ -80,6 +80,7 @@ void Settings::musicPlus(cocos2d::Ref* sender)
     {
         music += 0.1f;
         musicBar->setPercent(music *100);
+        AudioEngine::setVolume(1, music);
     } 
 }
 
@@ -89,6 +90,7 @@ void Settings::musicMinus(cocos2d::Ref* sender)
     {
         music -= 0.1f;
         musicBar->setPercent(music * 100);
+        AudioEngine::setVolume(1, music);
     }
 }
 

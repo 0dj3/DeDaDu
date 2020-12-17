@@ -25,8 +25,8 @@ public:
     float getSFXVolume();
 
 private:
-    float music = 0.5;
-    float sfx = 0.5;
+    float music = 0.01;
+    float sfx = 0.01;
     void musicPlus(cocos2d::Ref* pSender);
     void musicMinus(cocos2d::Ref* pSender);
     void sfxPlus(cocos2d::Ref* pSender);
