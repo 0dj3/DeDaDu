@@ -20,7 +20,7 @@ public:
     };
 
     static void DropItems(cocos2d::Vec2 position);
-
+    void spawnEnemy();
     int range = 50;
 
 private:
