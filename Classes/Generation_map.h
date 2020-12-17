@@ -31,7 +31,7 @@ public:
 
     void generBarrel();
 
-    void miniMap(Player* player);
+    Node* miniMap(Player* player);
 private:
     bool init(bool checkLoc);
     int** generationArrayMap(int sizeMap);
@@ -48,9 +48,6 @@ private:
     TMXTiledMap* wallLoc2;
     
     DrawNode* drawOne;
-    DrawNode* drawMain;
-    DrawNode* drawOne2;
-    DrawNode* drawMain2;
 
     std::vector<TMXTiledMap*> allMainRoom;
     std::vector<TMXTiledMap*> allMapOne;

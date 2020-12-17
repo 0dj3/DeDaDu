@@ -14,7 +14,9 @@ Slime::Slime()
 Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Slime* newSlime = new Slime();
-    if (newSlime && newSlime->sprite->initWithFile("res/enemy/slime/test_slime.png")) {
+    if (newSlime && newSlime->sprite->initWithFile("res/enemy/slime/test_slime.png")) 
+    {
+        newSlime->spawnEnemy();
         newSlime->sprite->getTexture()->setAliasTexParameters();
         newSlime->sprite->setScale(3.0);
         newSlime->setPosition(position);

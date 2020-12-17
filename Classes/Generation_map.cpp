@@ -589,29 +589,21 @@ void Generation_map::generBarrel() {
     }
 }
 
-void Generation_map::miniMap(Player* player) {
-    removeChild(drawOne, true);
-    removeChild(drawMain, true);
-    removeChild(drawOne2, true);
-    removeChild(drawMain2, true);
+Node* Generation_map::miniMap(Player* player) {
+    Layer* layer = new Layer();
+    layer->setPosition(player->getPosition());
 
     drawOne = DrawNode::create();
-    drawMain = DrawNode::create();
-    drawOne2 = DrawNode::create();
-    drawMain2 = DrawNode::create();
-
-    auto posPl = player->getPosition(); 
-            
+    auto posPl = Vec2(0, 0);
     Vec2 *point = new Vec2[4];
-    Vec2* point2 = new Vec2[4];
 
     int k = 0, z = 0;
     int sizeX = 0, sizeY = 0;
-    int posMapX = 450, posMapY = 75;
+    int posMapX = 450, posMapY = 70;
 
     for (int i = 0; i < sizeMap; i++) {
         for (int j = sizeMap / 2; j < sizeMap; j++) {
-            if (arrayMap[i][j] == 2) {
+            if (arrayMap[i][j] != 0 ) {
                 point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
                 k++;
                 point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
@@ -621,19 +613,7 @@ void Generation_map::miniMap(Player* player) {
                 point[k] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
                 k++;
                 sizeX += 50;
-                
                 drawOne->drawPolygon(point, k, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
-            }
-            if (arrayMap[i][j] == 1) {
-                point2[z] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                z++;
-                point2[z] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                z++;
-                point2[z] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                z++;
-                point2[z] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                z++;
-                drawMain->drawPolygon(point2, z, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
             }
             k = 0;
             z = 0;
@@ -642,9 +622,6 @@ void Generation_map::miniMap(Player* player) {
         sizeX = 0;
     }
 
-    this->addChild(drawOne);
-    this->addChild(drawMain);
-
     k = 0;
     z = 0;
     sizeX -= 50;
@@ -652,7 +629,7 @@ void Generation_map::miniMap(Player* player) {
 
     for (int i = 0; i < sizeMap; i++) {
         for (int j = sizeMap / 2 - 1; j >= 0; j--) {
-            if (arrayMap[i][j] == 2) {
+            if (arrayMap[i][j] != 0) {
                 point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
                 k++;
                 point[k] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
@@ -663,18 +640,7 @@ void Generation_map::miniMap(Player* player) {
                 k++;
                 
                 sizeX -= 50;
-                drawOne2->drawPolygon(point, k, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
-            }
-            if (arrayMap[i][j] == 1) {
-                point2[z] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                z++;
-                point2[z] = Vec2(posPl.x + 30 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                z++;
-                point2[z] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 60 + sizeY + posMapY);
-                z++;
-                point2[z] = Vec2(posPl.x + 60 + sizeX + posMapX, posPl.y + 30 + sizeY + posMapY);
-                z++;
-                drawMain2->drawPolygon(point2, z, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
+                drawOne->drawPolygon(point, k, Color4F(0.5, 0.5, 0.5, 0.5), 1.5, Color4F::GRAY);
             }
             k = 0;
             z = 0;
@@ -683,7 +649,7 @@ void Generation_map::miniMap(Player* player) {
         sizeX = -50;
     }
 
-    this->addChild(drawOne2);
-    this->addChild(drawMain2);
+    layer->addChild(drawOne);
 
+    return layer;
 }

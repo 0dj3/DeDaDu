@@ -17,6 +17,7 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
     Goblin* newGoblin = new Goblin();
     if (newGoblin && newGoblin->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
     {
+        newGoblin->spawnEnemy();
         newGoblin->sprite->getTexture()->setAliasTexParameters();
         newGoblin->sprite->setScale(3.0);
         newGoblin->setPosition(position);

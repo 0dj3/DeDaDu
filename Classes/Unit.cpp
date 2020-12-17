@@ -11,7 +11,10 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include "Settings.h"
 USING_NS_CC;
+
+Settings* settings = new Settings;
 
 Unit::Unit()
 {
@@ -27,7 +30,7 @@ void Unit::Damage(int value) {
 	if (dmgsound != nullptr)
 	{
 		AudioEngine::preload(dmgsound);
-		AudioEngine::play2d(dmgsound, false, 0.5);
+		AudioEngine::play2d(dmgsound, false, settings->getSFXVolume());
 	}
 	else
 	{
