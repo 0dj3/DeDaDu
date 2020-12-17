@@ -157,8 +157,10 @@ void GameScene::update(float dt)
         generation->generation(checkMap);
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
-    
-    generation->miniMap(static_cast<Player*>(player));
+    if (layerMiniMap != nullptr)
+        layerMiniMap->removeAllChildren();
+    layerMiniMap = generation->miniMap(static_cast<Player*>(player));
+    this->addChild(layerMiniMap);
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){

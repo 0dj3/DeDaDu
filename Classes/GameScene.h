@@ -35,7 +35,7 @@ private:
     std::vector<Unit*> enemies;
     
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
-
+    Node* layerMiniMap;
 };
 
 #endif // __GAME_SCENE_H__
