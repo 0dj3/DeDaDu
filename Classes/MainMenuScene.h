@@ -15,7 +15,6 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenuScene);
-    bool sound = true;
 private:
     void GoToCutScene(cocos2d::Ref* sender);
 

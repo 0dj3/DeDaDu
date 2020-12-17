@@ -15,7 +15,9 @@ Fly::Fly()
 Enemy* Fly::create(cocos2d::Layer* layer, const Vec2& position)
 {
     Fly* newFly = new Fly();
-    if (newFly && newFly->sprite->initWithFile("res/enemy/fly/idle_1.png")) {
+    if (newFly && newFly->sprite->initWithFile("res/enemy/fly/idle_1.png")) 
+    {
+        newFly->spawnEnemy();
         newFly->sprite->getTexture()->setAliasTexParameters();
         newFly->sprite->setScale(3.0);
         newFly->setPosition(position);

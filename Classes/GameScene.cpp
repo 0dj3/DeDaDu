@@ -8,6 +8,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include "AudioEngine.h"
 #include <ctime>
+#include "Settings.h"
 //#include "Generation_map.h"
 
 USING_NS_CC;
@@ -49,7 +50,9 @@ bool GameScene::init()
     InputListener::Instance()->Init(this);
 
     PhysicHelper::CreateWorld();
-    AudioEngine::play2d("res/sounds/bgsound.mp3", true, 0.1f);
+
+    Settings* settings = new Settings;
+    AudioEngine::play2d("res/sounds/bgsound.mp3", true, settings->getMusicVolume());
     
     generation = Generation_map::createScene(checkMap);
     this->addChild(generation);

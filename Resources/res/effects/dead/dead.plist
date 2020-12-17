@@ -64,6 +64,21 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>dead_5.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{16,16}</string>
+                <key>spriteSourceSize</key>
+                <string>{16,16}</string>
+                <key>textureRect</key>
+                <string>{{64,0},{16,16}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -76,9 +91,9 @@
             <key>realTextureFileName</key>
             <string>dead.png</string>
             <key>size</key>
-            <string>{64,16}</string>
+            <string>{80,16}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:db429cb8857680b4a77c78da90086efd:f136dc48791bc77b71ea5eacae65d6a7:cb46edbf51fc1c39d4d08f65db91fd43$</string>
+            <string>$TexturePacker:SmartUpdate:0e5f449ec7cd09e7d74f7efe417ea97b:55e659547c30ed307b99bf486a919a2c:cb46edbf51fc1c39d4d08f65db91fd43$</string>
             <key>textureFileName</key>
             <string>dead.png</string>
         </dict>
