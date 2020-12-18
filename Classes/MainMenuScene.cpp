@@ -30,8 +30,18 @@ bool MainMenuScene::init()
     Settings* settings = new Settings;
     AudioEngine::play2d("res/sounds/bgsound2.mp3", true, settings->getMusicVolume());
 
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    visibleSize = Director::getInstance()->getVisibleSize();
+    origin = Director::getInstance()->getVisibleOrigin();
+
+    parallax1 = Sprite::create("res/parallax/prlxback1.png");
+    parallax1->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(parallax1);
+    parallax2 = Sprite::create("res/parallax/prlxmiddle1.png");
+    parallax2->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(parallax2);
+    parallax3 = Sprite::create("res/parallax/prlxfront1.png");
+    parallax3->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(parallax3);
 
     auto playItem = MenuItemImage::create("res/ui/buttons/start.png", "res/ui/buttons/start_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToCutScene,this));
     auto settingsItem = MenuItemImage::create("res/ui/buttons/options.png", "res/ui/buttons/options_pressed.png", CC_CALLBACK_1(MainMenuScene::GoToSettings, this));
@@ -69,4 +79,7 @@ void MainMenuScene::update(float dt)
 {
     InputListener::Instance()->Init(this);
     CCLOG("mouse move %f, %f", InputListener::Instance()->mousePosition.x, InputListener::Instance()->mousePosition.y);
+    parallax1->setPosition(Point(((visibleSize.width / 2 + origin.x) - InputListener::Instance()->mousePosition.x * 0.1), 50 + ((visibleSize.height / 2 + origin.y) - InputListener::Instance()->mousePosition.y * 0.1)));
+    parallax2->setPosition(Point(((visibleSize.width / 2 + origin.x) - InputListener::Instance()->mousePosition.x * 0.2), 50 + ((visibleSize.height / 2 + origin.y) - InputListener::Instance()->mousePosition.y * 0.1)));
+    parallax3->setPosition(Point(((visibleSize.width / 2 + origin.x) - InputListener::Instance()->mousePosition.x * 0.6), 50 + ((visibleSize.height / 2 + origin.y) - InputListener::Instance()->mousePosition.y * 0.1)));
 }
