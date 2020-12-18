@@ -67,12 +67,12 @@ bool GameScene::init()
     this->addChild(generation);
     this->addChild(player);
 
-    hud = HUD::create(static_cast<Player*>(player));
+   /* hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
 
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime, 2);
-    enemies.push_back(slime);
+    enemies.push_back(slime);*/
 
     //
     //char str1[200] = { 0 };
@@ -94,13 +94,13 @@ bool GameScene::init()
     //demo1->runAction(action1);
     //spritesheet1->addChild(demo1);
     //
-    auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
+    /*auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
     this->addChild(fly, 2);
     enemies.push_back(fly);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
     this->addChild(goblin, 2);
-    enemies.push_back(goblin);
+    enemies.push_back(goblin);*/
 
     /*auto portalEnd = Portal::create();
     portalEnd->setPosition(player->getPosition());

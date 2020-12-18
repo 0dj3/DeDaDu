@@ -291,17 +291,20 @@ void Generation_map::generMapOne(TMXTiledMap* PosMap, int direction, bool checkL
         tileMapOne = TMXTiledMap::create("maps/room_up.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width - 10) * 60, sizeMapY + (PosMap->getMapSize().height) * 60));
 
+        allMapOne.push_back(tileMapOne);
         break;
     case 3://right
         tileMapOne = TMXTiledMap::create("maps/room_right.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height - 10) * 60));
         //tileMapOne->setPosition(Point(sizeMapX + (tileMapOne->getMapSize().width) * 60, sizeMapX + (PosMap->getMapSize().height - 4) * 60));
 
+        allMapOne.push_back(tileMapOne);
         break;
     case 4://left
         tileMapOne = TMXTiledMap::create("maps/room_left.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (-tileMapOne->getMapSize().width) * 60, sizeMapY + (PosMap->getMapSize().height - 10) * 60));
 
+        allMapOne.push_back(tileMapOne);
         break;
     default:
         break;
@@ -311,7 +314,6 @@ void Generation_map::generMapOne(TMXTiledMap* PosMap, int direction, bool checkL
     tileMapOne->setScale(3.0);
     border(tileMapOne);
     this->addChild(tileMapOne);
-    allMapOne.push_back(tileMapOne);
     location2(tileMapOne, checkLoc);
 }
 

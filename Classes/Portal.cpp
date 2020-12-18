@@ -8,7 +8,7 @@ Portal* Portal::create(){
 
 bool Portal::init(){
 	auto portal = PortalSprite();
-	this->addChild(portal);
+	//this->addChild(portal);
 	return true;
 }
 
