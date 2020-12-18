@@ -11,10 +11,9 @@
 #include <sstream>
 #include <string>
 #include <cmath>
-#include "Settings.h"
 USING_NS_CC;
 
-Settings* settings = new Settings;
+MainMenuScene* settings = new MainMenuScene;
 
 Unit::Unit()
 {

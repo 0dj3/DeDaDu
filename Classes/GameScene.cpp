@@ -8,7 +8,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include "AudioEngine.h"
 #include <ctime>
-#include "Settings.h"
+#include "MainMenuScene.h"
 //#include "Generation_map.h"
 
 USING_NS_CC;
@@ -53,7 +53,7 @@ bool GameScene::init()
 
     PhysicHelper::CreateWorld();
 
-    Settings* settings = new Settings;
+    MainMenuScene* settings = new MainMenuScene;
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, settings->getMusicVolume());
     
     

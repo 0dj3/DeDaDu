@@ -2,6 +2,9 @@
 #define __MAIN_MENU_SCENE_H__
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
+
+USING_NS_CC;
 
 class MainMenuScene : public cocos2d::Layer
 {
@@ -13,12 +16,29 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     void update(float dt);
 
+    ui::LoadingBar* musicBar;
+    ui::LoadingBar* sfxBar;
+
+    double difficult = 1.0;
+    double getDifficult();
+    float getMusicVolume();
+    float getSFXVolume();
+
+    int musicID;
+
     CREATE_FUNC(MainMenuScene);
 private:
+    float music = 0.01;
+    float sfx = 0.01;
+
+    void musicPlus(cocos2d::Ref* pSender);
+    void musicMinus(cocos2d::Ref* pSender);
+    void sfxPlus(cocos2d::Ref* pSender);
+    void sfxMinus(cocos2d::Ref* pSender);
+
     void GoToCutScene(cocos2d::Ref* sender);
-
     void GoToSettings(cocos2d::Ref* sender);
-
+    void GoToMainMenu(cocos2d::Ref* sender);
     void Exit(cocos2d::Ref* sender);
 
     cocos2d::Size visibleSize;

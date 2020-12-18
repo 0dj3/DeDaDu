@@ -2,7 +2,6 @@
 #include "MainMenuScene.h"
 #include "Definitions.h"
 #include "AudioEngine.h"
-#include "Settings.h"
 
 USING_NS_CC;
 
@@ -23,7 +22,7 @@ bool DeathScreen::init()
     {
         return false;
     }			
-    Settings* settings = new Settings;
+    MainMenuScene* settings = new MainMenuScene;
     AudioEngine::play2d("res/sounds/ds.mp3", false, settings->getMusicVolume());
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
