@@ -6,8 +6,10 @@
 USING_NS_CC;
 
 
-Generation_map* Generation_map::createScene(bool checkLoc){
+Generation_map* Generation_map::createScene(bool checkLoc, Player* player, Vec2 posHero){
     Generation_map* gener = new Generation_map();
+    gener->playerMiniMap = player;
+    gener->posHero = posHero;
     gener->init(checkLoc);
     return gener;
 }
@@ -137,6 +139,7 @@ void Generation_map::generation(bool checkLoc) {
 
     createStore();
     generBarrel();
+    miniMap();
 }
 
 void Generation_map::location2(TMXTiledMap* tiled, bool checkLoc) {
@@ -512,7 +515,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 0 + rand() % 1;
+    int count = 1 + rand() % 8;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
         int enemyType = 1 + rand() % 3;
@@ -539,7 +542,7 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
             break;
         }
 
-        this->addChild(enemy);
+        this->addChild(enemy, 2);
         enemies.push_back(enemy);
     }
     return enemies;
@@ -596,12 +599,13 @@ void Generation_map::generBarrel() {
     }
 }
 
-Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
-    removeChild(layer, true);
-    removeChild(miniRoom, true);
-    layer = Node::create();
-    layer->setPosition(player->getPosition());
-
+void Generation_map::miniMap() {
+    /*removeChild(layer, true);
+    removeChild(miniRoom, true);*/
+    Generation_map* gener = new Generation_map();
+    Node* layer = Node::create();
+    layer->setPosition(playerMiniMap->getPosition());
+    std::vector<Sprite*> allDrawRoom;
     int konMap;
     int k = 0, z = 0;
     int sizeX = 0, sizeY = 0;
@@ -610,7 +614,7 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
     for (int i = 0; i < sizeMap; i++) {
         for (int j = sizeMap / 2; j < sizeMap; j++) {
             if (arrayMap[i][j] != 0) {
-                removeChild(miniRoom, true);
+                //removeChild(miniRoom, true);
                 miniRoom = Sprite::create("miniMap/miniRoom.png");
                 miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
                 miniRoom->setScale(2.5);
@@ -667,7 +671,7 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
     for (int i = 0; i < sizeMap; i++) {
         for (int j = sizeMap / 2 - 1; j >= 0; j--) {
             if (arrayMap[i][j] != 0) {
-                removeChild(miniRoom, true);
+                //removeChild(miniRoom, true);
                 miniRoom = Sprite::create("miniMap/miniRoom.png");
                 miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
                 miniRoom->setScale(2.5);
@@ -703,32 +707,45 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
         sizeY += 50;
         sizeX = -50;
     }
+    Vec2 dotPlayer;
+    dotPlayer = Vec2(allDrawRoom[1 - 1]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawRoom[1 - 1]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5);
 
+    this->colorMiniRoom =miniRoom->getColor();
+    //return layer;
+    this->allDrawRoom = allDrawRoom;
+    this->layer = layer;
+    this->dotPlayer = dotPlayer;
+    this->addChild(layer, 3);
+}
+
+void Generation_map::addMiniMap(Player* player, Vec2 posHero) {
+    
     if (checkPl == false) {
         FirstPosPl = Vec2(posHero.x / 18, posHero.y / 23);
-        checkPl = true;
+        checkPl = true;        
     }
-    Sprite* dotPlayer = Sprite::create("miniMap/dotPlayer.png");
-    dotPlayer->setPosition(Vec2(allDrawRoom[1 - 1]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawRoom[1 - 1]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5));
+    layer->setPosition(player->getPosition());
+    dotPlayer = (Vec2(allDrawRoom[1 - 1]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawRoom[1 - 1]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5));
     
     for (int i = 0; i < allDrawRoom.size(); i++) {
 
-        auto posPX = dotPlayer->getPosition().x;
-        auto posPY = dotPlayer->getPosition().y;
+        auto posPX = dotPlayer.x;
+        auto posPY = dotPlayer.y;
 
         auto posAX = allDrawRoom[i]->getPosition().x - 20;
         auto posAY = allDrawRoom[i]->getPosition().y + 20;
 
         auto posBX = allDrawRoom[i]->getPosition().x + 20;
         auto posBY = allDrawRoom[i]->getPosition().y - 20;
-
+        
         //log("Px=%f Py=%f BX=%f BY=%f", posPX, posPY, allDrawRoom[1 - 1]->getPosition().x, allDrawRoom[1 - 1]->getPosition().y);
-        if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+        if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY)
             allDrawRoom[i]->setColor(Color3B::GRAY);
-        }
+        else 
+            if (allDrawRoom[i]->getColor() ==  Color3B::GRAY) 
+                allDrawRoom[i]->setColor(colorMiniRoom);
+           
     }
-    allDrawRoom.clear();
-    return layer;
 }
 
 Sprite* Generation_map::miniHall(Sprite* miniRoom, int dir) {

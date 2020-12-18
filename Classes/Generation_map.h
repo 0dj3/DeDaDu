@@ -9,7 +9,7 @@ USING_NS_CC;
 
 class Generation_map: public Layer {
 public:
-	static Generation_map* createScene(bool checkLoc);
+	static Generation_map* createScene(bool checkLoc, Player* player, Vec2 posHero);
     
     void generation(bool checkLoc);
     void border(TMXTiledMap* tiled);
@@ -31,10 +31,12 @@ public:
 
     void generBarrel();
 
-    Node* miniMap(Player* player, Vec2);
+    void miniMap();
     Sprite* miniHall(Sprite* miniRoom, int direction);
+    void addMiniMap(Player* player, Vec2 posHero);
 private:
     bool init(bool checkLoc);
+    //void update(float dt);
     int** generationArrayMap(int sizeMap);
 
     Store* store;
@@ -48,10 +50,7 @@ private:
     TMXTiledMap* tileMainRoom;
     TMXTiledMap* wallLoc2;
     
-    DrawNode* drawOne;
-    DrawNode* drawOne2;
     std::vector<Sprite*> allDrawRoom;
-    DrawNode* drawPlayer;
 
     std::vector<TMXTiledMap*> allMainRoom;
     std::vector<TMXTiledMap*> allMapOne;
@@ -73,5 +72,9 @@ private:
     Vec2 FirstPosPl = Vec2(0, 0);
     Node* layer;
     Sprite* miniRoom;
+    Vec2 posHero;
+    Player* playerMiniMap;
     std::vector<b2Body*> allPhStore;
+    Vec2 dotPlayer;
+    Color3B colorMiniRoom;
 };

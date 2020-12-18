@@ -56,19 +56,22 @@ bool GameScene::init()
     Settings* settings = new Settings;
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, settings->getMusicVolume());
     
-    generation = Generation_map::createScene(checkMap);
-    this->addChild(generation);
+    
 
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
-    this->addChild(player);
+    
     /*log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);*/
+
+    generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());
+    this->addChild(generation);
+    this->addChild(player);
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
 
     slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
-    this->addChild(slime);
+    this->addChild(slime, 2);
     enemies.push_back(slime);
 
     //
@@ -92,18 +95,23 @@ bool GameScene::init()
     //spritesheet1->addChild(demo1);
     //
     auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
-    this->addChild(fly);
+    this->addChild(fly, 2);
     enemies.push_back(fly);
 
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
-    this->addChild(goblin);
+    this->addChild(goblin, 2);
     enemies.push_back(goblin);
 
     /*auto portalEnd = Portal::create();
     portalEnd->setPosition(player->getPosition());
     portalEnd->setScale(0.1);
     this->addChild(portalEnd);*/
-   
+
+    //removeChild(layerMiniMap, true);
+
+    /*layerMiniMap = generation->miniMap(static_cast<Player*>(player), player->getPosition());
+    this->addChild(layerMiniMap);*/
+
     return true;
 }
 
@@ -169,10 +177,7 @@ void GameScene::update(float dt)
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
 
-    removeChild(layerMiniMap, true);
-    layerMiniMap = generation->miniMap(static_cast<Player*>(player), player->getPosition());
-    this->addChild(layerMiniMap);
-    
+    generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){
