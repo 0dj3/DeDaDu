@@ -99,10 +99,10 @@ bool GameScene::init()
     this->addChild(goblin);
     enemies.push_back(goblin);
 
-    auto portalEnd = Portal::create();
+    /*auto portalEnd = Portal::create();
     portalEnd->setPosition(player->getPosition());
     portalEnd->setScale(0.1);
-    this->addChild(portalEnd);
+    this->addChild(portalEnd);*/
    
     return true;
 }
