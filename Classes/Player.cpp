@@ -6,14 +6,17 @@
 
 USING_NS_CC;
 
+Vec2 Player::position;
+
 Player::Player()
 {
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
-    this->gold = 20;
-    this->maxHp = 100;
-    this->hp = 100;
-    this->autorelease();
+    gold = 20;
+    maxHp = 100;
+    hp = 100;
+    stats->speed = 2;
+    autorelease();
 }
 
 Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
@@ -31,7 +34,7 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->hands = new Hands(newPlayer);
         newPlayer->addChild(newPlayer->hands);
 
-        Item* weapon = Weapon::createRange("res/weapon/sword.png", ContactListener::PLAYER, "res/effects/explosion/idle_3.png", "res/sounds/swoosh.mp3", 10, 1, 10, 10);
+        Item* weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 3, 5);
         newPlayer->hands->PutInHands(weapon);
 
         newPlayer->scheduleUpdate();
@@ -43,6 +46,7 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 
 void Player::update(float dt)
 {
+    position = getPosition();
     move();
     rotate();
     if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
@@ -51,13 +55,13 @@ void Player::update(float dt)
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
-        hands->UseItem(pos, InputListener::Instance()->mousePosition, ContactListener::PLAYER);
+        hands->UseItem(pos, InputListener::Instance()->mousePosition);
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
         Item* item;
         if (rand() % 2) {
-            item = Weapon::createRange("res/weapon/sword.png", ContactListener::PLAYER, "res/effects/explosion/idle_3.png", "res/sounds/swoosh.mp3", 10, 1, 10, 10);
+            item = Weapon::createRange("res/weapon/sword.png", "res/effects/explosion/idle_3.png", "res/sounds/swoosh.mp3", 10, 1, 10, 10);
         }
         else {
             item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);

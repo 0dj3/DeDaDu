@@ -1,0 +1,11 @@
+{
+  "id": 0,
+  "filename": "res/weapon/sword.png",
+  "projectileFilename": "res/effects/slash_1.png",
+  "soundFilename": "res/sounds/swoosh.mp3",
+  "type": "melee",
+  "damage": 20,
+  "delay": 0.5,
+  "attackRange": 0,
+  "speed": 0
+}

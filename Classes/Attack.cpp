@@ -10,20 +10,21 @@ Attack::Attack() {
 
 }
 
-void Attack::CreateProjectile(Vec2 position, Vec2 localTarget, ContactListener::BodyTag creatorTag, Weapon* weapon) {
+void Attack::CreateAttack(Vec2 position, Vec2 localTarget, ContactListener::BodyTag userTag, Weapon* weapon) {
     Attack* attack = new Attack();
     if (attack && attack->initWithFile(weapon->projectileFilename)) {
+        attack->getTexture()->setAliasTexParameters();
         attack->setPosition(position);
         attack->setRotation(CC_RADIANS_TO_DEGREES(-localTarget.getAngle()));
+        attack->setScale(2);
         attack->setTag(ContactListener::ATTACK);
-        attack->creatorTag = creatorTag;
+        attack->creatorTag = userTag;
         Director::getInstance()->getRunningScene()->addChild(attack);
         attack->weapon = weapon;
 
         cocos2d::DelayTime* delay;
         if (weapon->weaponType == Weapon::MELEE) {
             delay = cocos2d::DelayTime::create(0.01);
-            attack->setScale(2);
         }
         else {
             delay = cocos2d::DelayTime::create(weapon->attackRange / weapon->speed);

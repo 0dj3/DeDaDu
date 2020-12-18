@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "filename": "res/weapon/staff1.png",
+  "projectileFilename": "res/effects/projectile/fire.png",
+  "soundFilename": "res/sounds/swoosh.mp3",
+  "type": "range",
+  "damage": 10,
+  "delay": 1,
+  "attackRange": 10,
+  "speed": 10
+}

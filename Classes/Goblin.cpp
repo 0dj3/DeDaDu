@@ -31,7 +31,7 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
         newGoblin->hands = new Hands(newGoblin);
         newGoblin->addChild(newGoblin->hands);
 
-        Item* weapon = Weapon::createMelee("res/weapon/knife.png", ContactListener::ENEMY, "res/effects/hit/slash_1.png", "res/sounds/swoosh.mp3", 10, 1);
+        Item* weapon = Weapon::createMelee("res/weapon/knife.png", "res/effects/hit/slash_1.png", "res/sounds/swoosh.mp3", 10, 1);
         newGoblin->hands->PutInHands(weapon);
 
         newGoblin->scheduleUpdate();
@@ -46,17 +46,17 @@ void Goblin::update(float dt)
     if (hands->IsDelay())
         return;
     if (IsPlayerWithinRange()) {
-        Vec2 playerPos = _player->getPosition() - this->getPosition();
+        Vec2 playerPos = Player::position - this->getPosition();
         playerPos.normalize();
         Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
-        hands->UseItem(pos, playerPos, ContactListener::ENEMY);
+        hands->UseItem(pos, playerPos);
     }
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
         auto startAttack = CallFunc::create([this]() {
             Vec2 toTarget;
             //toTarget = Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
-            toTarget = _player->getPosition() - this->getPosition();
+            toTarget = Player::position - this->getPosition();
             toTarget.normalize();
             Vec2 desiredVel = 50 * toTarget * (rand() % 2);
             b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
@@ -73,7 +73,7 @@ void Goblin::update(float dt)
 void Goblin::move()
 {
 
-     Vec2 toTarget = _player->getPosition() - this->getPosition();
+     Vec2 toTarget = Player::position - this->getPosition();
      toTarget.normalize();
      Vec2 desiredVel = stats->speed * toTarget;
      b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);

@@ -8,7 +8,7 @@ Weapon::Weapon() {
     type = WEAPON;
 }
 
-Weapon* Weapon::create(WeaponType weaponType, std::string filename, ContactListener::BodyTag userTag, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
+Weapon* Weapon::create(WeaponType weaponType, std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
 {
     Weapon* newWeapon = new Weapon();
     if (newWeapon->initWithFile(filename)) {
@@ -16,7 +16,6 @@ Weapon* Weapon::create(WeaponType weaponType, std::string filename, ContactListe
         newWeapon->setScale(2.0);
         newWeapon->weaponType = weaponType;
         newWeapon->filename = filename;
-        newWeapon->userTag = userTag;
         newWeapon->projectileFilename = projectileFilename;
         newWeapon->soundFilename = soundFilename;
         newWeapon->damage = damage;
@@ -31,21 +30,21 @@ Weapon* Weapon::create(WeaponType weaponType, std::string filename, ContactListe
 
 Weapon* Weapon::create(Weapon* weapon)
 {
-    return create(weapon->weaponType, weapon->filename, weapon->userTag, weapon->projectileFilename, weapon->soundFilename, weapon->damage, weapon->delay, weapon->attackRange, weapon->speed);
+    return create(weapon->weaponType, weapon->filename, weapon->projectileFilename, weapon->soundFilename, weapon->damage, weapon->delay, weapon->attackRange, weapon->speed);
 }
 
-Weapon* Weapon::createMelee(std::string filename, ContactListener::BodyTag userTag, std::string projectileFilename, std::string soundFilename, int damage, double delay)
+Weapon* Weapon::createMelee(std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay)
 {
-    return create(MELEE, filename, userTag, projectileFilename, soundFilename, damage, delay, 0, 0);
+    return create(MELEE, filename, projectileFilename, soundFilename, damage, delay, 0, 0);
 }
 
-Weapon* Weapon::createRange(std::string filename, ContactListener::BodyTag userTag, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
+Weapon* Weapon::createRange(std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
 {
-    return create(RANGE, filename, userTag, projectileFilename, soundFilename, damage, delay, attackRange, speed);
+    return create(RANGE, filename, projectileFilename, soundFilename, damage, delay, attackRange, speed);
 }
 
-void Weapon::Attack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag) {
-    Attack::CreateProjectile(position, localTarget, creatorTag, this);
+void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag userTag) {
+    Attack::CreateAttack(position, localTarget, userTag, this);
     AudioEngine::preload(soundFilename);
     AudioEngine::play2d(soundFilename, false, 0.1);
 }

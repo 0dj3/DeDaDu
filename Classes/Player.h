@@ -21,6 +21,7 @@ public:
     static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
     Hands* hands;
     int gold = 10;
+    static cocos2d::Vec2 position;
 private:
     bool isDelay = false;
 

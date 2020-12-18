@@ -14,7 +14,7 @@ class Attack : public cocos2d::Sprite
 public:
 	Attack();
 
-	static void CreateProjectile(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag, Weapon* weapon);
+	static void CreateAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag userTag, Weapon* weapon);
 
 	ContactListener::BodyTag GetCreatorTag() { return creatorTag; };
 	int GetDamage() { return weapon->damage; };

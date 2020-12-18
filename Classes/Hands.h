@@ -27,7 +27,7 @@ public:
 		this->handsSprite->getTexture()->setAliasTexParameters();
 	};
 
-	void UseItem(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag creatorTag) {
+	void UseItem(cocos2d::Vec2 position, cocos2d::Vec2 localTarget) {
 		if (isDelay || item == NULL)
 			return;
 		cocos2d::DelayTime* delay = cocos2d::DelayTime::create(item->delay);
@@ -43,7 +43,7 @@ public:
 		switch (item->type)	
 		{
 		case Item::WEAPON:
-			static_cast<Weapon*>(item)->Attack(position, localTarget, creatorTag);
+			static_cast<Weapon*>(item)->StartAttack(position, localTarget, (ContactListener::BodyTag)unit->getTag());
 			break;
 		case Item::POTION:
 			static_cast<Potion*>(item)->Drink(unit);
