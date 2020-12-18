@@ -31,7 +31,8 @@ public:
 
     void generBarrel();
 
-    Node* miniMap(Player* player);
+    Node* miniMap(Player* player, Vec2);
+    Sprite* miniHall(Sprite* miniRoom, int direction);
 private:
     bool init(bool checkLoc);
     int** generationArrayMap(int sizeMap);
@@ -48,6 +49,9 @@ private:
     TMXTiledMap* wallLoc2;
     
     DrawNode* drawOne;
+    DrawNode* drawOne2;
+    std::vector<Sprite*> allDrawRoom;
+    DrawNode* drawPlayer;
 
     std::vector<TMXTiledMap*> allMainRoom;
     std::vector<TMXTiledMap*> allMapOne;
@@ -64,4 +68,10 @@ private:
     int checkj;
     bool checkDoorRoom = false;
     PhysicsWorld* sceneWorld;
+
+    bool checkPl = false;
+    Vec2 FirstPosPl = Vec2(0, 0);
+    Node* layer;
+    Sprite* miniRoom;
+    std::vector<b2Body*> allPhStore;
 };

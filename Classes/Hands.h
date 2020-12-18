@@ -46,7 +46,8 @@ public:
 			static_cast<Weapon*>(item)->Attack(position, localTarget, creatorTag);
 			break;
 		case Item::POTION:
-			//static_cast<Potion*>(item)->Drink(unit);
+			static_cast<Potion*>(item)->Drink(unit);
+			item = NULL;
 			break;
 		default:
 			break;

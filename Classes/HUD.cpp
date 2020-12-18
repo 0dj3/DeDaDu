@@ -4,6 +4,7 @@
 #include "AudioEngine.h"
 #include "Hands.h"
 #include "Item.h"
+#include "Weapon.h"
 
 USING_NS_CC;
 
@@ -20,10 +21,30 @@ void HUD::Init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	//////////////////////// Weapon slot
+
 	weaponSlot = Sprite::create("res/ui/selected_slot.png");
 	weaponSlot->setPosition(Point(-620, -350));
 	weaponSlot->setAnchorPoint(Point(0, 0));
 	this->addChild(weaponSlot);
+
+	weaponSprite = Sprite::create("res/ui/selected_slot.png");
+	weaponSprite->setScale(3.0);
+	weaponSprite->setPosition(Point(-540, -275));
+	this->addChild(weaponSprite);
+
+	damagestats = Label::createWithTTF("0", "fonts/Pixel Times.ttf", 30);
+	damagestats->setAnchorPoint(Point(0, 1));
+	damagestats->setPosition(Point(500, -240));
+	this->addChild(damagestats);
+
+	delaystats = Label::createWithTTF("0", "fonts/Pixel Times.ttf", 30);
+	delaystats->setAnchorPoint(Point(0, 1));
+	delaystats->setPosition(Point(500, -275));
+	this->addChild(delaystats);
+
+
+	////////////////////////
 
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
@@ -102,27 +123,21 @@ void HUD::update(float dt)
 		counter->setPosition(Point(-580, 303));
 		this->addChild(counter);
 
-		/*removeChild(damagestats, true);
-		char damage_str[200] = { 0 };
-		sprintf(damage_str, "dmg: %d", playerHUD->hands->GetItem()->stats.find("damage")->second);
-		damagestats = Label::createWithTTF(damage_str, "fonts/Pixel Times.ttf", 30);
-		damagestats->setAnchorPoint(Point(0, 1));
-		damagestats->setPosition(Point(500, -240));
-		this->addChild(damagestats);
+		if (playerHUD->hands->GetItem() != NULL) {
+			weaponSprite->setTexture(playerHUD->hands->GetItem()->filename);
+			weaponSprite->getTexture()->setAliasTexParameters();
 
-		removeChild(delaystats, true);
-		char delay_str[200] = { 0 };
-		sprintf(delay_str, "del: %d", playerHUD->hands->GetItem()->stats.find("delay")->second);
-		delaystats = Label::createWithTTF(delay_str, "fonts/Pixel Times.ttf", 30);
-		delaystats->setAnchorPoint(Point(0, 1));
-		delaystats->setPosition(Point(500, -275));
-		this->addChild(delaystats);*/
+			if (playerHUD->hands->GetItem()->type == Item::WEAPON) {
+				char damage_str[200] = { 0 };
+				sprintf(damage_str, "dmg: %i", static_cast<Weapon*>(playerHUD->hands->GetItem())->damage);
+				damagestats->setString(damage_str);
 
-		removeChild(weaponSprite, true);
-		weaponSprite = Sprite::create(playerHUD->hands->GetItem()->filename);
-		weaponSprite->setScale(3.0);
-		weaponSprite->setPosition(Point(-540, -275));
-		this->addChild(weaponSprite);
+				char delay_str[200] = { 0 };
+				sprintf(delay_str, "del: %.2f s", static_cast<Weapon*>(playerHUD->hands->GetItem())->delay);
+				delaystats->setString(delay_str);
+			}
+		}
+		
 	}
 }
 

@@ -11,9 +11,6 @@ bool Store::init(TMXTiledMap* map, int countMap) {
 	auto posMap = map->getPosition();
 	auto sizeMap = map->getMapSize();
 
-	for (int i = 0; i < allPhysicTray.size(); i++)
-		PhysicHelper::world->DestroyBody(allPhysicTray[i]);
-
 	store = TMXTiledMap::create("maps/store.tmx");
 	store->setScale(3.0);
 	store->setPosition(Vec2(posMap.x + ((sizeMap.width / 2 - 2) * 60), posMap.y + ((sizeMap.height / 2 + 1) * 60)));
@@ -34,8 +31,9 @@ bool Store::init(TMXTiledMap* map, int countMap) {
 
 void Store::createTray(TMXTiledMap* storeMap, int count) {
 	auto posMap = storeMap->getPosition();
+	
 	for (int i = 0; i < count; i++) {
-		tray = new Sprite();
+		tray = Sprite::create();
 		tray->initWithFile("NPC/store/table.png");
 		tray->getTexture()->setAliasTexParameters();
 		tray->setScale(3.0);
@@ -75,4 +73,8 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 
 TMXTiledMap* Store::getMap() {
 	return store;
+}
+
+std::vector<b2Body*> Store::getTray() {
+	return allPhysicTray;
 }

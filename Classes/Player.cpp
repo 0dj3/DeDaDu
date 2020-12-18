@@ -71,12 +71,14 @@ void Player::update(float dt)
             if (gold >= targetItem->price) {
                 gold -= targetItem->price;
                 if (targetItem->type == Item::POTION) {
-                    static_cast<Potion*>(targetItem)->Drink(this);
+                    hands->PutInHands(targetItem);
+                    //static_cast<Potion*>(targetItem)->Drink(this);
                     targetItem->setName(DEAD_TAG);
                     targetItem = NULL;
                 }
                 else {
                     hands->PutInHands(targetItem);
+                    targetItem->setName(DEAD_TAG);
                     targetItem = NULL;
                 }
             }

@@ -16,7 +16,6 @@ protected:
 public:
     typedef enum ItemType
     {
-        GOLD = 1,
         POTION,
         WEAPON
     };

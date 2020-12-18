@@ -44,6 +44,8 @@ bool GameScene::init()
         return false;
     }
     
+    
+
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -60,7 +62,7 @@ bool GameScene::init()
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(player);
-    log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);
+    /*log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);*/
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
@@ -96,6 +98,12 @@ bool GameScene::init()
     auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
     this->addChild(goblin);
     enemies.push_back(goblin);
+
+    auto portalEnd = Portal::create();
+    portalEnd->setPosition(player->getPosition());
+    portalEnd->setScale(0.1);
+    this->addChild(portalEnd);
+   
     return true;
 }
 
@@ -160,10 +168,11 @@ void GameScene::update(float dt)
         generation->generation(checkMap);
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
-    if (layerMiniMap != nullptr)
-        layerMiniMap->removeAllChildren();
-    layerMiniMap = generation->miniMap(static_cast<Player*>(player));
+
+    removeChild(layerMiniMap, true);
+    layerMiniMap = generation->miniMap(static_cast<Player*>(player), player->getPosition());
     this->addChild(layerMiniMap);
+    
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){
