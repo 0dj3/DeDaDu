@@ -81,7 +81,7 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
 {
     Node* node = static_cast<Node*>(body->GetUserData());
     Attack* attack = static_cast<Attack*>(weapon->GetUserData());
-    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG)
+    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG || node->getTag() == GOLD)
         return;
     b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
     direction.Normalize();
