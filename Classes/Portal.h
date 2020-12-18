@@ -5,7 +5,8 @@ USING_NS_CC;
 class Portal : public  Node{
 public:
 	static Portal* create();
-	Sprite* PortalSprite();
+	void portalStart();
+	Node* portalEnd();
 private:
 	bool init();
 	Sprite* portal;

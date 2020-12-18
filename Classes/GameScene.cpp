@@ -60,17 +60,16 @@ bool GameScene::init()
 
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
-    
     /*log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);*/
 
     generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());
     this->addChild(generation);
     this->addChild(player);
 
-   /* hud = HUD::create(static_cast<Player*>(player));
+    hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
 
-    slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
+    /*slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
     this->addChild(slime, 2);
     enemies.push_back(slime);*/
 
