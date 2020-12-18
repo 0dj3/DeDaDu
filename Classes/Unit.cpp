@@ -77,7 +77,7 @@ void Unit::Dead()
 void Unit::CheckMaxHP() {
 	if (maxHP != START_HP * stats->hp) {
 		maxHP = START_HP * stats->hp;
-		hp = maxHP;
+		//hp = maxHP;
 	}
 }
 

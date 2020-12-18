@@ -14,7 +14,7 @@ Player::Player()
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     gold = 20;
-    stats = new UnitStats(1, 1, 1, 2);
+    stats = new UnitStats(1, 2, 1, 2);
     CheckMaxHP();
     autorelease();
 }
@@ -137,10 +137,27 @@ void Player::setGold(int x)
 }
 
 void Player::checkLVL() {
-    if (exp >= lvl * lvl * EXP_UNTIL_LVL_UP) {
+    if (exp >= EXP_UNTIL_LVL_UP) {
         CCLOG("LVL");
         lvl++;
-        exp = exp - lvl * lvl * EXP_UNTIL_LVL_UP;
+        exp = exp - EXP_UNTIL_LVL_UP;
+        switch (rand() % 4)
+        {
+        case 0:
+            stats->UpHP();
+            break;
+        case 1:
+            stats->UpDamage();
+            break;
+        case 2:
+            stats->UpAttackSpeed();
+            break;
+        case 3:
+            stats->UpMoveSpeed();
+            break;
+        default:
+            break;
+        }
     }
 }
 

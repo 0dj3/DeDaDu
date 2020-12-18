@@ -11,7 +11,7 @@ Enemy::Enemy()
 }
 
 void Enemy::DropItems(Vec2 position) {
-    Player::giveEXP(5);
+    Player::giveEXP(10);
     if (rand() % 2) {
         if (rand() % 10 > 8) {
             Item* item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 15 - 15);
