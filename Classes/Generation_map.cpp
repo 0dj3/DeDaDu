@@ -547,13 +547,20 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
 
 void Generation_map::createStore() {
     srand(time(0));
+
     auto countMap = allMapOne.size() - 1;
     auto mapLocation = 1 + rand() % (countMap - 1);
+
+    for (int i = 0; i < allPhStore.size(); i++)
+        PhysicHelper::world->DestroyBody(allPhStore[i]);
+
     store = Store::createScene(allMapOne[mapLocation], countMap);
     this->addChild(store);
+
+    allPhStore = store->getTray();
+
     allMapOne.erase(allMapOne.begin() + mapLocation);
     auto storeMap = store->getMap();
-
     border(storeMap);
 }
 

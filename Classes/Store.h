@@ -9,6 +9,7 @@ class Store : public Node {
 public:
 	static Store* createScene(TMXTiledMap* map, int countMap);
 	TMXTiledMap* getMap();
+	std::vector<b2Body*> getTray();
 	void createTray(TMXTiledMap* storeMap, int count);
 private:
 	bool init(TMXTiledMap* map, int countMap);

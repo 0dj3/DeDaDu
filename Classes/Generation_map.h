@@ -72,4 +72,5 @@ private:
     Vec2 FirstPosPl = Vec2(0, 0);
     Node* layer;
     Sprite* miniRoom;
+    std::vector<b2Body*> allPhStore;
 };
