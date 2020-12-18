@@ -100,14 +100,6 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
     Item* itemNode = static_cast<Item*>(item->GetUserData());
     if (node->getTag() == PLAYER) {
         Player* player = static_cast<Player*>(body->GetUserData());
-        if (itemNode->type == Item::GOLD) {
-            HUD::DisplayString(itemNode->getPosition(), std::to_string(itemNode->price), 15, Color3B(255, 255, 0));
-            AudioEngine::preload("res/sounds/coin.mp3");
-            AudioEngine::play2d("res/sounds/coin.mp3", false, 0.5);
-            player->setGold(itemNode->price);
-            itemNode->setName(DEAD_TAG);
-            return;
-        }
         player->targetItem = static_cast<Item*>(item->GetUserData());
     }
 }

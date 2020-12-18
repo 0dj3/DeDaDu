@@ -37,6 +37,7 @@ public:
         unit->Damage(value);
         AudioEngine::preload(soundFilename);
         AudioEngine::play2d(soundFilename, false, 0.1);
+        removeFromParentAndCleanup(true);
     };
 
 private:
