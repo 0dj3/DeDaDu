@@ -3,7 +3,7 @@ USING_NS_CC;
 
 class Portal : public Sprite {
 public:
-	static Portal* Portal::create();
+	static Portal* create();
 	Sprite* PortalSprite();
 private:
 	bool init();
