@@ -602,10 +602,6 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
     layer = Node::create();
     layer->setPosition(player->getPosition());
 
-    /*Sprite* miniHall = new Sprite();
-    miniHall->initWithFile("miniMap/miniHall.png");
-    miniHall->getTexture()->setAliasTexParameters();*/
-
     int konMap;
     int k = 0, z = 0;
     int sizeX = 0, sizeY = 0;
@@ -622,6 +618,26 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
                 allDrawRoom.push_back(miniRoom);
                 konMap = allDrawRoom.size();
                 sizeX += 50;
+                if (i != 0 && i != sizeMap - 1) {
+                    if (arrayMap[i + 1][j] != 0) {
+                        auto hall = miniHall(miniRoom, 2);
+                        layer->addChild(hall);
+                    }
+                    if (arrayMap[i - 1][j] != 0) {
+                        auto hall = miniHall(miniRoom, 1);
+                        layer->addChild(hall);
+                    }
+                }
+                if (j != 0 && j != sizeMap - 1) {
+                    if (arrayMap[i][j + 1] != 0){
+                        auto hall = miniHall(miniRoom, 3);
+                        layer->addChild(hall);
+                    }
+                    if (arrayMap[i][j - 1] != 0){
+                        auto hall = miniHall(miniRoom, 4);
+                        layer->addChild(hall);
+                    }    
+                }
             }
             k = 0;
             z = 0;
@@ -645,6 +661,26 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
                 layer->addChild(miniRoom);
                 allDrawRoom.push_back(miniRoom);
                 sizeX -= 50;
+                if (i != 0 && i != sizeMap - 1) {
+                    if (arrayMap[i + 1][j] != 0) {
+                        auto hall = miniHall(miniRoom, 2);
+                        layer->addChild(hall);
+                    }
+                    if (arrayMap[i - 1][j] != 0) {
+                        auto hall = miniHall(miniRoom, 1);
+                        layer->addChild(hall);
+                    }
+                }
+                if (j != 0 && j != sizeMap - 1) {
+                    if (arrayMap[i][j + 1] != 0) {
+                        auto hall = miniHall(miniRoom, 3);
+                        layer->addChild(hall);
+                    }
+                    if (arrayMap[i][j - 1] != 0) {
+                        auto hall = miniHall(miniRoom, 4);
+                        layer->addChild(hall);
+                    }
+                }
             }
             k = 0;
             z = 0;
@@ -681,4 +717,34 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
     }
     allDrawRoom.clear();
     return layer;
+}
+
+Sprite* Generation_map::miniHall(Sprite* miniRoom, int dir) {
+    Sprite* miniHall = Sprite::create();
+    miniHall->initWithFile("miniMap/miniHall.png");
+    miniHall->setScale(2.5);
+
+    auto posRoom = miniRoom->getPosition();
+    auto sizeRoom = miniRoom->getBoundingBox().size;
+
+    switch (dir)
+    {
+    case 1://down
+        miniHall->setPosition(Vec2(posRoom.x, posRoom.y - sizeRoom.height / 1.25));
+        break;
+    case 2://up
+        miniHall->setPosition(Vec2(posRoom.x, posRoom.y + sizeRoom.height / 1.25));
+        break;
+    case 3://right
+        miniHall->setPosition(Vec2(posRoom.x + sizeRoom.width / 1.25, posRoom.y));
+        miniHall->setRotation(90);
+        break;
+    case 4://left
+        miniHall->setPosition(Vec2(posRoom.x - sizeRoom.width / 1.25, posRoom.y));
+        miniHall->setRotation(90);
+        break;
+    default:
+        break;
+    }
+    return miniHall;
 }

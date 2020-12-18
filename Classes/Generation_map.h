@@ -32,6 +32,7 @@ public:
     void generBarrel();
 
     Node* miniMap(Player* player, Vec2);
+    Sprite* miniHall(Sprite* miniRoom, int direction);
 private:
     bool init(bool checkLoc);
     int** generationArrayMap(int sizeMap);
