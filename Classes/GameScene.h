@@ -6,7 +6,7 @@
 #include "InputListener.h"
 #include "HUD.h"
 #include "Generation_map.h"
-
+#include "Portal.h"
 USING_NS_CC;
 
 class GameScene : public cocos2d::Layer

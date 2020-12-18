@@ -44,6 +44,8 @@ bool GameScene::init()
         return false;
     }
     
+    
+
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -97,7 +99,10 @@ bool GameScene::init()
     this->addChild(goblin);
     enemies.push_back(goblin);
 
-
+    auto portalEnd = Portal::create();
+    portalEnd->setPosition(player->getPosition());
+    portalEnd->setScale(0.1);
+    this->addChild(portalEnd);
    
     return true;
 }
@@ -163,8 +168,8 @@ void GameScene::update(float dt)
         generation->generation(checkMap);
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
     }
-    if (layerMiniMap != nullptr)
-        layerMiniMap->removeAllChildren();
+
+    removeChild(layerMiniMap, true);
     layerMiniMap = generation->miniMap(static_cast<Player*>(player), player->getPosition());
     this->addChild(layerMiniMap);
     

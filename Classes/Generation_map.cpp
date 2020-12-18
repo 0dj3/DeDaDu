@@ -711,9 +711,6 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
     Sprite* dotPlayer = Sprite::create("miniMap/dotPlayer.png");
     dotPlayer->setPosition(Vec2(allDrawRoom[1 - 1]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawRoom[1 - 1]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5));
     
-    //layer->addChild(dotPlayer);
-    
-
     for (int i = 0; i < allDrawRoom.size(); i++) {
 
         auto posPX = dotPlayer->getPosition().x;
