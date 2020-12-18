@@ -30,7 +30,7 @@ public:
 	void UseItem(cocos2d::Vec2 position, cocos2d::Vec2 localTarget) {
 		if (isDelay || item == NULL)
 			return;
-		cocos2d::DelayTime* delay = cocos2d::DelayTime::create(item->delay);
+		cocos2d::DelayTime* delay = cocos2d::DelayTime::create(item->delay / unit->stats->attackSpeed);
 		auto startCD = cocos2d::CallFunc::create([this]() {
 			isDelay = true;
 			});
@@ -43,7 +43,7 @@ public:
 		switch (item->type)	
 		{
 		case Item::WEAPON:
-			static_cast<Weapon*>(item)->StartAttack(position, localTarget, (ContactListener::BodyTag)unit->getTag());
+			static_cast<Weapon*>(item)->StartAttack(position, localTarget, unit);
 			break;
 		case Item::POTION:
 			static_cast<Potion*>(item)->Drink(unit);

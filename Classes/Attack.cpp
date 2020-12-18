@@ -10,7 +10,7 @@ Attack::Attack() {
 
 }
 
-void Attack::CreateAttack(Vec2 position, Vec2 localTarget, ContactListener::BodyTag userTag, Weapon* weapon) {
+void Attack::CreateAttack(Vec2 position, Vec2 localTarget, Unit* creator, Weapon* weapon) {
     Attack* attack = new Attack();
     if (attack && attack->initWithFile(weapon->projectileFilename)) {
         attack->getTexture()->setAliasTexParameters();
@@ -18,9 +18,9 @@ void Attack::CreateAttack(Vec2 position, Vec2 localTarget, ContactListener::Body
         attack->setRotation(CC_RADIANS_TO_DEGREES(-localTarget.getAngle()));
         attack->setScale(2);
         attack->setTag(ContactListener::ATTACK);
-        attack->creatorTag = userTag;
+        attack->creatorTag = (ContactListener::BodyTag)creator->getTag();
         Director::getInstance()->getRunningScene()->addChild(attack);
-        attack->weapon = weapon;
+        attack->damage = weapon->damage * creator->stats->damage;
 
         cocos2d::DelayTime* delay;
         if (weapon->weaponType == Weapon::MELEE) {
@@ -29,12 +29,12 @@ void Attack::CreateAttack(Vec2 position, Vec2 localTarget, ContactListener::Body
         else {
             delay = cocos2d::DelayTime::create(weapon->attackRange / weapon->speed);
         }
-        auto startAttack = CallFunc::create([attack, localTarget]() {
+        auto startAttack = CallFunc::create([attack, localTarget, weapon]() {
             attack->setName("");
             b2Body* body =  attack->CreatePhysicBody();
             b2Vec2 pos = b2Vec2(localTarget.x, localTarget.y);
             pos.Normalize();
-            body->ApplyForceToCenter((LINEAR_ACCELERATION) * attack->weapon->speed * PPM * pos, true);
+            body->ApplyForceToCenter((LINEAR_ACCELERATION) * weapon->speed * PPM * pos, true);
         });
         auto endAttack = CallFunc::create([attack]() {
             attack->setName(DEAD_TAG);

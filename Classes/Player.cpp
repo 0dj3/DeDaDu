@@ -7,15 +7,15 @@
 USING_NS_CC;
 
 Vec2 Player::position;
+int Player::exp = 0;
 
 Player::Player()
 {
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     gold = 20;
-    maxHp = 100;
-    hp = 100;
-    stats->speed = 2;
+    stats = new UnitStats(1, 1, 1, 2);
+    CheckMaxHP();
     autorelease();
 }
 
@@ -47,11 +47,12 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
 void Player::update(float dt)
 {
     position = getPosition();
+    checkLVL();
+    CheckMaxHP();
     move();
     rotate();
     if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
-        InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)] = false;
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
@@ -123,7 +124,7 @@ void Player::move()
     }
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
-    b2Vec2 desiredVel = stats->speed * toTarget;
+    b2Vec2 desiredVel = stats->moveSpeed * toTarget;
     body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
 
     auto cam = Camera::getDefaultCamera();
@@ -133,4 +134,16 @@ void Player::move()
 void Player::setGold(int x)
 {
     gold += x;
+}
+
+void Player::checkLVL() {
+    if (exp >= lvl * lvl * EXP_UNTIL_LVL_UP) {
+        CCLOG("LVL");
+        lvl++;
+        exp = exp - lvl * lvl * EXP_UNTIL_LVL_UP;
+    }
+}
+
+void Player::giveEXP(int value) {
+    exp += value;
 }

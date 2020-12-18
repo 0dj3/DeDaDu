@@ -7,7 +7,8 @@ USING_NS_CC;
 Slime::Slime()
 {
     dmgsound = "res/sounds/hit/slime.mp3";
-    tag = ContactListener::ENEMY;
+    stats = new UnitStats(0.3, 1, 1, 1);
+    CheckMaxHP();
     this->autorelease();
 }
 
@@ -20,7 +21,6 @@ Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
         newSlime->sprite->getTexture()->setAliasTexParameters();
         newSlime->sprite->setScale(3.0);
         newSlime->setPosition(position);
-        newSlime->hp = 30;
         newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
         newSlime->weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 5, 4);
         newSlime->setTag(newSlime->tag);
@@ -45,10 +45,8 @@ void Slime::update(float dt)
         auto attack = CallFunc::create([this]() {
             for (int i = 0; i < (rand() % 2 + 2); i++) {
                 Vec2 toPlayer = Player::position - this->getPosition();
-                //toPlayer.normalize();
                 Vec2 toTarget = Vec2((double)(rand()) / RAND_MAX * (200) - 100, (double)(rand()) / RAND_MAX * (200) - 100);
-                //toTarget.normalize();
-                weapon->StartAttack(this->getPosition(), toPlayer + toTarget, ContactListener::ENEMY);
+                weapon->StartAttack(this->getPosition(), toPlayer + toTarget, this);
                 //attack->setColor(Color3B(0, 255, 0));
             }
             });

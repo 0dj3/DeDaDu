@@ -43,8 +43,8 @@ Weapon* Weapon::createRange(std::string filename, std::string projectileFilename
     return create(RANGE, filename, projectileFilename, soundFilename, damage, delay, attackRange, speed);
 }
 
-void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag userTag) {
-    Attack::CreateAttack(position, localTarget, userTag, this);
+void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit) {
+    Attack::CreateAttack(position, localTarget, unit, this);
     AudioEngine::preload(soundFilename);
     AudioEngine::play2d(soundFilename, false, 0.1);
 }

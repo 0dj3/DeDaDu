@@ -7,7 +7,8 @@
 USING_NS_CC;
 Goblin::Goblin()
 {
-    stats->speed = 1;
+    stats = new UnitStats(0.5, 1, 1, 1);
+    CheckMaxHP();
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }
@@ -23,7 +24,6 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
         newGoblin->setPosition(position);
 
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
-        newGoblin->hp = 50;
         newGoblin->setTag(newGoblin->tag);
         newGoblin->layer = layer;
         newGoblin->_player = player;
@@ -75,7 +75,7 @@ void Goblin::move()
 
      Vec2 toTarget = Player::position - this->getPosition();
      toTarget.normalize();
-     Vec2 desiredVel = stats->speed * toTarget;
+     Vec2 desiredVel = stats->moveSpeed * toTarget;
      b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
      body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
 }

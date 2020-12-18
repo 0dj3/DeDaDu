@@ -2,6 +2,8 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#define EXP_UNTIL_LVL_UP 10
+
 #include "cocos2d.h"
 #include "Unit.h"
 #include <string>
@@ -15,21 +17,27 @@
 class Player : public Unit
 {
 public:
-    Item* targetItem = NULL;
-    Player();
-    void setGold(int x);
-    static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
+    static cocos2d::Vec2 position;
+
     Hands* hands;
     int gold = 10;
-    static cocos2d::Vec2 position;
+    Item* targetItem = NULL;
+
+    Player();
+    static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
+    void setGold(int x);
+
+    static void giveEXP(int value);
+
 private:
+    int lvl = 1;
+    static int exp;
     bool isDelay = false;
 
     void update(float dt);
-
     void move();
     void rotate();
-
+    void checkLVL();
 };
 
 #endif // __PLAYER_H__

@@ -17,9 +17,11 @@ MainMenuScene* settings = new MainMenuScene;
 
 Unit::Unit()
 {
+	maxHP = START_HP;
+	hp = maxHP;
 	layer = new Layer();
     sprite = new Sprite();
-	stats = new UnitStats();
+	stats = new UnitStats(1, 1, 1, 1);
 	this->addChild(sprite);
 	this->setName("unit");
 	loadStats();
@@ -59,8 +61,8 @@ void Unit::Damage(int value) {
 		}
 		return;
 	}
-	if (hp - value > maxHp) {
-		hp = maxHp;
+	if (hp - value > maxHP) {
+		hp = maxHP;
 	} else {
 		hp -= value;
 	}
@@ -70,6 +72,13 @@ void Unit::Dead()
 {	
 	//this->removeFromParentAndCleanup(true);
 	this->setName(DEAD_TAG);
+}
+
+void Unit::CheckMaxHP() {
+	if (maxHP != START_HP * stats->hp) {
+		maxHP = START_HP * stats->hp;
+		hp = maxHP;
+	}
 }
 
 void Unit::loadStats() {

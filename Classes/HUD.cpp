@@ -90,7 +90,7 @@ void HUD::getHit(int damage, Unit* player) {
 	}
 	else {
 		player->hp -= damage;
-		healthBar->setPercent(player->hp / player->maxHp);
+		healthBar->setPercent(player->hp / player->maxHP);
 	}
 }
 

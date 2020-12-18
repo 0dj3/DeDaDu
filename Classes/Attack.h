@@ -14,13 +14,13 @@ class Attack : public cocos2d::Sprite
 public:
 	Attack();
 
-	static void CreateAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, ContactListener::BodyTag userTag, Weapon* weapon);
+	static void CreateAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* creator, Weapon* weapon);
 
 	ContactListener::BodyTag GetCreatorTag() { return creatorTag; };
-	int GetDamage() { return weapon->damage; };
+	int GetDamage() { return damage; };
 
 private:
-	Weapon* weapon;
+	int damage;
 	ContactListener::BodyTag creatorTag;
 
 	b2Body* CreatePhysicBody();
