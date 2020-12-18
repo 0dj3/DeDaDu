@@ -12,6 +12,15 @@ public:
 
     UnitStats(double hp, double damage, double attackSpeed, double moveSpeed);
 
+    void UpHP();
+    void DownHP();
+    void UpDamage();
+    void DownDamage();
+    void UpMoveSpeed();
+    void DownMoveSpeed();
+    void UpAttackSpeed();
+    void DownAttackSpeed();
+
 private:
 
 };
