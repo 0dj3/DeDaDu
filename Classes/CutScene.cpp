@@ -34,7 +34,7 @@ bool CutScene::init()
 
     this->scheduleOnce(CC_SCHEDULE_SELECTOR(CutScene::GoToGameScene), DISPLAY_TIME_SPLASH_SCENE);
 
-    char delay_str[200] = "Wake the f**k up, knight!";
+    char delay_str[200] = "Who are you?";
     auto label = Label::createWithTTF(delay_str, "fonts/Pixel Times.ttf", 30);
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);

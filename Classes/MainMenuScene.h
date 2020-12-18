@@ -24,6 +24,8 @@ public:
     float getMusicVolume();
     float getSFXVolume();
 
+    int musicID;
+
     CREATE_FUNC(MainMenuScene);
 private:
     float music = 0.01;
