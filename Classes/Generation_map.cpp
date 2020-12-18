@@ -618,14 +618,27 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
                 allDrawRoom.push_back(miniRoom);
                 konMap = allDrawRoom.size();
                 sizeX += 50;
+
+                if ((i == (sizeMap - 1) && j == (sizeMap / 2))){
+                    auto hall = miniHall(miniRoom, 1);
+                    layer->addChild(hall);
+                }
+
+                if ((i == (0) && j == (sizeMap / 2))) {
+                    auto hall = miniHall(miniRoom, 2);
+                    layer->addChild(hall);
+                }
+
                 if (i != 0 && i != sizeMap - 1) {
-                    if (arrayMap[i + 1][j] != 0) {
-                        auto hall = miniHall(miniRoom, 2);
-                        layer->addChild(hall);
-                    }
-                    if (arrayMap[i - 1][j] != 0) {
-                        auto hall = miniHall(miniRoom, 1);
-                        layer->addChild(hall);
+                    if (arrayMap[i][j] != 1) {
+                        if (arrayMap[i + 1][j] == 2) {
+                            auto hall = miniHall(miniRoom, 2);
+                            layer->addChild(hall);
+                        }
+                        if (arrayMap[i - 1][j] == 2) {
+                            auto hall = miniHall(miniRoom, 1);
+                            layer->addChild(hall);
+                        }
                     }
                 }
                 if (j != 0 && j != sizeMap - 1) {
@@ -662,13 +675,15 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
                 allDrawRoom.push_back(miniRoom);
                 sizeX -= 50;
                 if (i != 0 && i != sizeMap - 1) {
-                    if (arrayMap[i + 1][j] != 0) {
-                        auto hall = miniHall(miniRoom, 2);
-                        layer->addChild(hall);
-                    }
-                    if (arrayMap[i - 1][j] != 0) {
-                        auto hall = miniHall(miniRoom, 1);
-                        layer->addChild(hall);
+                    if (arrayMap[i][j] != 1) {
+                        if (arrayMap[i + 1][j] == 2) {
+                            auto hall = miniHall(miniRoom, 2);
+                            layer->addChild(hall);
+                        }
+                        if (arrayMap[i - 1][j] == 2) {
+                            auto hall = miniHall(miniRoom, 1);
+                            layer->addChild(hall);
+                        }
                     }
                 }
                 if (j != 0 && j != sizeMap - 1) {
@@ -696,7 +711,7 @@ Node* Generation_map::miniMap(Player* player, Vec2 posHero) {
     Sprite* dotPlayer = Sprite::create("miniMap/dotPlayer.png");
     dotPlayer->setPosition(Vec2(allDrawRoom[1 - 1]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawRoom[1 - 1]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5));
     
-    layer->addChild(dotPlayer);
+    //layer->addChild(dotPlayer);
     
 
     for (int i = 0; i < allDrawRoom.size(); i++) {
