@@ -20,6 +20,13 @@ private:
     void GoToSettings(cocos2d::Ref* sender);
 
     void Exit(cocos2d::Ref* sender);
+
+    cocos2d::Size visibleSize;
+    cocos2d::Vec2 origin;
+
+    cocos2d::Sprite* parallax1;
+    cocos2d::Sprite* parallax2;
+    cocos2d::Sprite* parallax3;
 };
 
 #endif // __MAIN_MENU_SCENE_H__
