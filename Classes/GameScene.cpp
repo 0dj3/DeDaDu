@@ -9,6 +9,7 @@
 #include "AudioEngine.h"
 #include <ctime>
 #include "MainMenuScene.h"
+
 //#include "Generation_map.h"
 
 USING_NS_CC;
@@ -53,10 +54,11 @@ bool GameScene::init()
 
     PhysicHelper::CreateWorld();
 
-    MainMenuScene* settings = new MainMenuScene;
-    AudioEngine::play2d("res/sounds/bgsound.mp3", true, settings->getMusicVolume());
-    
-    
+    std::ifstream ifs("../Resources/properties/data.json");
+    rapidjson::IStreamWrapper isw(ifs);
+    doc.ParseStream(isw);
+    auto music = doc["music"].GetFloat();
+    AudioEngine::play2d("res/sounds/bgsound.mp3", true, music);
 
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));

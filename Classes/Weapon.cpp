@@ -6,6 +6,7 @@ USING_NS_CC;
 
 Weapon::Weapon() {
     type = WEAPON;
+    loadSettings();
 }
 
 Weapon* Weapon::create(WeaponType weaponType, std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
@@ -46,7 +47,7 @@ Weapon* Weapon::createRange(std::string filename, std::string projectileFilename
 void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit) {
     Attack::CreateAttack(position, localTarget, unit, this);
     AudioEngine::preload(soundFilename);
-    AudioEngine::play2d(soundFilename, false, 0.1);
+    AudioEngine::play2d(soundFilename, false, sfx);
 }
 
 Weapon* Weapon::GetRandomWeapon() {
@@ -64,4 +65,15 @@ Weapon* Weapon::GetRandomWeapon() {
         break;
     }
     return weapon;
+}
+
+void Weapon::loadSettings()
+{
+    std::ifstream ifs("../Resources/properties/data.json");
+    rapidjson::IStreamWrapper isw(ifs);
+    doc.ParseStream(isw);
+    assert(doc.IsObject());
+    assert(doc.HasMember("sfx"));
+    assert(doc["sfx"].IsFloat());
+    sfx = doc["sfx"].GetFloat();
 }

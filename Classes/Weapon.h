@@ -6,6 +6,11 @@
 #include <Box2d/Box2d.h>
 #include "Item.h"
 #include "ContactListener.h"
+#include "include/rapidjson/document.h"
+#include "include/rapidjson/error/en.h"
+#include <include/rapidjson/istreamwrapper.h>
+#include <iostream>
+#include <fstream>
 
 class Weapon : public Item
 {
@@ -37,8 +42,10 @@ public:
 
     void StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit);
 
+    rapidjson::Document doc;
 private:
-
+    void loadSettings();
+    float sfx;
 };
 
 #endif // __WEAPON_H__

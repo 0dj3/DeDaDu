@@ -3,17 +3,24 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "include/rapidjson/document.h"
+#include "include/rapidjson/error/en.h"
+#include <include/rapidjson/istreamwrapper.h>
+#include <include/rapidjson/ostreamwrapper.h>
+#include "include/rapidjson/writer.h"
+#include <iostream>
+#include <fstream>
 
 USING_NS_CC;
 
-class MainMenuScene : public cocos2d::Layer
+class MainMenuScene : public Layer
 {
 public:
-    static cocos2d::Scene* createScene();
+    static Scene* createScene();
 
     virtual bool init();
     
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    void menuCloseCallback(Ref* pSender);
     void update(float dt);
 
     ui::LoadingBar* musicBar;
@@ -25,28 +32,29 @@ public:
     float getSFXVolume();
 
     int musicID;
+    rapidjson::Document doc;
 
     CREATE_FUNC(MainMenuScene);
 private:
-    float music = 0.01;
-    float sfx = 0.01;
+    float music;
+    float sfx;
 
-    void musicPlus(cocos2d::Ref* pSender);
-    void musicMinus(cocos2d::Ref* pSender);
-    void sfxPlus(cocos2d::Ref* pSender);
-    void sfxMinus(cocos2d::Ref* pSender);
+    void musicPlus(Ref* pSender);
+    void musicMinus(Ref* pSender);
+    void sfxPlus(Ref* pSender);
+    void sfxMinus(Ref* pSender);
 
-    void GoToCutScene(cocos2d::Ref* sender);
-    void GoToSettings(cocos2d::Ref* sender);
-    void GoToMainMenu(cocos2d::Ref* sender);
-    void Exit(cocos2d::Ref* sender);
+    void GoToCutScene(Ref* sender);
+    void GoToSettings(Ref* sender);
+    void GoToMainMenu(Ref* sender);
+    void Exit(Ref* sender);
 
-    cocos2d::Size visibleSize;
-    cocos2d::Vec2 origin;
+    Size visibleSize;
+    Vec2 origin;
 
-    cocos2d::Sprite* parallax1;
-    cocos2d::Sprite* parallax2;
-    cocos2d::Sprite* parallax3;
+    Sprite* parallax1;
+    Sprite* parallax2;
+    Sprite* parallax3;
 };
 
 #endif // __MAIN_MENU_SCENE_H__

@@ -25,13 +25,14 @@ Unit::Unit()
 	this->addChild(sprite);
 	this->setName("unit");
 	loadStats();
+	loadSettings();
 }
 
 void Unit::Damage(int value) {
 	if (dmgsound != nullptr)
 	{
 		AudioEngine::preload(dmgsound);
-		AudioEngine::play2d(dmgsound, false, settings->getSFXVolume());
+		AudioEngine::play2d(dmgsound, false, sfx);
 	}
 	else
 	{
@@ -94,4 +95,16 @@ void Unit::loadStats() {
 
 	/*maxHp = stats["player_hp"].GetInt();
 	hp = maxHp;*/
+
+}
+
+void Unit::loadSettings()
+{
+	std::ifstream ifs("../Resources/properties/data.json");
+	rapidjson::IStreamWrapper isw(ifs);
+	doc.ParseStream(isw);
+	assert(doc.IsObject());
+	assert(doc.HasMember("sfx"));
+	assert(doc["sfx"].IsFloat());
+	sfx = doc["sfx"].GetFloat();
 }

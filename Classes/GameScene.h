@@ -6,6 +6,12 @@
 #include "InputListener.h"
 #include "HUD.h"
 #include "Generation_map.h"
+#include "include/rapidjson/document.h"
+#include "include/rapidjson/error/en.h"
+#include <include/rapidjson/istreamwrapper.h>
+#include <iostream>
+#include <fstream>
+
 USING_NS_CC;
 
 class GameScene : public cocos2d::Layer
@@ -23,7 +29,7 @@ public:
     cocos2d::Scene* scene;
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    
+    rapidjson::Document doc;
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
 

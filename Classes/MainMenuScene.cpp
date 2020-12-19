@@ -28,6 +28,18 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool MainMenuScene::init()
 {
+    std::ifstream ifs("../Resources/properties/data.json");
+    rapidjson::IStreamWrapper isw(ifs);
+
+    doc.ParseStream(isw);
+    assert(doc.IsObject());
+    assert(doc.HasMember("music"));
+    assert(doc["music"].IsFloat());
+    music = doc["music"].GetFloat();
+    assert(doc.HasMember("sfx"));
+    assert(doc["sfx"].IsFloat());
+    sfx = doc["sfx"].GetFloat();
+
     InputListener::Instance()->Init(this);
     this->removeChildByTag(12);
     musicID = AudioEngine::play2d("res/sounds/bgsound2.mp3", true, music);
@@ -126,6 +138,13 @@ void MainMenuScene::GoToSettings(cocos2d::Ref* sender)
 
 void MainMenuScene::GoToMainMenu(cocos2d::Ref* sender)
 {
+    doc["music"].SetFloat(music);
+    doc["sfx"].SetFloat(sfx);
+    std::ofstream ofs("../Resources/properties/data.json");
+    rapidjson::OStreamWrapper osw(ofs);
+    rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+
     for (int i = 12; i <= 19; i++)
     {
         this->removeChildByTag(i, true);
