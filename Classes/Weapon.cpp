@@ -54,13 +54,13 @@ Weapon* Weapon::GetRandomWeapon() {
     switch (rand() % 2)
     {
     case 0:
-        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 3, 5);
+        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", rand() % 5 + 10, 1, 3, 5);
         break;
     case 1:
-        weapon = Weapon::createMelee("res/weapon/sword.png", "res/effects/projectile/slash.png", "res/sounds/swoosh.mp3", 20, 1);
+        weapon = Weapon::createMelee("res/weapon/sword.png", "res/effects/projectile/slash.png", "res/sounds/swoosh.mp3", rand() % 10 + 20, 1);
         break;
     default:
-        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 3, 5);
+        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", rand() % 5 + 10, 1, 3, 5);
         break;
     }
     return weapon;

@@ -63,7 +63,7 @@ void Player::update(float dt)
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
         Item* item;
         if (rand() % 2) {
-            item = Weapon::createRange("res/weapon/sword.png", "res/effects/explosion/idle_3.png", "res/sounds/swoosh.mp3", 10, 1, 10, 10);
+            item = Weapon::GetRandomWeapon();
         }
         else {
             item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);
@@ -77,8 +77,7 @@ void Player::update(float dt)
             if (gold >= targetItem->price) {
                 gold -= targetItem->price;
                 if (targetItem->type == Item::POTION) {
-                    hands->PutInHands(targetItem);
-                    //static_cast<Potion*>(targetItem)->Drink(this);
+                    static_cast<Potion*>(targetItem)->Drink(this);
                     targetItem->setName(DEAD_TAG);
                     targetItem = NULL;
                 }
@@ -97,6 +96,7 @@ void Player::update(float dt)
             }
             else {
                 hands->PutInHands(targetItem);
+                targetItem->setName(DEAD_TAG);
                 targetItem = NULL;
             }
         }
