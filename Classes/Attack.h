@@ -18,8 +18,10 @@ public:
 
 	ContactListener::BodyTag GetCreatorTag() { return creatorTag; };
 	int GetDamage() { return damage; };
+	Weapon::WeaponType GetWeaponType() { return weaponType; };
 
 private:
+	Weapon::WeaponType weaponType;
 	int damage;
 	ContactListener::BodyTag creatorTag;
 

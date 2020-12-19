@@ -9,6 +9,7 @@ Goblin::Goblin()
 {
     stats = new UnitStats(0.5, 1, 1, 1);
     CheckMaxHP();
+    hp = maxHP;
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }

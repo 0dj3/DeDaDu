@@ -33,6 +33,8 @@ public:
 
     static Weapon* createRange(std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed);
 
+    static Weapon* GetRandomWeapon();
+
     void StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit);
 
 private:

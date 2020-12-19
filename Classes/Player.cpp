@@ -14,8 +14,9 @@ Player::Player()
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     gold = 20;
-    stats = new UnitStats(1, 2, 1, 2);
+    stats = new UnitStats(1, 1, 1, 2);
     CheckMaxHP();
+    hp = maxHP;
     autorelease();
 }
 
@@ -34,7 +35,7 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->hands = new Hands(newPlayer);
         newPlayer->addChild(newPlayer->hands);
 
-        Item* weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 3, 5);
+        Item* weapon = Weapon::GetRandomWeapon();
         newPlayer->hands->PutInHands(weapon);
 
         newPlayer->scheduleUpdate();
@@ -55,7 +56,7 @@ void Player::update(float dt)
     {
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
-        Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 2;
+        Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 3;
         hands->UseItem(pos, InputListener::Instance()->mousePosition);
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {

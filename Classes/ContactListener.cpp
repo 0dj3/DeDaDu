@@ -81,13 +81,18 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
 {
     Node* node = static_cast<Node*>(body->GetUserData());
     Attack* attack = static_cast<Attack*>(weapon->GetUserData());
-    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG || node->getTag() == GOLD || node->getTag() == ATTACK)
+    if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG || node->getTag() == GOLD)
         return;
-    b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
-    direction.Normalize();
-    body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
+    if (node->getTag() == ATTACK) {
+        Attack* attackB = static_cast<Attack*>(body->GetUserData());
+        if(attackB->GetWeaponType() == Weapon::RANGE)
+            return;
+    }
 
     if (node->getName() == "unit") {
+        b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
+        direction.Normalize();
+        body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
         Unit* unit = static_cast<Unit*>(body->GetUserData());
         unit->Damage(attack->GetDamage());
     }

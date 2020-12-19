@@ -9,6 +9,7 @@ Slime::Slime()
     dmgsound = "res/sounds/hit/slime.mp3";
     stats = new UnitStats(0.3, 1, 1, 1);
     CheckMaxHP();
+    hp = maxHP;
     this->autorelease();
 }
 
@@ -50,13 +51,13 @@ void Slime::update(float dt)
                 //attack->setColor(Color3B(0, 255, 0));
             }
             });
-        Sequence* seq;
-        if (rand() % 2) {
+        Sequence* seq = cocos2d::Sequence::create(microDelay, move, microDelay, attack, nullptr);
+        /*if (rand() % 2) {
             seq = cocos2d::Sequence::create(microDelay, move, nullptr);
         }
         else {
             seq = cocos2d::Sequence::create(microDelay, attack, nullptr);
-        }
+        }*/
 
         this->runAction(seq);
     }

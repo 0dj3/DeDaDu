@@ -19,6 +19,7 @@ void Attack::CreateAttack(Vec2 position, Vec2 localTarget, Unit* creator, Weapon
         attack->setScale(2);
         attack->setTag(ContactListener::ATTACK);
         attack->creatorTag = (ContactListener::BodyTag)creator->getTag();
+        attack->weaponType = weapon->weaponType;
         Director::getInstance()->getRunningScene()->addChild(attack);
         attack->damage = weapon->damage * creator->stats->damage;
 
@@ -52,7 +53,7 @@ b2Body* Attack::CreatePhysicBody() {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(this->getPosition().x / PPM, this->getPosition().y / PPM);
-    //bodyDef.angle = CC_DEGREES_TO_RADIANS(sprite->getRotation());
+    bodyDef.angle = CC_DEGREES_TO_RADIANS(this->getRotation());
     bodyDef.linearDamping = 0;
     bodyDef.angularDamping = 0;
     bodyDef.userData = this;
@@ -60,12 +61,12 @@ b2Body* Attack::CreatePhysicBody() {
     b2Body* body = PhysicHelper::world->CreateBody(&bodyDef);
     assert(body != NULL);
 
-    b2CircleShape circle;
-    circle.m_radius = this->getContentSize().width * this->getScale() / PPM / 2;
-    /*b2PolygonShape box;
-    box.SetAsBox(this->getContentSize().width * this->getScale() / PPM / 2, this->getContentSize().width * this->getScale() / PPM / 2);*/
+    /*b2CircleShape circle;
+    circle.m_radius = this->getContentSize().width * this->getScale() / PPM / 2;*/
+    b2PolygonShape box;
+    box.SetAsBox(this->getContentSize().width * this->getScale() / PPM / 2, this->getContentSize().width * this->getScale() / PPM / 2);
     b2FixtureDef shapeDef;
-    shapeDef.shape = &circle;
+    shapeDef.shape = &box;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
     shapeDef.isSensor = true;

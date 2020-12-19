@@ -48,3 +48,20 @@ void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit
     AudioEngine::preload(soundFilename);
     AudioEngine::play2d(soundFilename, false, 0.1);
 }
+
+Weapon* Weapon::GetRandomWeapon() {
+    Weapon* weapon;
+    switch (rand() % 2)
+    {
+    case 0:
+        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 3, 5);
+        break;
+    case 1:
+        weapon = Weapon::createMelee("res/weapon/sword.png", "res/effects/projectile/slash.png", "res/sounds/swoosh.mp3", 20, 1);
+        break;
+    default:
+        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 1, 3, 5);
+        break;
+    }
+    return weapon;
+}
