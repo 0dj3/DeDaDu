@@ -17,7 +17,6 @@
 #include <include/rapidjson/istreamwrapper.h>
 #include <iostream>
 #include <fstream>
-#include "GameManager.h"
 
 class Unit : public cocos2d::Node
 {

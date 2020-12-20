@@ -1,6 +1,7 @@
 #include "Weapon.h"
 #include "Definitions.h"
 #include "Attack.h"
+#include "GameManager.h"
 
 USING_NS_CC;
 

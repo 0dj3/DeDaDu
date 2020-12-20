@@ -8,6 +8,7 @@
 #include "HUD.h"
 #include "AudioEngine.h"
 #include "Gold.h"
+#include "GameManager.h"
 
 USING_NS_CC;
 

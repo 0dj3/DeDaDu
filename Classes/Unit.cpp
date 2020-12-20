@@ -6,6 +6,7 @@
 #include "HUD.h"
 #include <string>
 #include <cmath>
+#include "GameManager.h"
 USING_NS_CC;
 
 MainMenuScene* settings = new MainMenuScene;

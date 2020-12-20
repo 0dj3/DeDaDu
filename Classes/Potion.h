@@ -15,30 +15,11 @@ public:
     std::string soundFilename;
     int value;
 
-    Potion() {
-        type = POTION;
-    };
+    Potion();
 
-    static Potion* create(std::string filename, std::string soundFilename, int value) {
-        Potion* newPotion = new Potion();
-        if (newPotion->initWithFile(filename)) {
-            newPotion->getTexture()->setAliasTexParameters();
-            newPotion->setScale(2.0);
-            newPotion->filename = filename;
-            newPotion->soundFilename = soundFilename;
-            newPotion->value = value;
-            return newPotion;
-        }
-        CC_SAFE_DELETE(newPotion);
-        return NULL;
-    };
+    static Potion* create(std::string filename, std::string soundFilename, int value);
 
-    void Drink(Unit* unit) {
-        unit->Damage(value);
-        AudioEngine::preload(soundFilename);
-        AudioEngine::play2d(soundFilename, false, GameManager::Instance()->GetSFX());
-        removeFromParentAndCleanup(true);
-    };
+    void Drink(Unit* unit);
 
 private:
 
