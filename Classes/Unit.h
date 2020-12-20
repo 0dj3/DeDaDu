@@ -17,6 +17,7 @@
 #include <include/rapidjson/istreamwrapper.h>
 #include <iostream>
 #include <fstream>
+#include "GameManager.h"
 
 class Unit : public cocos2d::Node
 {
@@ -29,13 +30,11 @@ public:
     bool IsDead() { return this->getName() == DEAD_TAG ? true : false; };
 
     Unit();
-    rapidjson::Document doc;
     void Damage(int value);
 
     void Dead();
 
     void CheckMaxHP();
-    float sfx;
     char* dmgsound;
 
     int hp;
@@ -43,8 +42,6 @@ public:
 private:
     bool isDelay = false;
     void loadStats();
-    void loadSettings();
-    //bool isDead = false;
 
 };
 

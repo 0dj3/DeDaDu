@@ -58,7 +58,7 @@ void ContactListener::BeginGoldContact(b2Body* gold, b2Body* body)
         Player* player = static_cast<Player*>(body->GetUserData());
         HUD::DisplayString(goldNode->getPosition(), std::to_string(goldNode->value), 15, Color3B(255, 255, 0));
         AudioEngine::preload("res/sounds/coin.mp3");
-        AudioEngine::play2d("res/sounds/coin.mp3", false, sfx);
+        AudioEngine::play2d("res/sounds/coin.mp3", false, GameManager::Instance()->GetSFX());
         player->setGold(goldNode->value);
         goldNode->setName(DEAD_TAG);
     }
@@ -107,15 +107,4 @@ void ContactListener::BeginItemContact(b2Body* item, b2Body* body)
         Player* player = static_cast<Player*>(body->GetUserData());
         player->targetItem = static_cast<Item*>(item->GetUserData());
     }
-}
-
-void ContactListener::loadSettings()
-{
-    std::ifstream ifs("../Resources/properties/data.json");
-    rapidjson::IStreamWrapper isw(ifs);
-    doc.ParseStream(isw);
-    assert(doc.IsObject());
-    assert(doc.HasMember("sfx"));
-    assert(doc["sfx"].IsFloat());
-    sfx = doc["sfx"].GetFloat();
 }

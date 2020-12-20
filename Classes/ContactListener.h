@@ -4,11 +4,6 @@
 
 #include "cocos2d.h"
 #include <Box2d/Box2d.h>
-#include "include/rapidjson/document.h"
-#include "include/rapidjson/error/en.h"
-#include <include/rapidjson/istreamwrapper.h>
-#include <iostream>
-#include <fstream>
 
 class ContactListener: public b2ContactListener
 {
@@ -22,11 +17,7 @@ public:
         ITEM
     };
 
-    rapidjson::Document doc;
-
 private:
-    void loadSettings();
-    float sfx;
 
 	void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact) {};

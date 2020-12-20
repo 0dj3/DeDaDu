@@ -7,6 +7,7 @@
 #include <string>
 #include "PhysicHelper.h"
 #include "AudioEngine.h"
+#include "GameManager.h"
 
 class Item : public cocos2d::Sprite
 {

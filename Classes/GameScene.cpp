@@ -9,6 +9,7 @@
 #include "AudioEngine.h"
 #include <ctime>
 #include "MainMenuScene.h"
+#include "GameManager.h"
 
 //#include "Generation_map.h"
 
@@ -51,14 +52,15 @@ bool GameScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     InputListener::Instance()->Init(this);
+    GameManager::Instance()->Init();
 
     PhysicHelper::CreateWorld();
 
-    std::ifstream ifs("../Resources/properties/data.json");
+    /*std::ifstream ifs("../Resources/properties/data.json");
     rapidjson::IStreamWrapper isw(ifs);
     doc.ParseStream(isw);
-    auto music = doc["music"].GetFloat();
-    AudioEngine::play2d("res/sounds/bgsound.mp3", true, music);
+    auto music = doc["music"].GetFloat();*/
+    AudioEngine::play2d("res/sounds/bgsound.mp3", true, GameManager::Instance()->GetMusicVolume());
 
     visibleSize.height = -1250;
     player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));

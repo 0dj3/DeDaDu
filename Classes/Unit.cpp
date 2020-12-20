@@ -4,11 +4,6 @@
 #include "InputListener.h"
 #include "DeathScreen.h"
 #include "HUD.h"
-#include "include/rapidjson/document.h"
-#include "include/rapidjson/error/en.h"
-#include <include/rapidjson/istreamwrapper.h>
-#include <fstream>
-#include <sstream>
 #include <string>
 #include <cmath>
 USING_NS_CC;
@@ -25,14 +20,13 @@ Unit::Unit()
 	this->addChild(sprite);
 	this->setName("unit");
 	loadStats();
-	loadSettings();
 }
 
 void Unit::Damage(int value) {
 	if (dmgsound != nullptr)
 	{
 		AudioEngine::preload(dmgsound);
-		AudioEngine::play2d(dmgsound, false, sfx);
+		AudioEngine::play2d(dmgsound, false, GameManager::Instance()->GetSFX());
 	}
 	else
 	{
@@ -96,15 +90,4 @@ void Unit::loadStats() {
 	/*maxHp = stats["player_hp"].GetInt();
 	hp = maxHp;*/
 
-}
-
-void Unit::loadSettings()
-{
-	std::ifstream ifs("../Resources/properties/data.json");
-	rapidjson::IStreamWrapper isw(ifs);
-	doc.ParseStream(isw);
-	assert(doc.IsObject());
-	assert(doc.HasMember("sfx"));
-	assert(doc["sfx"].IsFloat());
-	sfx = doc["sfx"].GetFloat();
 }

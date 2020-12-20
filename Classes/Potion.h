@@ -36,7 +36,7 @@ public:
     void Drink(Unit* unit) {
         unit->Damage(value);
         AudioEngine::preload(soundFilename);
-        AudioEngine::play2d(soundFilename, false, 0.1);
+        AudioEngine::play2d(soundFilename, false, GameManager::Instance()->GetSFX());
         removeFromParentAndCleanup(true);
     };
 
