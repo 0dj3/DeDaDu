@@ -28,6 +28,10 @@ void Generation_map::generation(bool checkLoc) {
             PhysicHelper::world->DestroyBody(allPhysicBody[i]);
         for (int i = 0; i < allPhysicBarrel.size(); i++)
             PhysicHelper::world->DestroyBody(allPhysicBarrel[i]);
+        for (int i = 0; i < Director::getInstance()->getRunningScene()->getChildren().size(); i++) {
+            if(Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
+                Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
+        }
     }
 
     arrayMap = generationArrayMap(sizeMap);
