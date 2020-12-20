@@ -18,12 +18,9 @@ CC_DLL;
 
 Scene* GameScene::createScene()
 {
-    auto scene = Scene::createWithPhysics();
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    scene->getPhysicsWorld()->setGravity(Vect(0, 0));
+    auto scene = Scene::create();
     auto layer = GameScene::create();
     layer->scene = scene;
-    layer->SetPhysicsWorld(scene->getPhysicsWorld());
     layer->scheduleUpdate();
     scene->addChild(layer);
     return scene;
