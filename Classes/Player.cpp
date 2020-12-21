@@ -135,7 +135,7 @@ void Player::move()
             isDashDelay = false;
         });
         auto seq = cocos2d::Sequence::create(startDash, delay, endDash, nullptr);
-        SetInvulnerable(dashTime);
+        SetInvulnerable(dashTime / 2);
         this->runAction(seq);
     }
     else {
