@@ -67,7 +67,7 @@ void ContactListener::BeginGoldContact(b2Body* gold, b2Body* body)
 
 void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
 {
-    if (static_cast<Unit*>(body->GetUserData())->getName() == "unit") {
+    /*if (static_cast<Unit*>(body->GetUserData())->getName() == "unit") {
         Unit* unit = static_cast<Unit*>(body->GetUserData());
         if (unit->getTag() == PLAYER) {
             b2Vec2 direction = body->GetPosition() - enemy->GetPosition();
@@ -75,7 +75,7 @@ void ContactListener::BeginEnemyContact(b2Body* enemy, b2Body* body)
             body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
             unit->Damage(5);
         }
-    }
+    }*/
 }
 
 void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
@@ -85,16 +85,18 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
     if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG || node->getTag() == GOLD)
         return;
     if (node->getTag() == ATTACK) {
-        Attack* attackB = static_cast<Attack*>(body->GetUserData());
-        if(attackB->GetWeaponType() == Weapon::RANGE)
+       /* Attack* attackB = static_cast<Attack*>(body->GetUserData());
+        if(attackB->GetWeaponType() == Weapon::RANGE)*/
             return;
     }
 
     if (node->getName() == "unit") {
+        Unit* unit = static_cast<Unit*>(body->GetUserData());
+        if (unit->IsInvulnerable())
+            return;
         b2Vec2 direction = body->GetPosition() - weapon->GetPosition();
         direction.Normalize();
         body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
-        Unit* unit = static_cast<Unit*>(body->GetUserData());
         unit->Damage(attack->GetDamage());
     }
     attack->setName(DEAD_TAG);

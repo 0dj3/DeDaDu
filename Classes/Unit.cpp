@@ -24,6 +24,8 @@ Unit::Unit()
 }
 
 void Unit::Damage(int value) {
+	if (value >= 0 && IsInvulnerable())
+		return;
 	if (dmgsound != nullptr)
 	{
 		AudioEngine::preload(dmgsound);
@@ -91,4 +93,16 @@ void Unit::loadStats() {
 	/*maxHp = stats["player_hp"].GetInt();
 	hp = maxHp;*/
 
+}
+
+void Unit::SetInvulnerable(double time) {
+	cocos2d::DelayTime* delay = cocos2d::DelayTime::create(time);
+	auto startInvulnerable = CallFunc::create([this]() {;
+		isInvulnerable = true;
+	});
+	auto endInvulnerable = CallFunc::create([this]() {;
+		isInvulnerable = false;
+	});
+	auto seq = cocos2d::Sequence::create(startInvulnerable, delay, endInvulnerable, nullptr);
+	this->runAction(seq);
 }

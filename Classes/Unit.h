@@ -26,20 +26,18 @@ public:
     cocos2d::Sprite* sprite;
     cocos2d::Layer* layer;
     UnitStats* stats;
-    bool IsDead() { return this->getName() == DEAD_TAG ? true : false; };
+    char* dmgsound;
+    int hp;
+    int maxHP;
 
     Unit();
     void Damage(int value);
-
+    bool IsInvulnerable() { return isInvulnerable; };
     void Dead();
-
+    void SetInvulnerable(double time);
     void CheckMaxHP();
-    char* dmgsound;
-
-    int hp;
-    int maxHP;
 private:
-    bool isDelay = false;
+    bool isInvulnerable = false;
     void loadStats();
 
 };

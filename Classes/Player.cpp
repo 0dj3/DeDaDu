@@ -51,7 +51,8 @@ void Player::update(float dt)
     checkLVL();
     CheckMaxHP();
     move();
-    rotate();
+    auto cam = Camera::getDefaultCamera();
+    cam->setPosition(this->getPosition());
     if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
         Vec2 mousePos = InputListener::Instance()->mousePosition;
@@ -103,10 +104,6 @@ void Player::update(float dt)
     }
 }
 
-void Player::rotate() {
-
-}
-
 void Player::move()
 {
     float directionX = 0;
@@ -126,10 +123,24 @@ void Player::move()
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
     b2Vec2 desiredVel = stats->moveSpeed * toTarget;
-    body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
-
-    auto cam = Camera::getDefaultCamera();
-    cam->setPosition(this->getPosition());
+    if (!isDashDelay && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_SHIFT)]){
+        double dashTime = 1;
+        cocos2d::DelayTime* delay = cocos2d::DelayTime::create(dashTime);
+        auto startDash = CallFunc::create([this, desiredVel]() {;
+            int dashForce = 10;
+            body->ApplyForceToCenter((LINEAR_ACCELERATION) *dashForce * this->stats->moveSpeed * desiredVel, true);
+            isDashDelay = true;
+        });
+        auto endDash = CallFunc::create([this, desiredVel]() {;
+            isDashDelay = false;
+        });
+        auto seq = cocos2d::Sequence::create(startDash, delay, endDash, nullptr);
+        SetInvulnerable(dashTime);
+        this->runAction(seq);
+    }
+    else {
+        body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
+    }
 }
 
 void Player::setGold(int x)

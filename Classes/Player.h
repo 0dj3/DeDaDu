@@ -32,11 +32,10 @@ public:
 private:
     int lvl = 1;
     static int exp;
-    bool isDelay = false;
+    bool isDashDelay = false;
 
     void update(float dt);
     void move();
-    void rotate();
     void checkLVL();
 };
 
