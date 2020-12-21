@@ -173,22 +173,22 @@ void GameScene::menuCloseCallback(Ref* pSender){
 
 void GameScene::checkEndRoom() {
     //testMap
-    /*auto pos = generation->getPosTileMapOneEnd();
-    auto sizeEnd = generation->getSizeTileMapOneEnd();
-    auto posAX = pos.x + 80;
-    auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
-    auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
-    auto posBY = pos.y + 80;*/
+    auto posM = generation->getPosTileMapOneEnd();
+    auto sizeEndM = generation->getSizeTileMapOneEnd();
+    auto posAXM = posM.x + 80;
+    auto posAYM = posM.y + ((sizeEndM.height - 1) * 60 - 20);
+    auto posBXM = posM.x + ((sizeEndM.width - 1) * 60 - 20);
+    auto posBYM = posM.y + 80;
     
-    if (enemies.size() == 0) {
-        auto portal = this->portal();
+    if (player->getPosition().x >= posAXM && player->getPosition().x <= posBXM && player->getPosition().y <= posAYM && player->getPosition().y >= posBYM && countLocation <= 4 && enemies.size() == 0) {
+        portal = portalInit();
         auto pos = portal->getPosition();
         auto size = portal->getContentSize();
         auto posAX = pos.x - size.width;
         auto posAY = pos.y + size.height;
         auto posBX = pos.x + size.width;
         auto posBY = pos.y - size.height;
-        if (checkPortal == false) 
+        if (checkPortal == false)
             this->addChild(portal);
         if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && countLocation <= 4) {
 
@@ -202,7 +202,7 @@ void GameScene::checkEndRoom() {
     }
 }
 
-Sprite* GameScene::portal() {
+Sprite* GameScene::portalInit() {
     Sprite* portal;
     portal = Sprite::create("portal/portal.png");
     auto pos = generation->getPosTileMapOneEnd();

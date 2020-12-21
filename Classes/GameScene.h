@@ -33,7 +33,7 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
     void checkEndRoom();
-    Sprite* portal();
+    Sprite* portalInit();
 private:
     void update(float dt);
     int countLocation = 1;
@@ -44,7 +44,7 @@ private:
     
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
     Node* layerMiniMap;
-
+    Sprite* portal;
 
 };
 
