@@ -12,5 +12,6 @@ bool BossLocation::init() {
 	locIn->create("maps/boss_location1.tmx");
 	locIn->setScale(3.0);
 	border(locIn);
+	generMapOne(locIn, 1, false);
 	return true;
 }

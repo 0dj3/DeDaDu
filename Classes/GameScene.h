@@ -33,15 +33,19 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
     void checkEndRoom();
+    Sprite* portal();
 private:
     void update(float dt);
     int countLocation = 1;
+    bool checkPortal = false;
     bool checkMap = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
     Node* layerMiniMap;
+
+
 };
 
 #endif // __GAME_SCENE_H__

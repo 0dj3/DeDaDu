@@ -9,6 +9,7 @@ USING_NS_CC;
 class BossLocation: public Generation_map  {
 public:
 	static BossLocation* createScene(string bossName);
+	void bossSlime();
 private:
 	bool init();
 	string name;
