@@ -163,7 +163,18 @@ void GameScene::update(float dt)
     }
     generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
     enemies = generation->checkRoom(player, enemies, checkMap);
-    checkEndRoom();
+    auto pos = generation->getPosTileMapOneEnd();
+    auto sizeEnd = generation->getSizeTileMapOneEnd();
+    auto posAX = pos.x + 80;
+    auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
+    auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
+    auto posBY = pos.y + 80;
+    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == false && enemies.size() == 0) {
+        checkMap = true;
+        generation->generation(checkMap);
+        player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
+    }
+    generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
     
 }
 
@@ -192,12 +203,23 @@ void GameScene::checkEndRoom() {
             this->addChild(portal);
         if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && countLocation <= 4) {
 
-            if (countLocation >= 2)
+            if (countLocation <= 2) {
+                countLocation += 1;
+                checkPortal = true;
+                generation->generation(false);
+            }
+            /*if (countLocation == 3) {
+                BossLocation* bosL = BossLocation::createScene("slime");
+                this->addChild(bosL);
+            }*/
+            if (countLocation >= 3) {
+                countLocation += 1;
+                checkPortal = true;
                 generation->generation(true);
-            else generation->generation(false);
+            }
+                
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
-            countLocation += 1;
-            checkPortal = true;
+            
         }
     }
 }

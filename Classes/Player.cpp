@@ -14,7 +14,7 @@ Player::Player()
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     gold = 20;
-    stats = new UnitStats(1, 1, 1, 2);
+    stats = new UnitStats(1, 1, 1, 5);
     CheckMaxHP();
     hp = maxHP;
     autorelease();
