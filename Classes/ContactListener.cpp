@@ -85,8 +85,8 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
     if (node->getTag() == attack->GetCreatorTag() || node->getTag() == ITEM || attack->getName() == DEAD_TAG || node->getTag() == GOLD)
         return;
     if (node->getTag() == ATTACK) {
-       /* Attack* attackB = static_cast<Attack*>(body->GetUserData());
-        if(attackB->GetWeaponType() == Weapon::RANGE)*/
+        Attack* attackB = static_cast<Attack*>(body->GetUserData());
+        if(attackB->GetWeaponType() == Weapon::RANGE)
             return;
     }
 
