@@ -34,6 +34,7 @@ public:
     void miniMap();
     Sprite* miniHall(Sprite* miniRoom, int direction);
     void addMiniMap(Player* player, Vec2 posHero);
+    void cleanScene();
 private:
     bool init(bool checkLoc);
     //void update(float dt);

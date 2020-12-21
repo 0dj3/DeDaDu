@@ -9,9 +9,6 @@
 #include "AudioEngine.h"
 #include <ctime>
 #include "MainMenuScene.h"
-#include "GameManager.h"
-
-//#include "Generation_map.h"
 
 USING_NS_CC;
 CC_DLL;
@@ -163,7 +160,17 @@ void GameScene::update(float dt)
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
         }
     }
+    generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
     enemies = generation->checkRoom(player, enemies, checkMap);
+    checkEndRoom();
+    
+}
+
+void GameScene::menuCloseCallback(Ref* pSender){
+    Director::getInstance()->end();
+}
+
+void GameScene::checkEndRoom() {
     //testMap
     auto pos = generation->getPosTileMapOneEnd();
     auto sizeEnd = generation->getSizeTileMapOneEnd();
@@ -171,15 +178,12 @@ void GameScene::update(float dt)
     auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
     auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
     auto posBY = pos.y + 80;
-    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == false && enemies.size() == 0) {
-        checkMap = true;
-        generation->generation(checkMap);
+    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && countLocation <= 4 && enemies.size() == 0) {
+        
+        if (countLocation >= 2)
+            generation->generation(true);
+        else generation->generation(false);
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
+        countLocation += 1;
     }
-
-    generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
-}
-
-void GameScene::menuCloseCallback(Ref* pSender){
-    Director::getInstance()->end();
 }

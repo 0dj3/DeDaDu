@@ -20,19 +20,7 @@ bool Generation_map::init(bool checkLoc) {
 }
 
 void Generation_map::generation(bool checkLoc) {
-    if (checkLoc == true) {
-        this->removeAllChildren();
-        allMainRoom.clear();
-        allMapOne.clear();
-        for (int i = 0; i < allPhysicBody.size(); i++) 
-            PhysicHelper::world->DestroyBody(allPhysicBody[i]);
-        for (int i = 0; i < allPhysicBarrel.size(); i++)
-            PhysicHelper::world->DestroyBody(allPhysicBarrel[i]);
-        for (int i = 0; i < Director::getInstance()->getRunningScene()->getChildren().size(); i++) {
-            if(Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
-                Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
-        }
-    }
+    cleanScene();
 
     arrayMap = generationArrayMap(sizeMap);
     checkj = sizeMap / 2;
@@ -521,7 +509,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 1 + rand() % 8;
+    int count = 0 + rand() % 1;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
         int enemyType = 1 + rand() % 3;
@@ -782,4 +770,20 @@ Sprite* Generation_map::miniHall(Sprite* miniRoom, int dir) {
         break;
     }
     return miniHall;
+}
+
+void Generation_map::cleanScene() {
+    this->removeAllChildren();
+    allMainRoom.clear();
+    allMapOne.clear();
+    for (int i = 0; i < allPhysicBody.size(); i++)
+        PhysicHelper::world->DestroyBody(allPhysicBody[i]);
+    allPhysicBody.clear();
+    for (int i = 0; i < allPhysicBarrel.size(); i++)
+        PhysicHelper::world->DestroyBody(allPhysicBarrel[i]);
+    allPhysicBarrel.clear();
+    for (int i = 0; i < Director::getInstance()->getRunningScene()->getChildren().size(); i++) {
+        if (Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
+            Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
+    }
 }

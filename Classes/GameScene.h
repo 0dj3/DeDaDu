@@ -5,7 +5,7 @@
 #include "Slime.h"
 #include "InputListener.h"
 #include "HUD.h"
-#include "Generation_map.h"
+#include "BossLocation.h"
 #include "include/rapidjson/document.h"
 #include "include/rapidjson/error/en.h"
 #include <include/rapidjson/istreamwrapper.h>
@@ -32,9 +32,10 @@ public:
     rapidjson::Document doc;
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
-
+    void checkEndRoom();
 private:
     void update(float dt);
+    int countLocation = 1;
     bool checkMap = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;

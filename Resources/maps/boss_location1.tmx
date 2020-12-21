@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="full tilemap2" tilewidth="16" tileheight="16" tilecount="72" columns="9">
+  <image source="full tilemap2.png" width="144" height="128"/>
+ </tileset>
+ <layer id="1" name="background" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJyTYGBgkBjFo3gUj+JRPOKxGhompB4AkUsluQ==
+  </data>
+ </layer>
+ <layer id="2" name="walls" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxTZWBgUKUyphYYNW/UvFHzRs0bNY+65pFSdhNSDwBZbgpp
+  </data>
+ </layer>
+</map>
