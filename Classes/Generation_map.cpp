@@ -509,7 +509,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 1 + rand() % 1;
+    int count = 3 + rand() % 4;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
         int enemyType = 1 + rand() % 3;
