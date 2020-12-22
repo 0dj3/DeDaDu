@@ -163,7 +163,9 @@ void GameScene::update(float dt)
     }
     generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
     enemies = generation->checkRoom(player, enemies, checkMap);
-    auto pos = generation->getPosTileMapOneEnd();
+    checkEndRoom();
+
+    /*auto pos = generation->getPosTileMapOneEnd();
     auto sizeEnd = generation->getSizeTileMapOneEnd();
     auto posAX = pos.x + 80;
     auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
@@ -173,8 +175,7 @@ void GameScene::update(float dt)
         checkMap = true;
         generation->generation(checkMap);
         player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
-    }
-    generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
+    }*/
     
 }
 
@@ -191,7 +192,7 @@ void GameScene::checkEndRoom() {
     auto posBXM = posM.x + ((sizeEndM.width - 1) * 60 - 20);
     auto posBYM = posM.y + 80;
     
-    if (player->getPosition().x >= posAXM && player->getPosition().x <= posBXM && player->getPosition().y <= posAYM && player->getPosition().y >= posBYM && countLocation <= 4 && enemies.size() == 0) {
+    if (player->getPosition().x >= posAXM && player->getPosition().x <= posBXM && player->getPosition().y <= posAYM && player->getPosition().y >= posBYM && enemies.size() == 0) {
         portal = portalInit();
         auto pos = portal->getPosition();
         auto size = portal->getContentSize();
@@ -201,12 +202,13 @@ void GameScene::checkEndRoom() {
         auto posBY = pos.y - size.height;
         if (checkPortal == false)
             this->addChild(portal);
-        if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && countLocation <= 4) {
+        if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY ) {
 
             if (countLocation <= 2) {
                 countLocation += 1;
                 checkPortal = true;
-                generation->generation(false);
+                checkMap = false;
+                generation->generation(checkMap);
             }
             /*if (countLocation == 3) {
                 BossLocation* bosL = BossLocation::createScene("slime");
@@ -215,7 +217,8 @@ void GameScene::checkEndRoom() {
             if (countLocation >= 3) {
                 countLocation += 1;
                 checkPortal = true;
-                generation->generation(true);
+                checkMap = true;
+                generation->generation(checkMap);
             }
                 
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
