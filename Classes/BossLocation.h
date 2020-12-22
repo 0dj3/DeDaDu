@@ -13,6 +13,9 @@ public:
 private:
 	bool init();
 	string name;
-
+	TMXTiledMap* mapMain;
+	TMXTiledMap* hallUp;
+	TMXTiledMap* hallRight;
 	TMXTiledMap* locIn;
+	TMXTiledMap* mapOne;
 };

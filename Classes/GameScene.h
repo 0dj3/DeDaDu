@@ -21,6 +21,7 @@ public:
     HUD* hud;
     Unit* slime;
     Generation_map* generation;
+    BossLocation* bosL;
 
     static cocos2d::Scene* createScene();
 
@@ -36,9 +37,10 @@ public:
     void portalInit();
 private:
     void update(float dt);
-    int countLocation = 0;
+    int countLocation = 1;
     bool checkPortal = false;
     bool checkMap = false;
+    bool checkBoss = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     

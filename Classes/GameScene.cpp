@@ -63,18 +63,18 @@ bool GameScene::init()
 
     generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());
     this->addChild(generation);
-    this->addChild(player);
+
+    /*bosL = BossLocation::createScene("slime");
+    checkBoss = true;
+    this->addChild(bosL, 1);*/
+
+    this->addChild(player, 4);
     
     portalInit();
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
 
-    /*slime = Slime::create(this, Point(player->getPosition().x, player->getPosition().y + 100));
-    this->addChild(slime, 2);
-    enemies.push_back(slime);*/
-
-    //
     //char str1[200] = { 0 };
     //auto spritecache1 = SpriteFrameCache::getInstance();
     //spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
@@ -94,23 +94,7 @@ bool GameScene::init()
     //demo1->runAction(action1);
     //spritesheet1->addChild(demo1);
     //
-    /*auto fly = Fly::create(this, Point(player->getPosition().x - 100, player->getPosition().y + 100));
-    this->addChild(fly, 2);
-    enemies.push_back(fly);
 
-    auto goblin = Goblin::create(this, Point(player->getPosition().x + 100, player->getPosition().y + 100), static_cast<Player*>(player));
-    this->addChild(goblin, 2);
-    enemies.push_back(goblin);*/
-
-    /*auto portalEnd = Portal::create();
-    portalEnd->setPosition(player->getPosition());
-    portalEnd->setScale(0.1);
-    this->addChild(portalEnd);*/
-
-    //removeChild(layerMiniMap, true);
-
-    /*layerMiniMap = generation->miniMap(static_cast<Player*>(player), player->getPosition());
-    this->addChild(layerMiniMap);*/
 
     return true;
 }
@@ -163,10 +147,11 @@ void GameScene::update(float dt)
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
         }
     }
-    generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
-    enemies = generation->checkRoom(player, enemies, checkMap);
-    checkEndRoom();
-
+    if (checkBoss == false) {
+        generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
+        enemies = generation->checkRoom(player, enemies, checkMap);
+        checkEndRoom();
+    }
     /*auto pos = generation->getPosTileMapOneEnd();
     auto sizeEnd = generation->getSizeTileMapOneEnd();
     auto posAX = pos.x + 80;
@@ -217,14 +202,20 @@ void GameScene::checkEndRoom() {
                 BossLocation* bosL = BossLocation::createScene("slime");
                 this->addChild(bosL);
             }*/
-            if (countLocation >= 3) 
+            if (countLocation >= 3)
                 checkMap = true;
-            generation->generation(checkMap);
+            if (countLocation == 2) {
+                generation->cleanScene();
+                bosL = BossLocation::createScene("slime");
+                checkBoss = true;
+                this->addChild(bosL, 1);
+            }
+            else
+                generation->generation(checkMap);
             countLocation += 1;
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
     }
-    
 }
 
 void GameScene::portalInit() {

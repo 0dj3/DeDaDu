@@ -551,7 +551,7 @@ void Generation_map::createStore() {
     for (int i = 0; i < allPhStore.size(); i++)
         PhysicHelper::world->DestroyBody(allPhStore[i]);
 
-    store = Store::createScene(allMapOne[mapLocation], countMap);
+    store = Store::createScene(allMapOne[mapLocation]);
     this->addChild(store);
 
     allPhStore = store->getTray();
@@ -774,6 +774,7 @@ Sprite* Generation_map::miniHall(Sprite* miniRoom, int dir) {
 
 void Generation_map::cleanScene() {
     this->removeAllChildren();
+    this->removeChild(layer);
     allMainRoom.clear();
     allMapOne.clear();
     for (int i = 0; i < allPhysicBody.size(); i++)

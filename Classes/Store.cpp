@@ -1,13 +1,13 @@
 #include "Store.h"
 USING_NS_CC;
 
-Store* Store::createScene(TMXTiledMap* map, int countMap) {
+Store* Store::createScene(TMXTiledMap* map) {
 	Store* store = new Store();
-	store->init(map, countMap);
+	store->init(map);
 	return store;
 }
 
-bool Store::init(TMXTiledMap* map, int countMap) {
+bool Store::init(TMXTiledMap* map) {
 	auto posMap = map->getPosition();
 	auto sizeMap = map->getMapSize();
 

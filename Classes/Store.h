@@ -7,12 +7,12 @@ USING_NS_CC;
 
 class Store : public Node {
 public:
-	static Store* createScene(TMXTiledMap* map, int countMap);
+	static Store* createScene(TMXTiledMap* map);
 	TMXTiledMap* getMap();
 	std::vector<b2Body*> getTray();
 	void createTray(TMXTiledMap* storeMap, int count);
 private:
-	bool init(TMXTiledMap* map, int countMap);
+	bool init(TMXTiledMap* map);
 	TMXTiledMap* store;
 	TMXTiledMap* MapOne;
 	Sprite* sprite;
