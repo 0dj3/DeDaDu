@@ -20,7 +20,7 @@ b2Body* PhysicHelper::createDynamicPhysicBody(Node* node, const Size& size)
 
     b2CircleShape circle;
     circle.m_radius = size.width * node->getScale() / 2 / PPM;
-
+    
     b2FixtureDef shapeDef;
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;

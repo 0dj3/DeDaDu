@@ -512,7 +512,7 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
     int count = 3 + rand() % 4;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
-        int enemyType = 1 + rand() % 3;
+        int enemyType = 1 + rand() % 2;
         
 
         int rX = ((tiled->getMapSize().width - 3) * 60);
@@ -529,9 +529,9 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
         case 2:
             enemy = Slime::create(this, Point(randomX, randomY));
             break;
-        case 3:
+        /*case 3:
             enemy = Fly::create(this, Point(randomX, randomY));
-            break;
+            break;*/
         default:
             break;
         }
@@ -575,7 +575,7 @@ void Generation_map::generBarrel() {
             int randomX = (allMainRoom[i]->getPosition().x + 100) + rand() % rX;
             int randomY = (allMainRoom[i]->getPosition().y + 80) + rand() % rY;
 
-            auto barrel = new Sprite();
+            /*auto barrel = new Sprite();
             barrel->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/props_itens/barrel.png");
             barrel->getTexture()->setAliasTexParameters();
             barrel->setScale(3.0);
@@ -587,8 +587,10 @@ void Generation_map::generBarrel() {
             edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
             edgeNode->setPosition(barrel->getPosition());
             auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
-            this->addChild(edgeNode);
-            allPhysicBarrel.push_back(body);
+            this->addChild(edgeNode);*/
+            auto enemy = Fly::create(this, Point(randomX, randomY));
+            this->addChild(enemy, 2);
+            //allPhysicBarrel.push_back(body);
         }
     }
 }
@@ -773,16 +775,15 @@ Sprite* Generation_map::miniHall(Sprite* miniRoom, int dir) {
 }
 
 void Generation_map::cleanScene() {
-    this->removeAllChildren();
     this->removeChild(layer);
     allMainRoom.clear();
     allMapOne.clear();
     for (int i = 0; i < allPhysicBody.size(); i++)
         PhysicHelper::world->DestroyBody(allPhysicBody[i]);
     allPhysicBody.clear();
-    for (int i = 0; i < allPhysicBarrel.size(); i++)
+    /*for (int i = 0; i < allPhysicBarrel.size(); i++)
         PhysicHelper::world->DestroyBody(allPhysicBarrel[i]);
-    allPhysicBarrel.clear();
+    allPhysicBarrel.clear();*/
     for (int i = 0; i < Director::getInstance()->getRunningScene()->getChildren().size(); i++) {
         if (Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
             Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
