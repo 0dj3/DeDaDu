@@ -33,10 +33,10 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
     void checkEndRoom();
-    Sprite* portalInit();
+    void portalInit();
 private:
     void update(float dt);
-    int countLocation = 1;
+    int countLocation = 0;
     bool checkPortal = false;
     bool checkMap = false;
     cocos2d::PhysicsWorld* sceneWorld;

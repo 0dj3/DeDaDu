@@ -64,6 +64,8 @@ bool GameScene::init()
     generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());
     this->addChild(generation);
     this->addChild(player);
+    
+    portalInit();
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
@@ -193,46 +195,45 @@ void GameScene::checkEndRoom() {
     auto posBYM = posM.y + 80;
     
     if (player->getPosition().x >= posAXM && player->getPosition().x <= posBXM && player->getPosition().y <= posAYM && player->getPosition().y >= posBYM && enemies.size() == 0) {
-        portal = portalInit();
+        
+        if (checkPortal == false) {
+            portal->setVisible(true);
+            checkPortal = true;
+        }
         auto pos = portal->getPosition();
         auto size = portal->getContentSize();
         auto posAX = pos.x - size.width;
         auto posAY = pos.y + size.height;
         auto posBX = pos.x + size.width;
         auto posBY = pos.y - size.height;
-        if (checkPortal == false)
-            this->addChild(portal);
-        if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY ) {
-
-            if (countLocation <= 2) {
-                countLocation += 1;
-                checkPortal = true;
-                checkMap = false;
-                generation->generation(checkMap);
-            }
+        if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY) {
+            
+            checkPortal = false;
+            portal->setVisible(false);
+            /*
+            checkPortal = false;
+            this->removeChild(this->portal, true);*/
             /*if (countLocation == 3) {
                 BossLocation* bosL = BossLocation::createScene("slime");
                 this->addChild(bosL);
             }*/
-            if (countLocation >= 3) {
-                countLocation += 1;
-                checkPortal = true;
+            if (countLocation >= 3) 
                 checkMap = true;
-                generation->generation(checkMap);
-            }
-                
+            generation->generation(checkMap);
+            countLocation += 1;
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
-            
         }
     }
+    
 }
 
-Sprite* GameScene::portalInit() {
-    Sprite* portal;
-    portal = Sprite::create("portal/portal.png");
+void GameScene::portalInit() {
+    portal = new Sprite();
+    portal->initWithFile("portal/portal.png");
     auto pos = generation->getPosTileMapOneEnd();
     auto size = generation->getSizeTileMapOneEnd();
     portal->setScale(2.0);
     portal->setPosition(Vec2(pos.x + size.width * 30, pos.y + size.height * 30));
-    return portal;
+    this->addChild(portal);
+    portal->setVisible(false);
 }
