@@ -51,8 +51,7 @@ void Player::update(float dt)
     checkLVL();
     CheckMaxHP();
     move();
-    auto cam = Camera::getDefaultCamera();
-    cam->setPosition(this->getPosition());
+    cameraUpdate();
     if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
         Vec2 mousePos = InputListener::Instance()->mousePosition;
@@ -70,7 +69,7 @@ void Player::update(float dt)
             item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);
         }
         Director::getInstance()->getRunningScene()->addChild(item);
-        item->Sell(this->getPosition(), 5);
+        item->Sell(this->getPosition(), rand() % 5 + 10);
     }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
@@ -102,6 +101,11 @@ void Player::update(float dt)
             }
         }
     }
+}
+
+void Player::cameraUpdate() {
+    auto cam = Camera::getDefaultCamera();
+    cam->setPosition(this->getPosition());
 }
 
 void Player::move()

@@ -9,7 +9,7 @@ Weapon::Weapon() {
     type = WEAPON;
 }
 
-Weapon* Weapon::create(WeaponType weaponType, std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
+Weapon* Weapon::create(WeaponType weaponType, std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, double speed)
 {
     Weapon* newWeapon = new Weapon();
     if (newWeapon->initWithFile(filename)) {
@@ -21,7 +21,6 @@ Weapon* Weapon::create(WeaponType weaponType, std::string filename, std::string 
         newWeapon->soundFilename = soundFilename;
         newWeapon->damage = damage;
         newWeapon->delay = delay;
-        newWeapon->attackRange = attackRange;
         newWeapon->speed = speed;
         return newWeapon;
     }
@@ -31,17 +30,17 @@ Weapon* Weapon::create(WeaponType weaponType, std::string filename, std::string 
 
 Weapon* Weapon::create(Weapon* weapon)
 {
-    return create(weapon->weaponType, weapon->filename, weapon->projectileFilename, weapon->soundFilename, weapon->damage, weapon->delay, weapon->attackRange, weapon->speed);
+    return create(weapon->weaponType, weapon->filename, weapon->projectileFilename, weapon->soundFilename, weapon->damage, weapon->delay, weapon->speed);
 }
 
 Weapon* Weapon::createMelee(std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay)
 {
-    return create(MELEE, filename, projectileFilename, soundFilename, damage, delay, 0, 0);
+    return create(MELEE, filename, projectileFilename, soundFilename, damage, delay, 0);
 }
 
-Weapon* Weapon::createRange(std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, int attackRange, double speed)
+Weapon* Weapon::createRange(std::string filename, std::string projectileFilename, std::string soundFilename, int damage, double delay, double speed)
 {
-    return create(RANGE, filename, projectileFilename, soundFilename, damage, delay, attackRange, speed);
+    return create(RANGE, filename, projectileFilename, soundFilename, damage, delay, speed);
 }
 
 void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit) {
@@ -55,13 +54,12 @@ Weapon* Weapon::GetRandomWeapon() {
     switch (rand() % 2)
     {
     case 0:
-        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", rand() % 5 + 10, 1, 3, 5);
+        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", rand() % 5 + 10, 1, 2);
         break;
     case 1:
         weapon = Weapon::createMelee("res/weapon/sword.png", "res/effects/projectile/slash.png", "res/sounds/swoosh.mp3", rand() % 10 + 20, 1);
         break;
     default:
-        weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", rand() % 5 + 10, 1, 3, 5);
         break;
     }
     return weapon;

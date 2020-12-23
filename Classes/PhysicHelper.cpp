@@ -15,18 +15,21 @@ b2Body* PhysicHelper::createDynamicPhysicBody(Node* node, const Size& size)
     bodyDef.angularDamping = 10.0f;
     bodyDef.userData = node;
 
-    b2Body* body = world->CreateBody(&bodyDef); 
+    b2Body* body = world->CreateBody(&bodyDef);
     assert(body != NULL);
 
     b2CircleShape circle;
-    circle.m_radius = size.width * node->getScale() / 2 / PPM;
-    
+    circle.m_radius = size.width * node->getScale() / PPM;
+
     b2FixtureDef shapeDef;
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;
     shapeDef.friction = 0.0f;
     body->CreateFixture(&shapeDef);
-
+    b2MassData data;
+    body->GetMassData(&data);
+    data.mass = 1;
+    body->SetMassData(&data);
     return body;
 }
 
@@ -35,11 +38,12 @@ b2Body* PhysicHelper::createWallPhysicBody(Node* node, const Size& size)
     b2BodyDef bodyDef;
     bodyDef.fixedRotation = true;
     bodyDef.position.Set(node->getPosition().x / PPM, node->getPosition().y / PPM);
-    //bodyDef.userData = node;
+    bodyDef.userData = node;
+    node->setName("wall");
 
     b2Body* body = world->CreateBody(&bodyDef);
     assert(body != NULL);
-    
+
     b2PolygonShape box;
     box.SetAsBox(size.width * node->getScaleX() / PPM, size.height * node->getScaleY() / PPM);
 

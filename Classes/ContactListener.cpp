@@ -99,7 +99,8 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
         body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
         unit->Damage(attack->GetDamage());
     }
-    attack->setName(DEAD_TAG);
+    if (attack->GetWeaponType() == Weapon::RANGE)
+        attack->setName(DEAD_TAG);
 }
 
 void ContactListener::BeginItemContact(b2Body* item, b2Body* body)

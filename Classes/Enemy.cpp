@@ -31,8 +31,6 @@ void Enemy::spawnEnemy()
     char str1[200] = { 0 };
     auto spritecache1 = SpriteFrameCache::getInstance();
     spritecache1->addSpriteFramesWithFile("res/effects/dead/dead.plist");
-    auto spritesheet1 = SpriteBatchNode::create("res/effects/dead/dead.png");
-    this->addChild(spritesheet1);
 
     Vector<SpriteFrame*> idleAnimFrames1(5);
     for (int i = 1; i <= 5; i++) {
@@ -45,5 +43,5 @@ void Enemy::spawnEnemy()
     demo1->setScale(3.0);
     Action* action1 = Repeat::create(Animate::create(idleAnimation1), 1);
     demo1->runAction(action1);
-    spritesheet1->addChild(demo1);
+    this->addChild(demo1);
 }

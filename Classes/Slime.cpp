@@ -23,7 +23,7 @@ Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
         newSlime->sprite->setScale(3.0);
         newSlime->setPosition(position);
         newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
-        newSlime->weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/acid.png", "res/sounds/swoosh.mp3", 10, 1, 5, 4);
+        newSlime->weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/acid.png", "res/sounds/swoosh.mp3", 10, 1, 2);
         newSlime->setTag(newSlime->tag);
         newSlime->layer = layer;
         newSlime->scheduleUpdate();

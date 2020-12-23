@@ -22,6 +22,13 @@ void Item::Sell(cocos2d::Vec2 position, int price) {
     this->price = price;
     b2Body* body = CreatePhysicBody();
     body->SetType(b2_staticBody);
+    Label* counter = Label::createWithTTF(std::to_string(price), "fonts/Pixel Times.ttf", 20);
+    counter->getFontAtlas()->setAliasTexParameters();
+    counter->setHorizontalAlignment(TextHAlignment::CENTER);
+    counter->setColor(Color3B::YELLOW);
+    counter->setPosition(Vec2(this->getContentSize().width / 2, -this->getContentSize().width / 4));
+    counter->setScale(0.5);
+    this->addChild(counter);
 }
 
 void Item::PickUpItem()
@@ -31,6 +38,7 @@ void Item::PickUpItem()
 
 b2Body* Item::CreatePhysicBody()
 {
+    this->getTexture()->setAliasTexParameters();
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;

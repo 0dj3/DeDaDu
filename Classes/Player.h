@@ -37,6 +37,7 @@ private:
     void update(float dt);
     void move();
     void checkLVL();
+    void cameraUpdate();
 };
 
 #endif // __PLAYER_H__
