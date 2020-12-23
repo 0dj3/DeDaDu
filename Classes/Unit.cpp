@@ -13,8 +13,6 @@ MainMenuScene* settings = new MainMenuScene;
 
 Unit::Unit()
 {
-	maxHP = START_HP;
-	hp = maxHP;
 	layer = new Layer();
     sprite = new Sprite();
 	stats = new UnitStats(1, 1, 1, 1);
@@ -73,14 +71,14 @@ void Unit::Dead()
 }
 
 void Unit::CheckMaxHP() {
-	if (maxHP != START_HP * stats->hp) {
-		maxHP = START_HP * stats->hp;
+	if (maxHP != startHP * stats->hp) {
+		maxHP = startHP * stats->hp;
 		//hp = maxHP;
 	}
 }
 
 void Unit::loadStats() {
-	std::ifstream ifs("properties/balance.json");
+	std::ifstream ifs("Resources/properties/balance.json");
 	rapidjson::IStreamWrapper isw(ifs);
 
 	rapidjson::Document stats;
@@ -90,9 +88,9 @@ void Unit::loadStats() {
 	assert(stats.HasMember("player_hp"));
 	assert(stats["player_hp"].IsInt());
 
-	/*maxHp = stats["player_hp"].GetInt();
-	hp = maxHp;*/
-
+	startHP = stats["player_hp"].GetInt();
+	maxHP = startHP;
+	hp = maxHP;
 }
 
 void Unit::SetInvulnerable(double time) {

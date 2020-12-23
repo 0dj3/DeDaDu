@@ -16,7 +16,7 @@ bool GameManager::Init() {
 
 void GameManager::loadSettings()
 {
-	std::ifstream ifs("../Resources/properties/data.json");
+	std::ifstream ifs("Resources/properties/data.json");
 	rapidjson::IStreamWrapper isw(ifs);
 	rapidjson::Document doc;
 	doc.ParseStream(isw);

@@ -2,8 +2,6 @@
 #ifndef __UNIT_H__
 #define __UNIT_H__
 
-#define START_HP 100
-
 #include "Definitions.h"
 #include "cocos2d.h"
 #include "UnitStats.h"
@@ -29,6 +27,7 @@ public:
     char* dmgsound;
     int hp;
     int maxHP;
+    int startHP;
 
     Unit();
     void Damage(int value);

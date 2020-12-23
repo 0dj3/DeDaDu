@@ -28,7 +28,7 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool MainMenuScene::init()
 {
-    std::ifstream ifs("../Resources/properties/data.json");
+    std::ifstream ifs("Resources/properties/data.json");
     rapidjson::IStreamWrapper isw(ifs);
 
     doc.ParseStream(isw);
