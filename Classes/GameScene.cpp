@@ -172,8 +172,10 @@ void GameScene::menuCloseCallback(Ref* pSender){
 
 void GameScene::checkEndRoom() {
     //testMap
-    auto posM = generation->getPosTileMapOneEnd();
-    auto sizeEndM = generation->getSizeTileMapOneEnd();
+    /*auto posM = generation->getPosTileMapOneEnd();
+    auto sizeEndM = generation->getSizeTileMapOneEnd();*/
+    auto posM = posRoomPortal;
+    auto sizeEndM = sizeRoomPortal;
     auto posAXM = posM.x + 80;
     auto posAYM = posM.y + ((sizeEndM.height - 1) * 60 - 20);
     auto posBXM = posM.x + ((sizeEndM.width - 1) * 60 - 20);
@@ -221,10 +223,14 @@ void GameScene::checkEndRoom() {
 void GameScene::portalInit() {
     portal = new Sprite();
     portal->initWithFile("portal/portal.png");
-    auto pos = generation->getPosTileMapOneEnd();
-    auto size = generation->getSizeTileMapOneEnd();
+
+    auto allMapOne = generation->getAllMapOne();
+    int idMap = 0 + rand() % (allMapOne.size() - 1);
+
+    posRoomPortal = allMapOne[idMap]->getPosition();
+    sizeRoomPortal = allMapOne[idMap]->getMapSize();
     portal->setScale(2.0);
-    portal->setPosition(Vec2(pos.x + size.width * 30, pos.y + size.height * 30));
+    portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
     this->addChild(portal);
     portal->setVisible(false);
 }

@@ -35,6 +35,9 @@ public:
     Sprite* miniHall(Sprite* miniRoom, int direction);
     void addMiniMap(Player* player, Vec2 posHero);
     void cleanScene();
+
+    std::vector<TMXTiledMap*> allMainRoom;
+    std::vector<TMXTiledMap*> allMapOne;
 private:
     bool init(bool checkLoc);
     //void update(float dt);
@@ -53,8 +56,7 @@ private:
     
     std::vector<Sprite*> allDrawRoom;
 
-    std::vector<TMXTiledMap*> allMainRoom;
-    std::vector<TMXTiledMap*> allMapOne;
+    
 
     std::vector<b2Body*> allPhysicBody;
     std::vector<b2Body*> allPhysicBarrel;
