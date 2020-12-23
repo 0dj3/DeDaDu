@@ -22,6 +22,7 @@ public:
     Vec2 getPosTileMapOneEnd();
     Size getSizeTileMapOneEnd();
     std::vector<TMXTiledMap*> getAllMapOne();
+    std::vector<TMXTiledMap*> getAllMapMain();
 
     void location2(TMXTiledMap* tiled, bool checkLoc);
     std::vector<Unit*> checkRoom(Unit* player, std::vector<Unit*> enemies, bool checkLoc);
@@ -31,13 +32,14 @@ public:
 
     void generBarrel();
 
-    void miniMap();
+    void miniMap(int idRoom);
     Sprite* miniHall(Sprite* miniRoom, int direction);
-    void addMiniMap(Player* player, Vec2 posHero);
+    void addMiniMap(Player* player, Vec2 posHero, int idRoom);
     void cleanScene();
 
     std::vector<TMXTiledMap*> allMainRoom;
     std::vector<TMXTiledMap*> allMapOne;
+    Player* playerMiniMap;
 private:
     bool init(bool checkLoc);
     //void update(float dt);
@@ -55,7 +57,7 @@ private:
     TMXTiledMap* wallLoc2;
     
     std::vector<Sprite*> allDrawRoom;
-
+    std::vector<Sprite*> allDrawMainRoom;
     
 
     std::vector<b2Body*> allPhysicBody;
@@ -76,7 +78,6 @@ private:
     Node* layer;
     Sprite* miniRoom;
     Vec2 posHero;
-    Player* playerMiniMap;
     std::vector<b2Body*> allPhStore;
     Vec2 dotPlayer;
     Color3B colorMiniRoom;

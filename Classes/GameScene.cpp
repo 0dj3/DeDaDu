@@ -63,10 +63,8 @@ bool GameScene::init()
 
     generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());
     this->addChild(generation);
-
-    /*bosL = BossLocation::createScene("slime");
-    checkBoss = true;
-    this->addChild(bosL, 1);*/
+    allMainRoom = generation->getAllMapMain();
+    setPosPlayerMiniMap();
 
     this->addChild(player, 4);
     
@@ -148,7 +146,7 @@ void GameScene::update(float dt)
         }
     }
     if (checkBoss == false) {
-        generation->addMiniMap(static_cast<Player*>(player), player->getPosition());
+        generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom);
         enemies = generation->checkRoom(player, enemies, checkMap);
         checkEndRoom();
     }
@@ -215,7 +213,14 @@ void GameScene::checkEndRoom() {
             else
                 generation->generation(checkMap);
             countLocation += 1;
-            player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
+
+            auto allMapOne = generation->getAllMapOne();
+            int idMap = 0 + rand() % (allMapOne.size() - 1);
+
+            posRoomPortal = allMapOne[idMap]->getPosition();
+            sizeRoomPortal = allMapOne[idMap]->getMapSize();
+
+            setPosPlayerMiniMap();
         }
     }
 }
@@ -233,4 +238,16 @@ void GameScene::portalInit() {
     portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
     this->addChild(portal);
     portal->setVisible(false);
+}
+
+void GameScene::setPosPlayerMiniMap() {
+    allMainRoom = generation->getAllMapMain();
+    idRoom = 0 + rand() % (allMainRoom.size() - 1);
+    auto roomMainPos = allMainRoom[idRoom]->getPosition();
+    auto roomMainSize = allMainRoom[idRoom]->getMapSize() * 30;
+
+    player->body->SetTransform(b2Vec2((roomMainPos.x + roomMainSize.width) / PPM, (roomMainPos.y + roomMainSize.height) / PPM), player->body->GetAngle());
+    generation->playerMiniMap = static_cast<Player*>(player);
+
+    generation->miniMap(idRoom);
 }
