@@ -1,4 +1,6 @@
 #include "Store.h"
+#include <Weapon.h>
+#include <Potion.h>
 USING_NS_CC;
 
 Store* Store::createScene(TMXTiledMap* map) {
@@ -33,6 +35,15 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 	auto posMap = storeMap->getPosition();
 	
 	for (int i = 0; i < count; i++) {
+		Item* item;
+		if (rand() % 2) {
+			item = Weapon::GetRandomWeapon();
+		}
+		else {
+			item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);
+		}
+		Director::getInstance()->getRunningScene()->addChild(item);
+		item->Sell(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), rand() % 5 + 10);
 		/*tray = Sprite::create();
 		tray->initWithFile("NPC/store/table.png");
 		tray->getTexture()->setAliasTexParameters();
