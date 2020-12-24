@@ -558,6 +558,10 @@ void Generation_map::createStore() {
     store = Store::createScene(allMapOne[mapLocation]);
     this->addChild(store);
 
+    auto items = store->getItems();
+    for (int i = 0; i < items.size(); i++)
+        this->addChild(items[i]);
+
     allPhStore = store->getTray();
 
     allMapOne.erase(allMapOne.begin() + mapLocation);

@@ -87,3 +87,7 @@ TMXTiledMap* BossLocation::getPosRoom() {
 vector<Unit*> BossLocation::getEnemies() {
 	return enemies;
 }
+
+TMXTiledMap* BossLocation::getlocIn() {
+	return 	locIn;
+}

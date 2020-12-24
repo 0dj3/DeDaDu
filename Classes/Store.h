@@ -11,6 +11,7 @@ public:
 	TMXTiledMap* getMap();
 	std::vector<b2Body*> getTray();
 	void createTray(TMXTiledMap* storeMap, int count);
+	std::vector<Item*> getItems();
 private:
 	bool init(TMXTiledMap* map);
 	TMXTiledMap* store;

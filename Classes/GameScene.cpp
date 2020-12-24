@@ -149,6 +149,22 @@ void GameScene::update(float dt)
         generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom);
         enemies = generation->checkRoom(player, enemies, checkMap);
         checkEndRoom();
+    }if (checkBoss == true) {
+        auto enemiesBoss = bosL->getEnemies();
+        if (enemiesBoss.size() == 0) {
+            /*portal = new Sprite();
+            portal->initWithFile("portal/portal.png");
+
+            auto allMapOne = bosL->getlocIn();
+
+            posRoomPortal = allMapOne->getPosition();
+            sizeRoomPortal = allMapOne->getMapSize();
+            portal->setScale(2.0);
+            portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
+            this->addChild(portal);
+            checkBoss = false;
+            checkPortalF();*/
+        }
     }
     /*auto pos = generation->getPosTileMapOneEnd();
     auto sizeEnd = generation->getSizeTileMapOneEnd();
@@ -185,43 +201,8 @@ void GameScene::checkEndRoom() {
             portal->setVisible(true);
             checkPortal = true;
         }
-        auto pos = portal->getPosition();
-        auto size = portal->getContentSize();
-        auto posAX = pos.x - size.width;
-        auto posAY = pos.y + size.height;
-        auto posBX = pos.x + size.width;
-        auto posBY = pos.y - size.height;
-        if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY) {
-            
-            checkPortal = false;
-            portal->setVisible(false);
-
-
-            this->removeChild(portal);
-            /*
-            checkPortal = false;
-            this->removeChild(this->portal, true);*/
-            /*if (countLocation == 3) {
-                BossLocation* bosL = BossLocation::createScene("slime");
-                this->addChild(bosL);
-            }*/
-            if (countLocation >= 2)
-                checkMap = true;
-            if (countLocation == 1) {
-                BossLocation* bossLoc = new BossLocation();
-                generation->cleanScene();
-                bosL = bossLoc->createScene("slime", enemies);
-                checkBoss = true;
-                this->addChild(bosL, 1);
-                player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
-            }
-            else {
-                generation->generation(checkMap);
-                portalInit();
-                setPosPlayerMiniMap();
-            }
-            countLocation += 1;
-        }
+        checkPortalF();
+        
     }
 }
 
@@ -258,4 +239,37 @@ vector<Unit*> GameScene::getEnemies() {
 
 void GameScene::setEnemies(vector<Unit*> enemies) {
     this->enemies = enemies;
+}
+
+void GameScene::checkPortalF() {
+    auto pos = portal->getPosition();
+    auto size = portal->getContentSize();
+    auto posAX = pos.x - size.width;
+    auto posAY = pos.y + size.height;
+    auto posBX = pos.x + size.width;
+    auto posBY = pos.y - size.height;
+    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY) {
+
+        checkPortal = false;
+        portal->setVisible(false);
+
+
+        this->removeChild(portal);
+        if (countLocation >= 3)
+            checkMap = true;
+        if (countLocation == 2) {
+            BossLocation* bossLoc = new BossLocation();
+            generation->cleanScene();
+            bosL = bossLoc->createScene("slime", enemies);
+            checkBoss = true;
+            this->addChild(bosL, 1);
+            player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
+        }
+        else {
+            generation->generation(checkMap);
+            portalInit();
+            setPosPlayerMiniMap();
+        }
+        countLocation += 1;
+    }
 }

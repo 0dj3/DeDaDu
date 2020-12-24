@@ -26,6 +26,7 @@ bool Store::init(TMXTiledMap* map) {
 	shopMan->setScale(2.5);
 	this->addChild(shopMan);
 
+
 	createTray(store, 3);
 
 	return true;
@@ -42,8 +43,9 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		else {
 			item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);
 		}
-		Director::getInstance()->getRunningScene()->addChild(item);
 		item->Sell(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), rand() % 5 + 10);
+		//Director::getInstance()->getRunningScene()->addChild(item);
+		items.push_back(item);
 	}
 }
 
@@ -55,4 +57,8 @@ TMXTiledMap* Store::getMap() {
 
 std::vector<b2Body*> Store::getTray() {
 	return allPhysicTray;
+}
+
+std::vector<Item*> Store::getItems() {
+	return items;
 }

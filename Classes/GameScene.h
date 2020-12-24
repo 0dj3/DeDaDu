@@ -37,6 +37,7 @@ public:
     void portalInit();
     std::vector<Unit*> getEnemies();
     void setEnemies(std::vector<Unit*> enemies);
+    void checkPortalF();
 private:
     void update(float dt);
     int countLocation = 1;

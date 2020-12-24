@@ -12,13 +12,15 @@ public:
 
 	TMXTiledMap* mapMain;
 	TMXTiledMap* getPosRoom();
+
+	TMXTiledMap* locIn;
 	vector<Unit*> getEnemies();
+	TMXTiledMap* getlocIn();
 private:
 	bool init();
 	string name;
 	TMXTiledMap* hallUp;
 	TMXTiledMap* hallRight;
-	TMXTiledMap* locIn;
 	TMXTiledMap* mapOne;
 	void update(float dt);
 	Enemy* addBoss(Point pos);
