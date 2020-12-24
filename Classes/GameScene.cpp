@@ -195,6 +195,9 @@ void GameScene::checkEndRoom() {
             
             checkPortal = false;
             portal->setVisible(false);
+
+
+            this->removeChild(portal);
             /*
             checkPortal = false;
             this->removeChild(this->portal, true);*/
@@ -205,22 +208,19 @@ void GameScene::checkEndRoom() {
             if (countLocation >= 3)
                 checkMap = true;
             if (countLocation == 2) {
+                BossLocation* bossLoc = new BossLocation();
                 generation->cleanScene();
-                bosL = BossLocation::createScene("slime");
+                bosL = bossLoc->createScene("slime");
                 checkBoss = true;
                 this->addChild(bosL, 1);
+                player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
             }
-            else
+            else {
                 generation->generation(checkMap);
+                portalInit();
+                setPosPlayerMiniMap();
+            }
             countLocation += 1;
-
-            auto allMapOne = generation->getAllMapOne();
-            int idMap = 0 + rand() % (allMapOne.size() - 1);
-
-            posRoomPortal = allMapOne[idMap]->getPosition();
-            sizeRoomPortal = allMapOne[idMap]->getMapSize();
-
-            setPosPlayerMiniMap();
         }
     }
 }

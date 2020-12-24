@@ -9,13 +9,16 @@ USING_NS_CC;
 class BossLocation: public Generation_map  {
 public:
 	static BossLocation* createScene(string bossName);
-	void bossSlime();
+
+	TMXTiledMap* mapMain;
+	TMXTiledMap* getPosRoom();
 private:
 	bool init();
 	string name;
-	TMXTiledMap* mapMain;
 	TMXTiledMap* hallUp;
 	TMXTiledMap* hallRight;
 	TMXTiledMap* locIn;
 	TMXTiledMap* mapOne;
+
+	Enemy* addBoss(Point pos);
 };

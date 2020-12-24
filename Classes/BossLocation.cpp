@@ -48,6 +48,18 @@ bool BossLocation::init() {
 	auto storeMap = store->getMap();
 	border(storeMap);
 
+	auto posBoss = Vec2(locIn->getPosition().x + locIn->getMapSize().width * 30, locIn->getPosition().y + locIn->getMapSize().height * 30);
+	auto boss = addBoss(posBoss);
+	this->addChild(boss);
+
 	return true;
 }
 
+Enemy* BossLocation::addBoss(Point pos) {
+	auto enemy = Slime::create(this, pos);
+	return enemy;
+}
+
+TMXTiledMap* BossLocation::getPosRoom() {
+	return BossLocation::mapMain;
+}
