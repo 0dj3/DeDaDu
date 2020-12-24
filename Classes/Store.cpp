@@ -33,7 +33,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 	auto posMap = storeMap->getPosition();
 	
 	for (int i = 0; i < count; i++) {
-		tray = Sprite::create();
+		/*tray = Sprite::create();
 		tray->initWithFile("NPC/store/table.png");
 		tray->getTexture()->setAliasTexParameters();
 		tray->setScale(3.0);
@@ -46,7 +46,7 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		edgeNode->setPosition(tray->getPosition());
 		auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(tray->getContentSize()));
 		this->addChild(edgeNode);
-		allPhysicTray.push_back(body);
+		allPhysicTray.push_back(body);*/
 
 		/*Item* item;
 		if (rand() % 2) {
