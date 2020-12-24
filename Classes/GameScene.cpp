@@ -205,12 +205,12 @@ void GameScene::checkEndRoom() {
                 BossLocation* bosL = BossLocation::createScene("slime");
                 this->addChild(bosL);
             }*/
-            if (countLocation >= 3)
+            if (countLocation >= 2)
                 checkMap = true;
-            if (countLocation == 2) {
+            if (countLocation == 1) {
                 BossLocation* bossLoc = new BossLocation();
                 generation->cleanScene();
-                bosL = bossLoc->createScene("slime");
+                bosL = bossLoc->createScene("slime", enemies);
                 checkBoss = true;
                 this->addChild(bosL, 1);
                 player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
@@ -250,4 +250,12 @@ void GameScene::setPosPlayerMiniMap() {
     generation->playerMiniMap = static_cast<Player*>(player);
 
     generation->miniMap(idRoom);
+}
+
+vector<Unit*> GameScene::getEnemies() {
+    return enemies;
+}
+
+void GameScene::setEnemies(vector<Unit*> enemies) {
+    this->enemies = enemies;
 }

@@ -44,39 +44,6 @@ void Store::createTray(TMXTiledMap* storeMap, int count) {
 		}
 		Director::getInstance()->getRunningScene()->addChild(item);
 		item->Sell(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), rand() % 5 + 10);
-		/*tray = Sprite::create();
-		tray->initWithFile("NPC/store/table.png");
-		tray->getTexture()->setAliasTexParameters();
-		tray->setScale(3.0);
-		tray->setPosition(Vec2((posMap.x + i * 120) - 30, posMap.y - 80));
-		this->addChild(tray);
-
-		auto edgeNode = Node::create();
-		edgeNode->setScale(2.0);
-		edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
-		edgeNode->setPosition(tray->getPosition());
-		auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(tray->getContentSize()));
-		this->addChild(edgeNode);
-		allPhysicTray.push_back(body);*/
-
-		/*Item* item;
-		if (rand() % 2) {
-			std::map<std::string, int> stats{
-			{"healing", -20 + rand() % 40}
-			};
-			item = Item::create(Item::POTION, "Potion", "Super potion", "res/items/potion.png", stats);
-			item->setColor(Color3B(rand() % 255, rand() % 255, rand() % 255));
-		}
-		else {
-			std::map<std::string, int> stats{
-			{"damage", 1 + rand() % 40},
-			{"delay", 1 + rand() % 8}
-			};
-			item = Item::create(Item::WEAPON, "Sword", "Super sword", "res/weapon/sword.png", stats);
-		}
-		this->addChild(item);
-		item->SellShop(Vec2((posMap.x + i * 120) - 30, posMap.y - 80), 8, 1.0f);
-		items.push_back(item);*/
 	}
 }
 

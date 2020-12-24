@@ -1,11 +1,13 @@
 #include "BossLocation.h"
 #include "Store.h"
 
-BossLocation* BossLocation::createScene(string name) {
+BossLocation* BossLocation::createScene(string name, vector<Unit*> enemies) {
 	BossLocation* location = new BossLocation();
 	location->cleanScene();
 	location->init();
+	location->scheduleUpdate();
 	location->name = name;
+	location->enemies = enemies;
 	return location;
 }
 
@@ -55,11 +57,33 @@ bool BossLocation::init() {
 	return true;
 }
 
+void BossLocation::update(float dt) {
+	time += dt;
+
+	/*log("time=%f", time);
+	if (time >= 5) {
+		if (enemies.size() != 0) {
+			time = 0;
+			int rX = ((locIn->getMapSize().width - 3) * 60);
+			int rY = ((locIn->getMapSize().height - 3) * 60);
+
+			int randomX = (locIn->getPosition().x + 100) + rand() % rX;
+			int randomY = (locIn->getPosition().y + 80) + rand() % rY;
+			addBoss(Point(randomX, randomY));
+		}
+	}*/
+}
+
 Enemy* BossLocation::addBoss(Point pos) {
 	auto enemy = Slime::create(this, pos);
+	enemies.push_back(enemy);
 	return enemy;
 }
 
 TMXTiledMap* BossLocation::getPosRoom() {
 	return BossLocation::mapMain;
+}
+
+vector<Unit*> BossLocation::getEnemies() {
+	return enemies;
 }

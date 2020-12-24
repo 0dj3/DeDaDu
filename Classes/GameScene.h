@@ -35,6 +35,8 @@ public:
     CREATE_FUNC(GameScene);
     void checkEndRoom();
     void portalInit();
+    std::vector<Unit*> getEnemies();
+    void setEnemies(std::vector<Unit*> enemies);
 private:
     void update(float dt);
     int countLocation = 1;

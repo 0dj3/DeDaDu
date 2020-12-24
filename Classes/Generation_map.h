@@ -3,6 +3,7 @@
 #include <vector>
 #include <Slime.h>
 #include <Goblin.h>
+#include <SlimeKing.h>
 #include <Store.h>
 USING_NS_CC;
 #define SIZE_MAP 5;

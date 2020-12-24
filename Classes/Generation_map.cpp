@@ -530,7 +530,8 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
             enemy = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
             break;
         case 2:
-            enemy = Slime::create(this, Point(randomX, randomY));
+            enemy = SlimeKing::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+            //enemy = Slime::create(this, Point(randomX, randomY));
             break;
         /*case 3:
             enemy = Fly::create(this, Point(randomX, randomY));
