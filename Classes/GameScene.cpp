@@ -184,7 +184,8 @@ void GameScene::portalInit() {
 
 void GameScene::setPosPlayerMiniMap() {
     allMainRoom = generation->getAllMapMain();
-    idRoom = 0 + rand() % (allMainRoom.size() - 1);
+    auto idR = 0 + rand() % (allMainRoom.size() - 1);
+    idRoom = (allMainRoom.size() - 1) - idR;
     auto roomMainPos = allMainRoom[idRoom]->getPosition();
     auto roomMainSize = allMainRoom[idRoom]->getMapSize() * 30;
 
