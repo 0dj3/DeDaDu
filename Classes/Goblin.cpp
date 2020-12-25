@@ -9,6 +9,7 @@ Goblin::Goblin()
 {
     stats = new UnitStats(0.5, 1, 1, 1);
     CheckMaxHP();
+    idle();
     hp = maxHP;
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
@@ -17,7 +18,7 @@ Goblin::Goblin()
 Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* player)
 {
     Goblin* newGoblin = new Goblin();
-    if (newGoblin && newGoblin->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
+    if (newGoblin && newGoblin->sprite->initWithFile("res/enemy/goblin/1.png"))
     {
         newGoblin->spawnEnemy();
         newGoblin->sprite->getTexture()->setAliasTexParameters();
@@ -31,10 +32,8 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
 
         newGoblin->hands = new Hands(newGoblin);
         newGoblin->addChild(newGoblin->hands);
-
         Item* weapon = Weapon::createMelee("res/weapon/knife.png", "res/effects/hit/slash_1.png", "res/sounds/swoosh.mp3", 10, 1);
         newGoblin->hands->PutInHands(weapon);
-
         newGoblin->scheduleUpdate();
         return newGoblin;
     }
@@ -78,4 +77,24 @@ void Goblin::move()
      Vec2 desiredVel = stats->moveSpeed * toTarget;
      b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
      body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
+}
+
+void Goblin::idle()
+{
+    char str1[200] = { 0 };
+    auto spritecache1 = SpriteFrameCache::getInstance();
+    spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
+
+    Vector<SpriteFrame*> idleAnimFrames1(6);
+    for (int i = 1; i <= 6; i++) {
+        sprintf(str1, "run_%i.png", i);
+        idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
+    }
+    idleAnimate = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
+    auto demo1 = Sprite::createWithSpriteFrameName("run_1.png");
+    demo1->setPosition(Point(this->getPosition().x, this->getPosition().y));
+    demo1->setScale(3.0);
+    Action* action1 = RepeatForever::create(Animate::create(idleAnimate));
+    demo1->runAction(action1);
+    this->addChild(demo1);
 }
