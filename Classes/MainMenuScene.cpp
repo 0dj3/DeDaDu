@@ -140,7 +140,7 @@ void MainMenuScene::GoToMainMenu(cocos2d::Ref* sender)
 {
     doc["music"].SetFloat(music);
     doc["sfx"].SetFloat(sfx);
-    std::ofstream ofs("../Resources/properties/data.json");
+    std::ofstream ofs("Resources/properties/data.json");
     rapidjson::OStreamWrapper osw(ofs);
     rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);

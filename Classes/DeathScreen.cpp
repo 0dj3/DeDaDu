@@ -13,11 +13,18 @@ Scene* DeathScreen::createScene()
     return scene;
 }
 
-// Print useful error message instead of segfaulting when files are not there.
-
-// on "init" you need to initialize your instance
 bool DeathScreen::init()
 {
+    std::ifstream ifs("Resources/properties/data.json");
+    rapidjson::IStreamWrapper isw(ifs);
+
+    doc.ParseStream(isw);
+    assert(doc.IsObject());
+    assert(doc.HasMember("death_progress"));
+    assert(doc["death_progress"].IsInt());
+    progress = doc["death_progress"].GetInt();
+    CCLOG("%d", progress);
+
     if ( !Scene::init() )
     {
         return false;
@@ -27,20 +34,37 @@ bool DeathScreen::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    char str1[200] = "You need to rest, stranger...";
-    auto label = Label::createWithTTF(str1, "fonts/Pixel Times.ttf", 30);
+    switch (progress)
+    {
+    case 0: {
+        str = "You need to rest, stranger...";
+        progress = 1;
+        doc["death_progress"].SetInt(progress);
+        std::ofstream ofs("Resources/properties/data.json");
+        rapidjson::OStreamWrapper osw(ofs);
+        rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+        doc.Accept(writer);
+    }
+          break;
+    case 1: {
+        str = "So, next time...";
+        //in razrabotke
+    }
+    default:
+        str = "COMING SOON";
+        break;
+    }
+
+    auto label = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 30);
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
 
-    auto fadeIn = FadeIn::create(1.0f);
-    label->runAction(fadeIn);
+    auto FadeIn = FadeIn::create(1.0f);
+    label->runAction(FadeIn);
 
     auto fadeOut = FadeOut::create(0.5f);
     label->runAction(fadeOut);
 
-    //auto backgroundSprite = Sprite::create("res/ds.png");
-    //backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    //this->addChild(backgroundSprite);
     this->scheduleOnce(CC_SCHEDULE_SELECTOR(DeathScreen::GoToMainMenuScene), DISPLAY_TIME_SPLASH_SCENE);
 
     return true;

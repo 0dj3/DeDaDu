@@ -8,6 +8,8 @@
 #include "PhysicHelper.h"
 #include "Enemy.h"
 
+USING_NS_CC;
+
 class Goblin : public Enemy
 {
 public:
@@ -17,7 +19,10 @@ public:
     Hands* hands;
     virtual void DeathRattle() override;
 private:
-
+    Animation* idleAnimate;
+    Animation* runAnimate;
+    void initGoblin();
+    void idle();
     void update(float dt);
     void move();
 };
