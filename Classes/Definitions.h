@@ -4,6 +4,7 @@
 #define DISPLAY_TIME_SPLASH_SCENE 2
 #define TRANSITION_TIME 0.5
 #define PPM 16
+#define TIMEIMOORT 1
 #define LINEAR_ACCELERATION 100
 #define DEAD_TAG "dead"
 #define DEAD_BODY_TAG "dead_body"

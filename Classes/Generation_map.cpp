@@ -473,6 +473,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
                 enemies = createEnemy(enemies, allMainRoom[i], player);
                 checkDoorRoom = true;
                 allMainRoom.erase(allMainRoom.begin() + i);
+                playerMiniMap->SetInvulnerable(TIMEIMOORT);
             }
         }
         for (int i = 0; i < allMapOne.size(); i++) {
@@ -491,6 +492,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
                 enemies = createEnemy(enemies, allMapOne[i], player);
                 checkDoorRoom = true;
                 allMapOne.erase(allMapOne.begin() + i);
+                playerMiniMap->SetInvulnerable(TIMEIMOORT);
             }
         }
     }
