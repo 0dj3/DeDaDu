@@ -65,6 +65,9 @@ bool GameScene::init()
     this->addChild(generation);
     allMainRoom = generation->getAllMapMain();
     setPosPlayerMiniMap();
+    barrels = generation->getBarrel();
+    for (int i = 0; i < barrels.size(); i++)
+        this->addChild(barrels[i]);
 
     this->addChild(player, 4);
     
@@ -249,7 +252,7 @@ void GameScene::checkPortalF() {
     auto posBX = pos.x + size.width;
     auto posBY = pos.y - size.height;
     if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY) {
-
+        
         checkPortal = false;
         portal->setVisible(false);
 
@@ -266,9 +269,15 @@ void GameScene::checkPortalF() {
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
         else {
+            barrels = generation->getBarrel();
+            for (int i = 0; i < barrels.size(); i++)
+                    barrels[i]->setName(DEAD_TAG);
             generation->generation(checkMap);
             portalInit();
             setPosPlayerMiniMap();
+            barrels = generation->getBarrel();
+            for (int i = 0; i < barrels.size(); i++)
+                this->addChild(barrels[i]);
         }
         countLocation += 1;
     }

@@ -572,9 +572,7 @@ void Generation_map::createStore() {
 void Generation_map::generBarrel() {
     srand(time(0));
     
-    
     int count = 1 + rand() % 8;
-
     for (int i = 0; i < allMainRoom.size(); i++) {
         for (int j = 0; j < count; j++) {
             int rX = ((allMainRoom[i]->getMapSize().width - 3) * 60);
@@ -596,9 +594,8 @@ void Generation_map::generBarrel() {
             edgeNode->setPosition(barrel->getPosition());
             auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
             this->addChild(edgeNode);*/
-            /*auto enemy = Fly::create(this, Point(randomX, randomY));
-            this->addChild(enemy, 2);*/
-            //allPhysicBarrel.push_back(body);
+            auto enemy = Fly::create(this, Point(randomX, randomY));
+            allPhysicBarrel.push_back(enemy);
         }
     }
 }
@@ -803,4 +800,8 @@ void Generation_map::cleanScene() {
         if (Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
             Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
     }
+}
+
+std::vector<Unit*> Generation_map::getBarrel() {
+    return allPhysicBarrel;
 }

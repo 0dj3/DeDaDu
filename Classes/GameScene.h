@@ -46,6 +46,7 @@ private:
     bool checkBoss = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
+    vector<Unit*> barrels;
     
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
     Node* layerMiniMap;
