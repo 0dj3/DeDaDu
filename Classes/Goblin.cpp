@@ -48,7 +48,7 @@ void Goblin::update(float dt)
         Vec2 playerPos = Player::position - this->getPosition();
         playerPos.normalize();
         Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
-        hands->UseItem(pos, playerPos);
+        hands->UseItem(pos, playerPos.getAngle());
     }
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);

@@ -46,7 +46,7 @@ void Slime::update(float dt)
             for (int i = 0; i < (rand() % 2 + 2); i++) {
                 Vec2 toPlayer = Player::position - this->getPosition();
                 Vec2 toTarget = Vec2((double)(rand()) / RAND_MAX * (200) - 100, (double)(rand()) / RAND_MAX * (200) - 100);
-                weapon->StartAttack(this->getPosition(), toPlayer + toTarget, this);
+                weapon->StartAttack(this->getPosition(), (toPlayer + toTarget).getAngle(), this);
                 //attack->setColor(Color3B(0, 255, 0));
             }
             });
