@@ -50,10 +50,6 @@ bool GameScene::init()
 
     PhysicHelper::CreateWorld();
 
-    /*std::ifstream ifs("../Resources/properties/data.json");
-    rapidjson::IStreamWrapper isw(ifs);
-    doc.ParseStream(isw);
-    auto music = doc["music"].GetFloat();*/
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, GameManager::Instance()->GetMusicVolume());
 
     visibleSize.height = -1250;
@@ -74,27 +70,6 @@ bool GameScene::init()
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
-
-    //char str1[200] = { 0 };
-    //auto spritecache1 = SpriteFrameCache::getInstance();
-    //spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
-    //auto spritesheet1 = SpriteBatchNode::create("res/enemy/goblin/goblin.png");
-    //this->addChild(spritesheet1);
-
-    //Vector<SpriteFrame*> idleAnimFrames1(4);
-    //for (int i = 1; i <= 6; i++) {
-    //    sprintf(str1, "idle_%i.png", i);
-    //    idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
-    //}
-    //auto idleAnimation1 = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
-    //auto demo1 = Sprite::createWithSpriteFrameName("idle_1.png");
-    //demo1->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
-    //demo1->setScale(3.0);
-    //Action* action1 = RepeatForever::create(Animate::create(idleAnimation1));
-    //demo1->runAction(action1);
-    //spritesheet1->addChild(demo1);
-    //
-
 
     return true;
 }
@@ -122,7 +97,6 @@ void GameScene::update(float dt)
             continue;
         }
 
-        //Unit* unit = (Unit*)b->GetUserData();
         if (n->getName() == DEAD_TAG)
         {
             if (n->getTag() == ContactListener::ENEMY || ContactListener::PLAYER)
@@ -171,17 +145,6 @@ void GameScene::update(float dt)
             checkPortalF();*/
         }
     }
-    /*auto pos = generation->getPosTileMapOneEnd();
-    auto sizeEnd = generation->getSizeTileMapOneEnd();
-    auto posAX = pos.x + 80;
-    auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
-    auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
-    auto posBY = pos.y + 80;
-    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == false && enemies.size() == 0) {
-        checkMap = true;
-        generation->generation(checkMap);
-        player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
-    }*/
     
 }
 
@@ -190,9 +153,6 @@ void GameScene::menuCloseCallback(Ref* pSender){
 }
 
 void GameScene::checkEndRoom() {
-    //testMap
-    /*auto posM = generation->getPosTileMapOneEnd();
-    auto sizeEndM = generation->getSizeTileMapOneEnd();*/
     auto posM = posRoomPortal;
     auto sizeEndM = sizeRoomPortal;
     auto posAXM = posM.x + 80;
