@@ -49,7 +49,7 @@ void HUD::Init()
 	map = Sprite::create("res/ui/map.png");
 	map->setAnchorPoint(Point(1, 1));
 	map->setPosition(Point(620, 350));
-	map->setScale(0.5);
+	map->setScale(0.7);
 	this->addChild(map);
 
 

@@ -527,10 +527,10 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
         switch (enemyType)
         {
         case 1:
-            enemy = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+            enemy = Goblin::create(Point(randomX, randomY), static_cast<Player*>(player));
             break;
         case 2:
-            enemy = SlimeKing::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+            enemy = SlimeKing::create(Point(randomX, randomY), static_cast<Player*>(player), 3);
             //enemy = Slime::create(this, Point(randomX, randomY));
             break;
         /*case 3:
@@ -572,9 +572,7 @@ void Generation_map::createStore() {
 void Generation_map::generBarrel() {
     srand(time(0));
     
-    
     int count = 1 + rand() % 8;
-
     for (int i = 0; i < allMainRoom.size(); i++) {
         for (int j = 0; j < count; j++) {
             int rX = ((allMainRoom[i]->getMapSize().width - 3) * 60);
@@ -596,9 +594,8 @@ void Generation_map::generBarrel() {
             edgeNode->setPosition(barrel->getPosition());
             auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
             this->addChild(edgeNode);*/
-            /*auto enemy = Fly::create(this, Point(randomX, randomY));
-            this->addChild(enemy, 2);*/
-            //allPhysicBarrel.push_back(body);
+            auto enemy = Fly::create(Point(randomX, randomY));
+            allPhysicBarrel.push_back(enemy);
         }
     }
 }
@@ -803,4 +800,8 @@ void Generation_map::cleanScene() {
         if (Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
             Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
     }
+}
+
+std::vector<Unit*> Generation_map::getBarrel() {
+    return allPhysicBarrel;
 }

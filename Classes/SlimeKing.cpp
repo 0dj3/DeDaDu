@@ -14,20 +14,20 @@ SlimeKing::SlimeKing()
     this->autorelease();
 }
 
-Enemy* SlimeKing::create(cocos2d::Layer* layer, const Vec2& position, Player* player)
+Enemy* SlimeKing::create(const Vec2& position, Player* player, int lives)
 {
     SlimeKing* newSlimeKing = new SlimeKing();
     if (newSlimeKing && newSlimeKing->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
     {
         newSlimeKing->spawnEnemy();
         newSlimeKing->sprite->getTexture()->setAliasTexParameters();
-        newSlimeKing->sprite->setScale(5.0);
+        newSlimeKing->sprite->setScale(lives * 2);
         newSlimeKing->setPosition(position);
 
         newSlimeKing->body = PhysicHelper::createDynamicPhysicBody(newSlimeKing, newSlimeKing->sprite->getContentSize());
         newSlimeKing->setTag(newSlimeKing->tag);
-        newSlimeKing->layer = layer;
         newSlimeKing->_player = player;
+        newSlimeKing->lives = lives;
 
         newSlimeKing->scheduleUpdate();
         return newSlimeKing;
@@ -72,5 +72,10 @@ void SlimeKing::move()
 }
 
 void SlimeKing::DeathRattle() {
-    Enemy::DropItems(this->getPosition());
+    if (lives != 1) {
+        Enemy* enemy = SlimeKing::create(Vec2(getPosition().x + 10, getPosition().y), _player, lives - 1);
+        Director::getInstance()->getRunningScene()->addChild(enemy, 2);
+        enemy = SlimeKing::create(Vec2(getPosition().x - 10, getPosition().y), _player, lives - 1);
+        Director::getInstance()->getRunningScene()->addChild(enemy, 2);
+    }
 }

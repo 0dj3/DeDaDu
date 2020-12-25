@@ -24,7 +24,7 @@ public:
     Item* targetItem = NULL;
 
     Player();
-    static Unit* create(cocos2d::Layer* layer, const cocos2d::Vec2& position);
+    static Unit* create(const cocos2d::Vec2& position);
     void setGold(int x);
 
     static void giveEXP(int value);

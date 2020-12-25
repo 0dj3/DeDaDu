@@ -41,13 +41,14 @@ public:
     std::vector<TMXTiledMap*> allMainRoom;
     std::vector<TMXTiledMap*> allMapOne;
     Player* playerMiniMap;
+    std::vector<Unit*> getBarrel();
 private:
     bool init(bool checkLoc);
     //void update(float dt);
     int** generationArrayMap(int sizeMap);
 
     Store* store;
-
+    Node* NodeBarrel;
     TMXTiledMap* tileMap;
     TMXTiledMap* tileHallML;
     TMXTiledMap* tileHallMR;
@@ -62,7 +63,7 @@ private:
     
 
     std::vector<b2Body*> allPhysicBody;
-    std::vector<b2Body*> allPhysicBarrel;
+    std::vector<Unit*> allPhysicBarrel;
     std::vector<b2Body*> PhBoDoorRoom;
     std::vector<TMXTiledMap*> childDoorRoom;
 

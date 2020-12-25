@@ -15,13 +15,13 @@ Player::Player()
     dmgsound = "res/sounds/hit/punch.mp3";
     tag = ContactListener::PLAYER;
     gold = 20;
-    stats = new UnitStats(1, 1, 1, 2);
+    stats = new UnitStats(10, 10, 10, 10);
     CheckMaxHP();
     hp = maxHP;
     autorelease();
 }
 
-Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
+Unit* Player::create(const Vec2& position)
 {
     Player* newPlayer = new Player();
     if (newPlayer && newPlayer->sprite->initWithFile("res/hero/test_hero.png")) {
@@ -29,7 +29,6 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
         newPlayer->setTag(newPlayer->tag);
-        newPlayer->layer = layer;
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 

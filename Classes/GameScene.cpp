@@ -16,12 +16,10 @@ CC_DLL;
 
 Scene* GameScene::createScene()
 {
-    auto scene = Scene::create();
     auto layer = GameScene::create();
-    layer->scene = scene;
     layer->scheduleUpdate();
-    scene->addChild(layer);
-    return scene;
+    layer->scene->addChild(layer);
+    return layer->scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -40,8 +38,9 @@ bool GameScene::init()
     {
         return false;
     }
-    
-    
+
+    auto scene = Scene::create();
+    this->scene = scene;
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -51,20 +50,19 @@ bool GameScene::init()
 
     PhysicHelper::CreateWorld();
 
-    /*std::ifstream ifs("../Resources/properties/data.json");
-    rapidjson::IStreamWrapper isw(ifs);
-    doc.ParseStream(isw);
-    auto music = doc["music"].GetFloat();*/
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, GameManager::Instance()->GetMusicVolume());
 
     visibleSize.height = -1250;
-    player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
+    player = Player::create(Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     /*log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);*/
 
     generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());
     this->addChild(generation);
     allMainRoom = generation->getAllMapMain();
     setPosPlayerMiniMap();
+    barrels = generation->getBarrel();
+    for (int i = 0; i < barrels.size(); i++)
+        this->addChild(barrels[i]);
 
     this->addChild(player, 4);
     
@@ -72,27 +70,6 @@ bool GameScene::init()
 
     hud = HUD::create(static_cast<Player*>(player));
     this->addChild(hud, 5);
-
-    //char str1[200] = { 0 };
-    //auto spritecache1 = SpriteFrameCache::getInstance();
-    //spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
-    //auto spritesheet1 = SpriteBatchNode::create("res/enemy/goblin/goblin.png");
-    //this->addChild(spritesheet1);
-
-    //Vector<SpriteFrame*> idleAnimFrames1(4);
-    //for (int i = 1; i <= 6; i++) {
-    //    sprintf(str1, "idle_%i.png", i);
-    //    idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
-    //}
-    //auto idleAnimation1 = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
-    //auto demo1 = Sprite::createWithSpriteFrameName("idle_1.png");
-    //demo1->setPosition(Point(player->getPosition().x + 100, player->getPosition().y - 100)); //Retain to use it later
-    //demo1->setScale(3.0);
-    //Action* action1 = RepeatForever::create(Animate::create(idleAnimation1));
-    //demo1->runAction(action1);
-    //spritesheet1->addChild(demo1);
-    //
-
 
     return true;
 }
@@ -120,7 +97,6 @@ void GameScene::update(float dt)
             continue;
         }
 
-        //Unit* unit = (Unit*)b->GetUserData();
         if (n->getName() == DEAD_TAG)
         {
             if (n->getTag() == ContactListener::ENEMY || ContactListener::PLAYER)
@@ -169,17 +145,6 @@ void GameScene::update(float dt)
             checkPortalF();*/
         }
     }
-    /*auto pos = generation->getPosTileMapOneEnd();
-    auto sizeEnd = generation->getSizeTileMapOneEnd();
-    auto posAX = pos.x + 80;
-    auto posAY = pos.y + ((sizeEnd.height - 1) * 60 - 20);
-    auto posBX = pos.x + ((sizeEnd.width - 1) * 60 - 20);
-    auto posBY = pos.y + 80;
-    if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY && checkMap == false && enemies.size() == 0) {
-        checkMap = true;
-        generation->generation(checkMap);
-        player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
-    }*/
     
 }
 
@@ -188,9 +153,6 @@ void GameScene::menuCloseCallback(Ref* pSender){
 }
 
 void GameScene::checkEndRoom() {
-    //testMap
-    /*auto posM = generation->getPosTileMapOneEnd();
-    auto sizeEndM = generation->getSizeTileMapOneEnd();*/
     auto posM = posRoomPortal;
     auto sizeEndM = sizeRoomPortal;
     auto posAXM = posM.x + 80;
@@ -267,9 +229,15 @@ void GameScene::checkPortalF() {
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
         else {
+            barrels = generation->getBarrel();
+            for (int i = 0; i < barrels.size(); i++)
+                    barrels[i]->setName(DEAD_TAG);
             generation->generation(checkMap);
             portalInit();
             setPosPlayerMiniMap();
+            barrels = generation->getBarrel();
+            for (int i = 0; i < barrels.size(); i++)
+                this->addChild(barrels[i]);
         }
         countLocation += 1;
     }

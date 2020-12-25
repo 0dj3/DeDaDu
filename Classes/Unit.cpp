@@ -12,7 +12,6 @@ MainMenuScene* settings = new MainMenuScene;
 
 Unit::Unit()
 {
-	layer = new Layer();
     sprite = new Sprite();
 	stats = new UnitStats(1, 1, 1, 1);
 	this->addChild(sprite);

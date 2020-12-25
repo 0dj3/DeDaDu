@@ -22,7 +22,6 @@ public:
     ContactListener::BodyTag tag;
     b2Body* body;
     cocos2d::Sprite* sprite;
-    cocos2d::Layer* layer;
     UnitStats* stats;
     char* dmgsound;
     int hp;
