@@ -34,7 +34,7 @@ public:
 
     static Weapon* GetRandomWeapon();
 
-    void StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit);
+    void StartAttack(cocos2d::Vec2 position, float angle, Unit* unit);
 
 private:
 

@@ -43,8 +43,8 @@ Weapon* Weapon::createRange(std::string filename, std::string projectileFilename
     return create(RANGE, filename, projectileFilename, soundFilename, damage, delay, speed);
 }
 
-void Weapon::StartAttack(cocos2d::Vec2 position, cocos2d::Vec2 localTarget, Unit* unit) {
-    Attack::CreateAttack(position, localTarget, unit, this);
+void Weapon::StartAttack(cocos2d::Vec2 position, float angle, Unit* unit) {
+    Attack::CreateAttack(position, angle, unit, this);
     AudioEngine::preload(soundFilename);
     AudioEngine::play2d(soundFilename, false, GameManager::Instance()->GetSFX());
 }

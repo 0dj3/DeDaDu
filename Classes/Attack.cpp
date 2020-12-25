@@ -3,6 +3,7 @@
 #include "PhysicHelper.h"
 #include "InputListener.h"
 #include "AudioEngine.h"
+#include <cmath>
 
 USING_NS_CC;
 
@@ -10,12 +11,12 @@ Attack::Attack() {
 
 }
 
-void Attack::CreateAttack(Vec2 position, Vec2 localTarget, Unit* creator, Weapon* weapon) {
+void Attack::CreateAttack(Vec2 position, float angle, Unit* creator, Weapon* weapon) {
     Attack* attack = new Attack();
     if (attack && attack->initWithFile(weapon->projectileFilename)) {
         attack->getTexture()->setAliasTexParameters();
         attack->setPosition(position);
-        attack->setRotation(CC_RADIANS_TO_DEGREES(-localTarget.getAngle()));
+        attack->setRotation(CC_RADIANS_TO_DEGREES(-angle));
         attack->setScale(2);
         attack->setTag(ContactListener::ATTACK);
         attack->creatorTag = (ContactListener::BodyTag)creator->getTag();
@@ -34,7 +35,8 @@ void Attack::CreateAttack(Vec2 position, Vec2 localTarget, Unit* creator, Weapon
 
         attack->setName("");
         b2Body* body = attack->CreatePhysicBody();
-        b2Vec2 pos = b2Vec2(localTarget.x, localTarget.y);
+        //b2Vec2 pos = b2Vec2(localTarget.x, localTarget.y);
+        b2Vec2 pos = b2Vec2(cos(body->GetAngle()), -sin(body->GetAngle()));
         pos.Normalize();
         body->ApplyForceToCenter((LINEAR_ACCELERATION) * weapon->speed * PPM * pos, true);
         return;

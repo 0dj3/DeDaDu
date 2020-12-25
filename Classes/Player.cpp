@@ -57,7 +57,7 @@ void Player::update(float dt)
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 3;
-        hands->UseItem(pos, InputListener::Instance()->mousePosition);
+        hands->UseItem(pos, InputListener::Instance()->mousePosition.getAngle());
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;

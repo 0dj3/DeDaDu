@@ -27,7 +27,7 @@ public:
 		this->handsSprite->getTexture()->setAliasTexParameters();
 	};
 
-	void UseItem(cocos2d::Vec2 position, cocos2d::Vec2 localTarget) {
+	void UseItem(cocos2d::Vec2 position, float angle) {
 		if (isDelay || item == NULL)
 			return;
 		cocos2d::DelayTime* delay = cocos2d::DelayTime::create(item->delay / unit->stats->attackSpeed);
@@ -43,7 +43,7 @@ public:
 		switch (item->type)	
 		{
 		case Item::WEAPON:
-			static_cast<Weapon*>(item)->StartAttack(position, localTarget, unit);
+			static_cast<Weapon*>(item)->StartAttack(position, angle, unit);
 			break;
 		case Item::POTION:
 			static_cast<Potion*>(item)->Drink(unit);
