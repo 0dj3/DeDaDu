@@ -1,6 +1,6 @@
-#include "rapidjson/document.h"
-#include "rapidjson/error/en.h"
-#include <rapidjson/istreamwrapper.h>
+#include "include/rapidjson/document.h"
+#include "include/rapidjson/error/en.h"
+#include <include/rapidjson/istreamwrapper.h>
 #include <iostream>
 #include <fstream>
 #include "testJson.h"
