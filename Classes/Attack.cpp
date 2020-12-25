@@ -11,34 +11,35 @@ Attack::Attack() {
 
 }
 
-void Attack::CreateAttack(Vec2 position, float angle, Unit* creator, Weapon* weapon) {
+void Attack::CreateAttack(std::string projectileFilename, ContactListener::BodyTag creatorTag, Weapon::WeaponType weaponType, 
+    cocos2d::Vec2 position, int damage, double angle, double speed, double size, int scatter) {
     Attack* attack = new Attack();
-    if (attack && attack->initWithFile(weapon->projectileFilename)) {
+    if (attack && attack->initWithFile(projectileFilename)) {
         attack->getTexture()->setAliasTexParameters();
         attack->setPosition(position);
-        attack->setRotation(CC_RADIANS_TO_DEGREES(-angle));
-        attack->setScale(2);
+        attack->setRotation(CC_RADIANS_TO_DEGREES(-angle) + (rand() % scatter - (scatter / 2)));
+        attack->setScale(size);
         attack->setTag(ContactListener::ATTACK);
-        attack->creatorTag = (ContactListener::BodyTag)creator->getTag();
-        attack->weaponType = weapon->weaponType;
+        attack->creatorTag = creatorTag;
+        attack->weaponType = weaponType;
         Director::getInstance()->getRunningScene()->addChild(attack);
-        attack->damage = weapon->damage * creator->stats->damage;
+        attack->damage = damage;
 
-        if (weapon->weaponType == Weapon::MELEE) {
+        if (weaponType == Weapon::MELEE) {
+            speed = 10;
             cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.01);
             auto endAttack = CallFunc::create([attack]() {
                 attack->setName(DEAD_TAG);
-            });
+                });
             auto seq = cocos2d::Sequence::create(delay, endAttack, nullptr);
             attack->runAction(seq);
         }
 
         attack->setName("");
         b2Body* body = attack->CreatePhysicBody();
-        //b2Vec2 pos = b2Vec2(localTarget.x, localTarget.y);
         b2Vec2 pos = b2Vec2(cos(body->GetAngle()), -sin(body->GetAngle()));
         pos.Normalize();
-        body->ApplyForceToCenter((LINEAR_ACCELERATION) * weapon->speed * PPM * pos, true);
+        body->ApplyForceToCenter((LINEAR_ACCELERATION) * speed * PPM * pos, true);
         return;
     }
     
@@ -57,15 +58,14 @@ b2Body* Attack::CreatePhysicBody() {
     b2Body* body = PhysicHelper::world->CreateBody(&bodyDef);
     assert(body != NULL);
 
-    b2CircleShape circle;
+    b2CircleShape circle; 
     if (weaponType == Weapon::MELEE) {
         circle.m_radius = 8 * this->getScale() / PPM;
     }
     else {
         circle.m_radius = this->getScale() / PPM;
     }
-    /*b2PolygonShape box;
-    box.SetAsBox(this->getContentSize().height * this->getScale() / PPM / 2, this->getContentSize().width * this->getScale() / PPM / 2);*/
+
     b2FixtureDef shapeDef;
     shapeDef.shape = &circle;
     shapeDef.density = 1.0f;

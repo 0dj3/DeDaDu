@@ -7,27 +7,26 @@
 USING_NS_CC;
 SlimeKing::SlimeKing()
 {
-    stats = new UnitStats(0.5, 1, 1, 1);
+    stats = new UnitStats(0.3, 1, 1, 1);
     CheckMaxHP();
     hp = maxHP;
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }
 
-Enemy* SlimeKing::create(const Vec2& position, Player* player, int lives)
+Enemy* SlimeKing::create(const Vec2& position, Player* player, int life)
 {
     SlimeKing* newSlimeKing = new SlimeKing();
     if (newSlimeKing && newSlimeKing->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
     {
         newSlimeKing->spawnEnemy();
         newSlimeKing->sprite->getTexture()->setAliasTexParameters();
-        newSlimeKing->sprite->setScale(lives * 2);
+        newSlimeKing->sprite->setScale(life * 2);
         newSlimeKing->setPosition(position);
-
         newSlimeKing->body = PhysicHelper::createDynamicPhysicBody(newSlimeKing, newSlimeKing->sprite->getContentSize());
         newSlimeKing->setTag(newSlimeKing->tag);
         newSlimeKing->_player = player;
-        newSlimeKing->lives = lives;
+        newSlimeKing->life = life;
 
         newSlimeKing->scheduleUpdate();
         return newSlimeKing;
@@ -38,44 +37,53 @@ Enemy* SlimeKing::create(const Vec2& position, Player* player, int lives)
 
 void SlimeKing::update(float dt)
 {
-    if (IsPlayerWithinRange()) {
-        Vec2 playerPos = Player::position - this->getPosition();
-        playerPos.normalize();
-        Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
-    }
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
-        auto startAttack = CallFunc::create([this]() {
-            Vec2 toTarget;
-            //toTarget = Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
-            toTarget = Player::position - this->getPosition();
-            toTarget.normalize();
-            Vec2 desiredVel = 50 * toTarget * (rand() % 2);
-            b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
-            body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
-        });
+        switch (rand() % 3)
+        {
+        case 0: {
+            auto move = CallFunc::create([this]() {
+                b2Vec2 toTarget = b2Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
+                toTarget.Normalize();
+                b2Vec2 desiredVel = 50 * toTarget;
+                body->ApplyForceToCenter((LINEAR_ACCELERATION)*desiredVel, true);
+                });
+            auto seq = cocos2d::Sequence::create(delay, move, nullptr);
+            this->runAction(seq);
+            break;
 
-        auto seq = cocos2d::Sequence::create(delay, startAttack, nullptr);
-
-        this->runAction(seq);
+        }
+        case 1: {
+            cocos2d::DelayTime* attackDelay = cocos2d::DelayTime::create(1);
+            auto attack1 = CallFunc::create([this]() {
+                double angle = Player::position.getAngle();
+                for (int i = -10; i < 10; i++) {
+                    Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
+                        Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, angle + i, 1, 2, 1);
+                }
+                });
+            auto attack2 = CallFunc::create([this]() {
+                double angle = Player::position.getAngle();
+                for (int i = 10; i > -10; i--) {
+                    Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
+                        Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, angle + i, 1, 2, 1);
+                }
+                });
+            auto seq = cocos2d::Sequence::create(delay, attack1, attackDelay, attack2, nullptr);
+            this->runAction(seq);
+            break;
+        }
+        default:
+            break;
+        }
     }
-    move();
-}
-
-void SlimeKing::move()
-{
-     Vec2 toTarget = Player::position - this->getPosition();
-     toTarget.normalize();
-     Vec2 desiredVel = stats->moveSpeed * toTarget;
-     b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
-     body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
 }
 
 void SlimeKing::DeathRattle() {
-    if (lives != 1) {
-        Enemy* enemy = SlimeKing::create(Vec2(getPosition().x + 10, getPosition().y), _player, lives - 1);
+    if (life != 1) {
+        Enemy* enemy = SlimeKing::create(Vec2(getPosition().x + 10, getPosition().y), _player, life - 1);
         Director::getInstance()->getRunningScene()->addChild(enemy, 2);
-        enemy = SlimeKing::create(Vec2(getPosition().x - 10, getPosition().y), _player, lives - 1);
+        enemy = SlimeKing::create(Vec2(getPosition().x - 10, getPosition().y), _player, life - 1);
         Director::getInstance()->getRunningScene()->addChild(enemy, 2);
     }
 }

@@ -44,7 +44,8 @@ Weapon* Weapon::createRange(std::string filename, std::string projectileFilename
 }
 
 void Weapon::StartAttack(cocos2d::Vec2 position, float angle, Unit* unit) {
-    Attack::CreateAttack(position, angle, unit, this);
+    Attack::CreateAttack(projectileFilename, (ContactListener::BodyTag)unit->getTag(), weaponType, position,
+        damage * unit->stats->damage, angle, speed, 2, 20);
     AudioEngine::preload(soundFilename);
     AudioEngine::play2d(soundFilename, false, GameManager::Instance()->GetSFX());
 }
