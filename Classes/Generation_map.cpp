@@ -276,7 +276,7 @@ void Generation_map::generMapOne(TMXTiledMap* PosMap, int direction, bool checkL
     case 1://down
         tileMapOne = TMXTiledMap::create("maps/room_down.tmx");
         tileMapOne->setPosition(Point(sizeMapX + (PosMap->getMapSize().width - 10) * 60, sizeMapY + (-tileMapOne->getMapSize().height) * 60));
-
+        allMapOne.push_back(tileMapOne);
         break;
     case 2://up
         tileMapOne = TMXTiledMap::create("maps/room_up.tmx");
@@ -512,7 +512,7 @@ std::vector<Unit*> Generation_map::checkRoom(Unit* player, std::vector<Unit*> en
 
 std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTiledMap* tiled, Unit* player) {
     srand(time(0));
-    int count = 3 + rand() % 4;
+    int count = 1 + rand() % 1;
     Enemy* enemy;
     for (int i = 0; i < count; i++) {
         int enemyType = 1 + rand() % 2;
@@ -530,8 +530,8 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
             enemy = Goblin::create(Point(randomX, randomY), static_cast<Player*>(player));
             break;
         case 2:
-            enemy = SlimeKing::create(Point(randomX, randomY), static_cast<Player*>(player), 3);
-            //enemy = Slime::create(this, Point(randomX, randomY));
+            //enemy = SlimeKing::create(Point(randomX, randomY), static_cast<Player*>(player), 3);
+            enemy = Slime::create(Point(randomX, randomY));
             break;
         /*case 3:
             enemy = Fly::create(this, Point(randomX, randomY));
@@ -572,7 +572,7 @@ void Generation_map::createStore() {
 void Generation_map::generBarrel() {
     srand(time(0));
     
-    int count = 1 + rand() % 8;
+    int count = 3 + rand() % 4;
     for (int i = 0; i < allMainRoom.size(); i++) {
         for (int j = 0; j < count; j++) {
             int rX = ((allMainRoom[i]->getMapSize().width - 3) * 60);
@@ -581,19 +581,6 @@ void Generation_map::generBarrel() {
             int randomX = (allMainRoom[i]->getPosition().x + 100) + rand() % rX;
             int randomY = (allMainRoom[i]->getPosition().y + 80) + rand() % rY;
 
-            /*auto barrel = new Sprite();
-            barrel->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/props_itens/barrel.png");
-            barrel->getTexture()->setAliasTexParameters();
-            barrel->setScale(3.0);
-            barrel->setPosition(Vec2(randomX, randomY));
-            this->addChild(barrel);
-
-            auto edgeNode = Node::create();
-            edgeNode->setScale(2.0);
-            edgeNode->setAnchorPoint(Vec2(0.5, 0.5));
-            edgeNode->setPosition(barrel->getPosition());
-            auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
-            this->addChild(edgeNode);*/
             auto enemy = Fly::create(Point(randomX, randomY));
             allPhysicBarrel.push_back(enemy);
         }
@@ -601,8 +588,6 @@ void Generation_map::generBarrel() {
 }
 
 void Generation_map::miniMap(int idRoom) {
-    /*removeChild(layer, true);
-    removeChild(miniRoom, true);*/
     Generation_map* gener = new Generation_map();
     Node* layer = Node::create();
     layer->setPosition(playerMiniMap->getPosition());
@@ -793,9 +778,7 @@ void Generation_map::cleanScene() {
     for (int i = 0; i < allPhysicBody.size(); i++)
         PhysicHelper::world->DestroyBody(allPhysicBody[i]);
     allPhysicBody.clear();
-    /*for (int i = 0; i < allPhysicBarrel.size(); i++)
-        PhysicHelper::world->DestroyBody(allPhysicBarrel[i]);
-    allPhysicBarrel.clear();*/
+    allPhysicBarrel.clear();
     for (int i = 0; i < Director::getInstance()->getRunningScene()->getChildren().size(); i++) {
         if (Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
             Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);

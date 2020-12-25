@@ -62,7 +62,7 @@ bool GameScene::init()
     setPosPlayerMiniMap();
     barrels = generation->getBarrel();
     for (int i = 0; i < barrels.size(); i++)
-        this->addChild(barrels[i]);
+        scene->addChild(barrels[i], 3);
 
     this->addChild(player, 4);
     
@@ -99,7 +99,7 @@ void GameScene::update(float dt)
 
         if (n->getName() == DEAD_TAG)
         {
-            if (n->getTag() == ContactListener::ENEMY || ContactListener::PLAYER)
+            if ((n->getTag() == ContactListener::ENEMY) || (n->getTag() == ContactListener::PLAYER))
                 static_cast<Unit*>(b->GetUserData())->DeathRattle();
             if (n->getTag() == ContactListener::PLAYER)
                 continue;
@@ -130,19 +130,16 @@ void GameScene::update(float dt)
         checkEndRoom();
     }if (checkBoss == true) {
         auto enemiesBoss = bosL->getEnemies();
-        if (enemiesBoss.size() == 0) {
-            /*portal = new Sprite();
+        if (bosL->countBoss == 0 && bosL->bossDeath == true) {
+            portal = new Sprite();
             portal->initWithFile("portal/portal.png");
-
             auto allMapOne = bosL->getlocIn();
-
             posRoomPortal = allMapOne->getPosition();
             sizeRoomPortal = allMapOne->getMapSize();
             portal->setScale(2.0);
             portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
-            this->addChild(portal);
-            checkBoss = false;
-            checkPortalF();*/
+            this->addChild(portal, 2);
+            checkPortalF();
         }
     }
     
@@ -167,7 +164,6 @@ void GameScene::checkEndRoom() {
             checkPortal = true;
         }
         checkPortalF();
-        
     }
 }
 
@@ -214,30 +210,34 @@ void GameScene::checkPortalF() {
     auto posBX = pos.x + size.width;
     auto posBY = pos.y - size.height;
     if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY) {
+        
         checkPortal = false;
         portal->setVisible(false);
 
         this->removeChild(portal);
-        if (countLocation >= 3)
+        if (countLocation == 3)
+            bosL->cleanScene();
+
+        if (countLocation >= 3) {
             checkMap = true;
+            checkBoss = false;
+        }
+
         if (countLocation == 2) {
-            BossLocation* bossLoc = new BossLocation();
             generation->cleanScene();
-            bosL = bossLoc->createScene("slime", enemies);
+            bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
             checkBoss = true;
             this->addChild(bosL, 1);
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
         else {
-            barrels = generation->getBarrel();
-            for (int i = 0; i < barrels.size(); i++)
-                    barrels[i]->setName(DEAD_TAG);
             generation->generation(checkMap);
             portalInit();
             setPosPlayerMiniMap();
+
             barrels = generation->getBarrel();
             for (int i = 0; i < barrels.size(); i++)
-                this->addChild(barrels[i]);
+                scene->addChild(barrels[i], 3);
         }
         countLocation += 1;
     }

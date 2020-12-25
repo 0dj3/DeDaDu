@@ -1,13 +1,14 @@
 #include "BossLocation.h"
 #include "Store.h"
 
-BossLocation* BossLocation::createScene(string name, vector<Unit*> enemies) {
+BossLocation* BossLocation::createScene(string name, vector<Unit*> enemies, Player* player) {
 	BossLocation* location = new BossLocation();
-	location->cleanScene();
+	location->slimeking = new SlimeKing();
+	location->name = name;
+	location->playerGL = player;
+	location->enemies = enemies;
 	location->init();
 	location->scheduleUpdate();
-	location->name = name;
-	location->enemies = enemies;
 	return location;
 }
 
@@ -30,6 +31,7 @@ bool BossLocation::init() {
 	hallRight->setPosition(Vec2(mapMain->getPosition().x + mapMain->getMapSize().width * 60, mapMain->getPosition().y + (mapMain->getMapSize().height / 2 - hallRight->getMapSize().height / 2) * 60));
 	mapOne->setPosition(Vec2(hallRight->getPosition().x + hallRight->getMapSize().width * 60, hallRight->getPosition().y + (hallRight->getMapSize().height / 2 - mapOne->getMapSize().height / 2) * 60));
 
+
 	border(locIn);
 	border(mapMain);
 	border(hallUp);
@@ -47,6 +49,11 @@ bool BossLocation::init() {
 
 	Store* store = Store::createScene(mapOne);
 	this->addChild(store);
+	auto items = store->getItems();
+	for (int i = 0; i < items.size(); i++)
+		this->addChild(items[i]);
+
+
 	auto storeMap = store->getMap();
 	border(storeMap);
 
@@ -54,30 +61,56 @@ bool BossLocation::init() {
 	auto boss = addBoss(posBoss);
 	this->addChild(boss);
 
+
+
 	return true;
 }
 
 void BossLocation::update(float dt) {
 	time += dt;
+	if (time >= 1) {
+		countBoss = slimeking->checkDeath;
+		if (countBoss != 0 && checkDoor == false) {
+			auto posPX = playerGL->getPosition().x;
+			auto posPY = playerGL->getPosition().y;
 
-	/*log("time=%f", time);
-	if (time >= 5) {
-		if (enemies.size() != 0) {
-			time = 0;
-			int rX = ((locIn->getMapSize().width - 3) * 60);
-			int rY = ((locIn->getMapSize().height - 3) * 60);
+			auto sizeMap = locIn->getMapSize();
+			auto posMap = locIn->getPosition();
 
-			int randomX = (locIn->getPosition().x + 100) + rand() % rX;
-			int randomY = (locIn->getPosition().y + 80) + rand() % rY;
-			addBoss(Point(randomX, randomY));
+			auto posAX = posMap.x + 80;
+			auto posAY = posMap.y + ((sizeMap.height - 1) * 60 - 20);
+			auto posBX = posMap.x + ((sizeMap.width - 1) * 60 - 20);
+			auto posBY = posMap.y + 80;
+
+			if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+				auto sizeMap = locIn->getMapSize();
+				auto posMap = locIn->getPosition();
+				createDoor(locIn, 1, false, true);
+				checkDoor = true;
+			}
 		}
-	}*/
+		else {
+			if (checkDoor == true && countBoss == 0) {
+
+				for (int i = 0; i < PhBoDoorRoom.size(); i++)
+					PhysicHelper::world->DestroyBody(PhBoDoorRoom[i]);
+				PhBoDoorRoom.clear();
+
+				for (int i = 0; i < childDoorRoom.size(); i++) 
+					this->removeChild(childDoorRoom[i], true);
+				childDoorRoom.clear();
+				bossDeath = true;
+				checkDoor = false;
+			}
+		}
+		time = 0;
+	}
+	
 }
 
 Enemy* BossLocation::addBoss(Point pos) {
-	auto enemy = Slime::create(pos);
-	enemies.push_back(enemy);
-	return enemy;
+	boss = slimeking->create(pos, static_cast<Player*>(playerGL), 3);
+	return boss;
 }
 
 TMXTiledMap* BossLocation::getPosRoom() {
@@ -91,3 +124,11 @@ vector<Unit*> BossLocation::getEnemies() {
 TMXTiledMap* BossLocation::getlocIn() {
 	return 	locIn;
 }
+
+//void BossLocation::cleanScene() {
+//	this->removeAllChildren();
+//	for (int i = 0; i < Director::getInstance()->getRunningScene()->getChildren().size(); i++) {
+//		if (Director::getInstance()->getRunningScene()->getChildren().at(i)->getTag() != ContactListener::PLAYER)
+//			Director::getInstance()->getRunningScene()->getChildren().at(i)->setName(DEAD_TAG);
+//	}
+//}

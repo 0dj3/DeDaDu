@@ -42,6 +42,8 @@ public:
     std::vector<TMXTiledMap*> allMapOne;
     Player* playerMiniMap;
     std::vector<Unit*> getBarrel();
+    std::vector<b2Body*> PhBoDoorRoom;
+    std::vector<TMXTiledMap*> childDoorRoom;
 private:
     bool init(bool checkLoc);
     //void update(float dt);
@@ -60,12 +62,9 @@ private:
     
     std::vector<Sprite*> allDrawRoom;
     std::vector<Sprite*> allDrawMainRoom;
-    
 
     std::vector<b2Body*> allPhysicBody;
     std::vector<Unit*> allPhysicBarrel;
-    std::vector<b2Body*> PhBoDoorRoom;
-    std::vector<TMXTiledMap*> childDoorRoom;
 
     Node* edgeNode;
     size_t quantityEnemy;
