@@ -23,6 +23,7 @@ bool DeathScreen::init()
     assert(doc.HasMember("death_progress"));
     assert(doc["death_progress"].IsInt());
     progress = doc["death_progress"].GetInt();
+    CCLOG("%d", progress);
 
     if ( !Scene::init() )
     {
@@ -39,7 +40,7 @@ bool DeathScreen::init()
         str = "You need to rest, stranger...";
         progress = 1;
         doc["death_progress"].SetInt(progress);
-        std::ofstream ofs("../Resources/properties/data.json");
+        std::ofstream ofs("Resources/properties/data.json");
         rapidjson::OStreamWrapper osw(ofs);
         rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
         doc.Accept(writer);
@@ -50,7 +51,7 @@ bool DeathScreen::init()
         //in razrabotke
     }
     default:
-        str = "ERROR";
+        str = "COMING SOON";
         break;
     }
 
@@ -58,7 +59,7 @@ bool DeathScreen::init()
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
 
-    auto FadeIn = FadeIn::create(0.5f);
+    auto FadeIn = FadeIn::create(1.0f);
     label->runAction(FadeIn);
 
     auto fadeOut = FadeOut::create(0.5f);

@@ -8,6 +8,8 @@
 #include "PhysicHelper.h"
 #include "Enemy.h"
 
+USING_NS_CC;
+
 class Goblin : public Enemy
 {
 public:
@@ -16,7 +18,10 @@ public:
     static Enemy* create(cocos2d::Layer* scene, const cocos2d::Vec2& position, Player* player);
     Hands* hands;
 private:
-
+    Animate* idleAnimate;
+    Animate* runAnimate;
+    void initGoblin();
+    void idle();
     void update(float dt);
     void move();
 };

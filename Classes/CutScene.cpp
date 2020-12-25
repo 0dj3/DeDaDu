@@ -30,6 +30,7 @@ bool CutScene::init()
     assert(doc.HasMember("progress"));
     assert(doc["progress"].IsInt());
     progress = doc["progress"].GetInt();
+    CCLOG("%d", progress);
 
     //////////////////////////////
     // 1. super init first
@@ -48,7 +49,7 @@ bool CutScene::init()
         str = "Who are you?";
         progress = 1;
         doc["progress"].SetInt(progress);
-        std::ofstream ofs("../Resources/properties/data.json");
+        std::ofstream ofs("Resources/properties/data.json");
         rapidjson::OStreamWrapper osw(ofs);
         rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
         doc.Accept(writer);
@@ -59,7 +60,7 @@ bool CutScene::init()
         //in razrabotke
     }
     default:
-        str = "ERROR";
+        str = "COMING SOON";
         break;
     }
     
@@ -67,7 +68,7 @@ bool CutScene::init()
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
 
-    auto FadeIn = FadeIn::create(0.5f);
+    auto FadeIn = FadeIn::create(1.0f);
     label->runAction(FadeIn);
 
     auto fadeOut = FadeOut::create(0.5f);

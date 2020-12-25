@@ -73,7 +73,6 @@ void Goblin::update(float dt)
 
 void Goblin::move()
 {
-
      Vec2 toTarget = Player::position - this->getPosition();
      toTarget.normalize();
      Vec2 desiredVel = stats->moveSpeed * toTarget;

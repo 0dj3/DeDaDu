@@ -35,6 +35,7 @@ public:
     void Dead();
     void SetInvulnerable(double time);
     void CheckMaxHP();
+
 private:
     bool isInvulnerable = false;
     void loadStats();
