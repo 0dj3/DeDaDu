@@ -20,17 +20,17 @@ public:
 		this->addChild(handsSprite);
 	};
 
-	virtual void PutInHands(Item* item) {
-		this->item = item;
-		this->item->setName(DEAD_BODY_TAG);
-		this->handsSprite->setTexture(GetItem()->filename);
+	virtual void PutInHands(Weapon* weapon) {
+		this->weapon = weapon;
+		this->weapon->setName(DEAD_BODY_TAG);
+		this->handsSprite->setTexture(weapon->filename);
 		this->handsSprite->getTexture()->setAliasTexParameters();
 	};
 
 	void UseItem(cocos2d::Vec2 position, float angle) {
-		if (isDelay || item == NULL)
+		if (isDelay || weapon == NULL)
 			return;
-		cocos2d::DelayTime* delay = cocos2d::DelayTime::create(item->delay / unit->stats->attackSpeed);
+		cocos2d::DelayTime* delay = cocos2d::DelayTime::create(weapon->delay / unit->stats->attackSpeed);
 		auto startCD = cocos2d::CallFunc::create([this]() {
 			isDelay = true;
 			});
@@ -39,22 +39,10 @@ public:
 			});
 		auto seq = cocos2d::Sequence::create(startCD, delay, endCD, nullptr);
 		this->runAction(seq);
-
-		switch (item->type)	
-		{
-		case Item::WEAPON:
-			static_cast<Weapon*>(item)->StartAttack(position, angle, unit);
-			break;
-		case Item::POTION:
-			static_cast<Potion*>(item)->Drink(unit);
-			item = NULL;
-			break;
-		default:
-			break;
-		}
+		weapon->StartAttack(position, angle, unit);
 	};
 
-	Item* GetItem() { return item; };
+	Weapon* GetWeapon() { return weapon; };
 
 	bool IsDelay() { return isDelay; };
 
@@ -62,7 +50,7 @@ protected:
 	Unit* unit = NULL;
 	bool isDelay = false;
 	cocos2d::Sprite* handsSprite;
-	Item* item = NULL;
+	Weapon* weapon = NULL;
 
 };
 

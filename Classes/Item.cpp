@@ -62,32 +62,3 @@ b2Body* Item::CreatePhysicBody()
 
     return body;
 }
-
-void Item::SellShop(cocos2d::Vec2 position, int price, float circleSize) {
-    setPosition(position);
-    isForSale = true;
-    this->price = price;
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.fixedRotation = true;
-    bodyDef.position.Set(this->getPosition().x / PPM, this->getPosition().y / PPM);
-    bodyDef.linearDamping = 10.0f;
-    bodyDef.angularDamping = 10.0f;
-    bodyDef.userData = this;
-
-    b2Body* body = PhysicHelper::world->CreateBody(&bodyDef);
-    assert(body != NULL);
-
-    b2PolygonShape box;
-    box.SetAsBox(this->getContentSize().width * this->getScale() / PPM * circleSize, this->getContentSize().height * this->getScale() / PPM * circleSize);
-
-    //b2CircleShape circle;
-    //circle.m_radius = this->getContentSize().width * this->getScale() / PPM * circleSize;
-
-    b2FixtureDef shapeDef;
-    shapeDef.shape = &box;
-    shapeDef.density = 1.0f;
-    shapeDef.friction = 0.0f;
-    body->CreateFixture(&shapeDef);
-    body->SetType(b2_staticBody);
-}

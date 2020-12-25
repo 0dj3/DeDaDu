@@ -35,7 +35,7 @@ Unit* Player::create(const Vec2& position)
         newPlayer->hands = new Hands(newPlayer);
         newPlayer->addChild(newPlayer->hands);
 
-        Item* weapon = Weapon::GetRandomWeapon();
+        Weapon* weapon = Weapon::GetRandomWeapon();
         newPlayer->hands->PutInHands(weapon);
 
         newPlayer->scheduleUpdate();
@@ -82,7 +82,7 @@ void Player::update(float dt)
                     targetItem = NULL;
                 }
                 else {
-                    hands->PutInHands(targetItem);
+                    hands->PutInHands(static_cast<Weapon*>(targetItem));
                     targetItem->setName(DEAD_TAG);
                     targetItem = NULL;
                 }
@@ -95,7 +95,7 @@ void Player::update(float dt)
                 targetItem = NULL;
             }
             else {
-                hands->PutInHands(targetItem);
+                hands->PutInHands(static_cast<Weapon*>(targetItem));
                 targetItem->setName(DEAD_TAG);
                 targetItem = NULL;
             }

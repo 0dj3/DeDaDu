@@ -32,7 +32,7 @@ Enemy* Goblin::create(const Vec2& position, Player* player)
 
         newGoblin->hands = new Hands(newGoblin);
         newGoblin->addChild(newGoblin->hands);
-        Item* weapon = Weapon::GetRandomWeapon();
+        Weapon* weapon = Weapon::GetRandomWeapon();
         newGoblin->hands->PutInHands(weapon);
         newGoblin->scheduleUpdate();
         return newGoblin;
@@ -51,26 +51,23 @@ void Goblin::update(float dt)
         {
         case 0:
         case 1: {
-            if (hands->GetItem()->type == Item::WEAPON) {
-                if (static_cast<Weapon*>(hands->GetItem())->weaponType == Weapon::MELEE) {
-                    if (this->getPosition().distance(Player::position) < 50) {
-                        hands->UseItem(this->getPosition(), (Player::position - getPosition()).getAngle());
-                        this->runAction(delay);
-                    }
-                }
-                else {
+            if (hands->GetWeapon()->weaponType == Weapon::MELEE) {
+                if (this->getPosition().distance(Player::position) < 50) {
                     hands->UseItem(this->getPosition(), (Player::position - getPosition()).getAngle());
                     this->runAction(delay);
                 }
             }
+            else {
+                hands->UseItem(this->getPosition(), (Player::position - getPosition()).getAngle());
+                this->runAction(delay);
+            }
             break;
         }
         case 2: { 
-            if (hands->GetItem()->type == Item::WEAPON)
-                if (static_cast<Weapon*>(hands->GetItem())->weaponType == Weapon::MELEE)
-                    targetPosition = Player::position;
-                else
-                    targetPosition = Vec2(((double)(rand()) / RAND_MAX * (10 * PPM) - (5 * PPM)), ((double)(rand()) / RAND_MAX * (10 * PPM) - (5 * PPM))) + getPosition();
+            if (static_cast<Weapon*>(hands->GetWeapon())->weaponType == Weapon::MELEE)
+                targetPosition = Player::position;
+            else
+                targetPosition = Vec2(((double)(rand()) / RAND_MAX * (10 * PPM) - (5 * PPM)), ((double)(rand()) / RAND_MAX * (10 * PPM) - (5 * PPM))) + getPosition();
             this->runAction(delay);
             break;
         }

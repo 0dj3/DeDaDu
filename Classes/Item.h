@@ -36,8 +36,6 @@ public:
 
     void Sell(cocos2d::Vec2 position, int price);
 
-    void SellShop(cocos2d::Vec2 position, int price, float circleSize);
-
     bool IsForSale() { return isForSale; };
 
 private:

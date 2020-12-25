@@ -130,19 +130,17 @@ void HUD::update(float dt)
 		counter->setPosition(Point(-580, 303));
 		this->addChild(counter);
 
-		if (playerHUD->hands->GetItem() != NULL) {
-			weaponSprite->setTexture(playerHUD->hands->GetItem()->filename);
+		if (playerHUD->hands->GetWeapon() != NULL) {
+			weaponSprite->setTexture(playerHUD->hands->GetWeapon()->filename);
 			weaponSprite->getTexture()->setAliasTexParameters();
 
-			if (playerHUD->hands->GetItem()->type == Item::WEAPON) {
-				char damage_str[200] = { 0 };
-				sprintf(damage_str, "dmg: %i", static_cast<Weapon*>(playerHUD->hands->GetItem())->damage);
-				damagestats->setString(damage_str);
+			char damage_str[200] = { 0 };
+			sprintf(damage_str, "dmg: %i", static_cast<Weapon*>(playerHUD->hands->GetWeapon())->damage);
+			damagestats->setString(damage_str);
 
-				char delay_str[200] = { 0 };
-				sprintf(delay_str, "del: %.2f s", static_cast<Weapon*>(playerHUD->hands->GetItem())->delay);
-				delaystats->setString(delay_str);
-			}
+			char delay_str[200] = { 0 };
+			sprintf(delay_str, "del: %.2f s", static_cast<Weapon*>(playerHUD->hands->GetWeapon())->delay);
+			delaystats->setString(delay_str);
 		}
 		
 	}
