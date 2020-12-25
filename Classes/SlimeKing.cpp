@@ -42,7 +42,7 @@ void SlimeKing::update(float dt)
 {
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
-        switch (rand() % 3)
+        switch (rand() % 2)
         {
         case 0: {
             auto move = CallFunc::create([this]() {

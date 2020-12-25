@@ -24,6 +24,7 @@ Enemy* Goblin::create(const Vec2& position, Player* player)
         newGoblin->sprite->getTexture()->setAliasTexParameters();
         newGoblin->sprite->setScale(3.0);
         newGoblin->setPosition(position);
+        newGoblin->targetPosition = position;
 
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
         newGoblin->setTag(newGoblin->tag);
@@ -31,7 +32,7 @@ Enemy* Goblin::create(const Vec2& position, Player* player)
 
         newGoblin->hands = new Hands(newGoblin);
         newGoblin->addChild(newGoblin->hands);
-        Item* weapon = Weapon::createMelee("res/weapon/knife.png", "res/effects/hit/slash_1.png", "res/sounds/swoosh.mp3", 10, 1);
+        Item* weapon = Weapon::GetRandomWeapon();
         newGoblin->hands->PutInHands(weapon);
         newGoblin->scheduleUpdate();
         return newGoblin;
@@ -44,38 +45,53 @@ void Goblin::update(float dt)
 {
     if (hands->IsDelay())
         return;
-    if (IsPlayerWithinRange()) {
-        Vec2 playerPos = Player::position - this->getPosition();
-        playerPos.normalize();
-        Vec2 pos = this->getPosition() + playerPos * this->sprite->getContentSize().height * this->getScale() * 2;
-        hands->UseItem(pos, playerPos.getAngle());
-    }
     if (!getNumberOfRunningActions()) {
-        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
-        auto startAttack = CallFunc::create([this]() {
-            Vec2 toTarget;
-            //toTarget = Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
-            toTarget = Player::position - this->getPosition();
-            toTarget.normalize();
-            Vec2 desiredVel = 50 * toTarget * (rand() % 2);
-            b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
-            body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
-        });
-
-        auto seq = cocos2d::Sequence::create(delay, startAttack, nullptr);
-
-        this->runAction(seq);
+        cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 1);
+        switch (rand() % 3)
+        {
+        case 0:
+        case 1: {
+            if (hands->GetItem()->type == Item::WEAPON) {
+                if (static_cast<Weapon*>(hands->GetItem())->weaponType == Weapon::MELEE) {
+                    if (this->getPosition().distance(Player::position) < 50) {
+                        hands->UseItem(this->getPosition(), (Player::position - getPosition()).getAngle());
+                        this->runAction(delay);
+                    }
+                }
+                else {
+                    hands->UseItem(this->getPosition(), (Player::position - getPosition()).getAngle());
+                    this->runAction(delay);
+                }
+            }
+            break;
+        }
+        case 2: { 
+            if (hands->GetItem()->type == Item::WEAPON)
+                if (static_cast<Weapon*>(hands->GetItem())->weaponType == Weapon::MELEE)
+                    targetPosition = Player::position;
+                else
+                    targetPosition = Vec2(((double)(rand()) / RAND_MAX * (10 * PPM) - (5 * PPM)), ((double)(rand()) / RAND_MAX * (10 * PPM) - (5 * PPM))) + getPosition();
+            this->runAction(delay);
+            break;
+        }
+        default:
+            break;
+        }
     }
     move();
 }
 
 void Goblin::move()
 {
-     Vec2 toTarget = Player::position - this->getPosition();
-     toTarget.normalize();
-     Vec2 desiredVel = stats->moveSpeed * toTarget;
-     b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
-     body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
+    if (getPosition().distance(targetPosition) < stats->moveSpeed * PPM) {
+        stopAllActions();
+        return;
+    }
+    Vec2 toTarget = targetPosition - this->getPosition();
+    toTarget.normalize();
+    Vec2 desiredVel = stats->moveSpeed * toTarget;
+    b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
+    body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
 }
 
 void Goblin::DeathRattle() {

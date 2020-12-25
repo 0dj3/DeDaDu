@@ -26,8 +26,8 @@ void Attack::CreateAttack(std::string projectileFilename, ContactListener::BodyT
         attack->damage = damage;
 
         if (weaponType == Weapon::MELEE) {
-            speed = 10;
-            cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.01);
+            speed = 5;
+            cocos2d::DelayTime* delay = cocos2d::DelayTime::create(0.02);
             auto endAttack = CallFunc::create([attack]() {
                 attack->setName(DEAD_TAG);
                 });
