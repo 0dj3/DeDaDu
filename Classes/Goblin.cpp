@@ -91,7 +91,9 @@ void Goblin::idle()
     Vector<SpriteFrame*> idleAnimFrames1(6);
     for (int i = 1; i <= 6; i++) {
         sprintf(str1, "run_%i.png", i);
-        idleAnimFrames1.pushBack(spritecache1->getSpriteFrameByName(str1));
+        SpriteFrame* spriteF = spritecache1->getSpriteFrameByName(str1);
+        spriteF->getTexture()->setAliasTexParameters();
+        idleAnimFrames1.pushBack(spriteF);
     }
     idleAnimate = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
     auto demo1 = Sprite::createWithSpriteFrameName("run_1.png");

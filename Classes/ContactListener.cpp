@@ -98,6 +98,8 @@ void ContactListener::BeginAttackContact(b2Body* weapon, b2Body* body)
         direction.Normalize();
         body->ApplyForceToCenter(10 * (LINEAR_ACCELERATION)*direction, true);
         unit->Damage(attack->GetDamage());
+        if (unit->getTag() == PLAYER)
+            unit->SetInvulnerable(0.5);
     }
     if (attack->GetWeaponType() == Weapon::RANGE)
         attack->setName(DEAD_TAG);

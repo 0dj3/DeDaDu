@@ -35,7 +35,7 @@ Enemy* Slime::create(const Vec2& position)
 void Slime::update(float dt)
 {
     if (!getNumberOfRunningActions()) {
-        cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 1);
+        cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 2);
         auto move = CallFunc::create([this]() {
             b2Vec2 toTarget = b2Vec2((double)(rand()) / RAND_MAX * (2) - 1, (double)(rand()) / RAND_MAX * (2) - 1);
             toTarget.Normalize();

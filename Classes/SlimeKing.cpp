@@ -19,7 +19,7 @@ SlimeKing::SlimeKing()
 Enemy* SlimeKing::create(const Vec2& position, Player* player, int life)
 {
     SlimeKing* newSlimeKing = new SlimeKing();
-    if (newSlimeKing && newSlimeKing->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
+    if (newSlimeKing && newSlimeKing->sprite->initWithFile("res/enemy/slime/test_slime.png"))
     {
         newSlimeKing->spawnEnemy();
         newSlimeKing->sprite->getTexture()->setAliasTexParameters();
