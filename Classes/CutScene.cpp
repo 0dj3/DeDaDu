@@ -22,6 +22,15 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool CutScene::init()
 {
+    std::ifstream ifs("Resources/properties/data.json");
+    rapidjson::IStreamWrapper isw(ifs);
+
+    doc.ParseStream(isw);
+    assert(doc.IsObject());
+    assert(doc.HasMember("progress"));
+    assert(doc["progress"].IsInt());
+    progress = doc["progress"].GetInt();
+
     //////////////////////////////
     // 1. super init first
     if ( !Scene::init() )
@@ -33,13 +42,34 @@ bool CutScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     this->scheduleOnce(CC_SCHEDULE_SELECTOR(CutScene::GoToGameScene), DISPLAY_TIME_SPLASH_SCENE);
-
-    char delay_str[200] = "Who are you?";
-    auto label = Label::createWithTTF(delay_str, "fonts/Pixel Times.ttf", 30);
+    switch (progress)
+    {
+    case 0: {
+        str = "Who are you?";
+        progress = 1;
+        doc["progress"].SetInt(progress);
+        std::ofstream ofs("../Resources/properties/data.json");
+        rapidjson::OStreamWrapper osw(ofs);
+        rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+        doc.Accept(writer);
+    }
+        break;
+    case 1: {
+        str = "Are you hear me?";
+        //in razrabotke
+    }
+    default:
+        str = "ERROR";
+        break;
+    }
+    
+    auto label = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 30);
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
-    auto fadeIn = FadeIn::create(1.0f);
-    label->runAction(fadeIn);
+
+    auto FadeIn = FadeIn::create(0.5f);
+    label->runAction(FadeIn);
+
     auto fadeOut = FadeOut::create(0.5f);
     label->runAction(fadeOut);
 
