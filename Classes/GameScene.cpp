@@ -215,15 +215,15 @@ void GameScene::checkPortalF() {
         portal->setVisible(false);
 
         this->removeChild(portal);
-        if (countLocation == 3)
+        if (countLocation == 2)
             bosL->cleanScene();
 
-        if (countLocation >= 3) {
+        if (countLocation >= 2) {
             checkMap = true;
             checkBoss = false;
         }
 
-        if (countLocation == 2) {
+        if (countLocation == 1) {
             generation->cleanScene();
             bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
             checkBoss = true;

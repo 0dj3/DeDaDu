@@ -57,9 +57,8 @@ bool BossLocation::init() {
 	auto storeMap = store->getMap();
 	border(storeMap);
 
-	auto posBoss = Vec2(locIn->getPosition().x + locIn->getMapSize().width * 30, locIn->getPosition().y + locIn->getMapSize().height * 30);
-	auto boss = addBoss(posBoss);
-	this->addChild(boss);
+	
+	//this->addChild(boss);
 
 
 
@@ -68,48 +67,54 @@ bool BossLocation::init() {
 
 void BossLocation::update(float dt) {
 	time += dt;
-	if (time >= 1) {
-		countBoss = slimeking->checkDeath;
-		if (countBoss != 0 && checkDoor == false) {
-			auto posPX = playerGL->getPosition().x;
-			auto posPY = playerGL->getPosition().y;
+	if (time >= 0.5) {
 
-			auto sizeMap = locIn->getMapSize();
-			auto posMap = locIn->getPosition();
+		auto posPX = playerGL->getPosition().x;
+		auto posPY = playerGL->getPosition().y;
 
-			auto posAX = posMap.x + 80;
-			auto posAY = posMap.y + ((sizeMap.height - 1) * 60 - 20);
-			auto posBX = posMap.x + ((sizeMap.width - 1) * 60 - 20);
-			auto posBY = posMap.y + 80;
+		auto sizeMap = locIn->getMapSize();
+		auto posMap = locIn->getPosition();
 
-			if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+		auto posAX = posMap.x + 80;
+		auto posAY = posMap.y + ((sizeMap.height - 1) * 60 - 20);
+		auto posBX = posMap.x + ((sizeMap.width - 1) * 60 - 20);
+		auto posBY = posMap.y + 80;
+
+		if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
+			if (checkBoss == false) {
+				auto posBoss = Vec2(locIn->getPosition().x + locIn->getMapSize().width * 30, locIn->getPosition().y + locIn->getMapSize().height * 30);
+				boss = addBoss(posBoss);
+				this->addChild(boss);
+				checkBoss = true;
+			}
+
+			countBoss = slimeking->checkDeath;
+			if (checkDoor == false) {
 				auto sizeMap = locIn->getMapSize();
 				auto posMap = locIn->getPosition();
 				createDoor(locIn, 1, false, true);
 				checkDoor = true;
 			}
-		}
-		else {
 			if (checkDoor == true && countBoss == 0) {
 
 				for (int i = 0; i < PhBoDoorRoom.size(); i++)
 					PhysicHelper::world->DestroyBody(PhBoDoorRoom[i]);
 				PhBoDoorRoom.clear();
 
-				for (int i = 0; i < childDoorRoom.size(); i++) 
+				for (int i = 0; i < childDoorRoom.size(); i++)
 					this->removeChild(childDoorRoom[i], true);
 				childDoorRoom.clear();
 				bossDeath = true;
 				checkDoor = false;
 			}
-		}
+		}	
 		time = 0;
 	}
 	
 }
 
 Enemy* BossLocation::addBoss(Point pos) {
-	boss = slimeking->create(pos, static_cast<Player*>(playerGL), 3);
+	auto boss = slimeking->create(pos, static_cast<Player*>(playerGL), 3);
 	return boss;
 }
 

@@ -34,7 +34,7 @@ private:
 	SlimeKing* slimeking;
 	Enemy* boss;
 	vector<Unit*> enemies;
-
+	bool checkBoss = false;
 	Enemy* addBoss(Point pos);
 	
 };
