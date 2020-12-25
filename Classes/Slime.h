@@ -15,7 +15,6 @@ public:
     static Enemy* create(const cocos2d::Vec2& position);
     virtual void DeathRattle() override;
 private:
-    Weapon* weapon;
     void update(float dt);
 
 };

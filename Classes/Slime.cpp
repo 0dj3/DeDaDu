@@ -23,7 +23,6 @@ Enemy* Slime::create(const Vec2& position)
         newSlime->sprite->setScale(3.0);
         newSlime->setPosition(position);
         newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
-        newSlime->weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/acid.png", "res/sounds/swoosh.mp3", 10, 1, 2);
         newSlime->setTag(newSlime->tag);
         newSlime->scheduleUpdate();
         return newSlime;
@@ -44,20 +43,11 @@ void Slime::update(float dt)
             });
         auto attack = CallFunc::create([this]() {
             for (int i = 0; i < (rand() % 2 + 2); i++) {
-                Vec2 toPlayer = Player::position - this->getPosition();
-                Vec2 toTarget = Vec2((double)(rand()) / RAND_MAX * (200) - 100, (double)(rand()) / RAND_MAX * (200) - 100);
-                weapon->StartAttack(this->getPosition(), (toPlayer + toTarget).getAngle(), this);
-                //attack->setColor(Color3B(0, 255, 0));
+                Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
+                    Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, (Player::position - getPosition()).getAngle(), 1, 2, 40);
             }
             });
         Sequence* seq = cocos2d::Sequence::create(microDelay, move, microDelay, attack, nullptr);
-        /*if (rand() % 2) {
-            seq = cocos2d::Sequence::create(microDelay, move, nullptr);
-        }
-        else {
-            seq = cocos2d::Sequence::create(microDelay, attack, nullptr);
-        }*/
-
         this->runAction(seq);
     }
 }
