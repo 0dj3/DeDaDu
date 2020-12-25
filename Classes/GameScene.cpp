@@ -16,12 +16,10 @@ CC_DLL;
 
 Scene* GameScene::createScene()
 {
-    auto scene = Scene::create();
     auto layer = GameScene::create();
-    layer->scene = scene;
     layer->scheduleUpdate();
-    scene->addChild(layer);
-    return scene;
+    layer->scene->addChild(layer);
+    return layer->scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -40,8 +38,9 @@ bool GameScene::init()
     {
         return false;
     }
-    
-    
+
+    auto scene = Scene::create();
+    this->scene = scene;
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
