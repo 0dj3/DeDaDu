@@ -58,7 +58,7 @@ bool GameScene::init()
     AudioEngine::play2d("res/sounds/bgsound.mp3", true, GameManager::Instance()->GetMusicVolume());
 
     visibleSize.height = -1250;
-    player = Player::create(this, Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
+    player = Player::create(Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 2 + origin.y));
     /*log("x=%f y=%f", player->body->GetPosition().x, player->body->GetPosition().y);*/
 
     generation = Generation_map::createScene(checkMap, static_cast<Player*>(player), player->getPosition());

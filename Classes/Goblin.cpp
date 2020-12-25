@@ -15,7 +15,7 @@ Goblin::Goblin()
     this->autorelease();
 }
 
-Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* player)
+Enemy* Goblin::create(const Vec2& position, Player* player)
 {
     Goblin* newGoblin = new Goblin();
     if (newGoblin && newGoblin->sprite->initWithFile("res/enemy/goblin/1.png"))
@@ -27,7 +27,6 @@ Enemy* Goblin::create(cocos2d::Layer* layer, const Vec2& position, Player* playe
 
         newGoblin->body = PhysicHelper::createDynamicPhysicBody(newGoblin, newGoblin->sprite->getContentSize());
         newGoblin->setTag(newGoblin->tag);
-        newGoblin->layer = layer;
         newGoblin->_player = player;
 
         newGoblin->hands = new Hands(newGoblin);
