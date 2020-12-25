@@ -61,15 +61,7 @@ void Player::update(float dt)
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
-        Item* item;
-        if (rand() % 2) {
-            item = Weapon::GetRandomWeapon();
-        }
-        else {
-            item = Potion::create("res/items/red_potion.png", "res/sounds/swoosh.mp3", rand() % 30 - 30);
-        }
-        Director::getInstance()->getRunningScene()->addChild(item);
-        item->Sell(this->getPosition(), rand() % 5 + 10);
+        giveEXP(10);
     }
     if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
         InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;

@@ -45,3 +45,11 @@ void Enemy::spawnEnemy()
     demo1->runAction(action1);
     this->addChild(demo1);
 }
+
+void Enemy::statsScale(int level) {
+    stats->damage = 1 + level / 10;
+    stats->attackSpeed = 1 + level / 20;
+    stats->hp = 1 + level / 5;
+    stats->moveSpeed = 1 + level / 15;
+    CheckMaxHP();
+}

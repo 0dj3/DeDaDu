@@ -27,11 +27,8 @@ public:
     Label* damagestats;
     Label* delaystats;
     Player* playerHUD;
-    
-    void getHit(int damage, Unit* player);
-    /*void updatePos(Unit* player);*/
-    void setGold(int plus);
     Menu* menubutton;
+
 private:
     void Init();
     int health = 80;

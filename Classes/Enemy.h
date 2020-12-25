@@ -18,6 +18,7 @@ public:
     static void DropItems(cocos2d::Vec2 position);
     void spawnEnemy();
     virtual void DeathRattle() override {};
+    void statsScale(int level);
 
 private:
 

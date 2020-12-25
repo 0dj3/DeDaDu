@@ -80,7 +80,7 @@ void HUD::Init()
 	healthBar->setAnchorPoint(Point(0, 1));
 	healthBar->setPosition(Point(-620, 350));
 	healthBar->setDirection(ui::LoadingBar::Direction::LEFT);
-	healthBar->setPercent(playerHUD->hp);
+	healthBar->setPercent(100);
 	this->addChild(healthBar);
 
 	auto playItem = MenuItemImage::create("res/ui/buttons/exitbutton.png", "res/ui/buttons/exitbutton_press.png", CC_CALLBACK_1(HUD::GoToMenu, this));
@@ -91,44 +91,23 @@ void HUD::Init()
 	this->addChild(menubutton);
 }
 
-void HUD::getHit(int damage, Unit* player) {
-	if (player->hp <= 0) {
-		player->Dead();
-	}
-	else {
-		player->hp -= damage;
-		healthBar->setPercent(player->hp / player->maxHP);
-	}
-}
-
 void HUD::GoToMenu(cocos2d::Ref* sender)
 {
 	AudioEngine::stopAll();
 	auto scene = MainMenuScene::createScene();
-
 	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
-
-}
-
-void HUD::setGold(int x)
-{
-	playerHUD->gold += x;
 }
 
 void HUD::update(float dt)
 {
 	if (playerHUD)
 	{
-		healthBar->setPercent(playerHUD->hp);
+		healthBar->setPercent((double)playerHUD->hp / playerHUD->maxHP * 100);
 		this->setPosition(playerHUD->getPosition());
 
-		removeChild(counter, true);
 		char counter_str[200] = { 0 };
 		sprintf(counter_str, "%d", playerHUD->gold);
-		counter = Label::createWithTTF(counter_str, "fonts/Pixel Times.ttf", 27);
-		counter->setAnchorPoint(Point(0, 1));
-		counter->setPosition(Point(-580, 303));
-		this->addChild(counter);
+		counter->setString(counter_str);
 
 		if (playerHUD->hands->GetWeapon() != NULL) {
 			weaponSprite->setTexture(playerHUD->hands->GetWeapon()->filename);
