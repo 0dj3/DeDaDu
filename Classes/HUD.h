@@ -23,6 +23,7 @@ public:
     Label* counter;
     Sprite* weaponSprite;
     Sprite* weaponSlot;
+    Sprite* map;
     Label* damagestats;
     Label* delaystats;
     Player* playerHUD;

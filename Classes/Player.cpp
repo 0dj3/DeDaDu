@@ -3,6 +3,7 @@
 #include "Attack.h"
 #include "HUD.h"
 #include "Weapon.h"
+#include "DeathScreen.h"
 
 USING_NS_CC;
 
@@ -20,7 +21,7 @@ Player::Player()
     autorelease();
 }
 
-Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
+Unit* Player::create(const Vec2& position)
 {
     Player* newPlayer = new Player();
     if (newPlayer && newPlayer->sprite->initWithFile("res/hero/test_hero.png")) {
@@ -28,7 +29,6 @@ Unit* Player::create(cocos2d::Layer* layer, const Vec2& position)
         newPlayer->sprite->setScale(3.0);
         newPlayer->setPosition(position);
         newPlayer->setTag(newPlayer->tag);
-        newPlayer->layer = layer;
 
         newPlayer->body = PhysicHelper::createDynamicPhysicBody(newPlayer, newPlayer->sprite->getContentSize());
 
@@ -179,4 +179,14 @@ void Player::checkLVL() {
 
 void Player::giveEXP(int value) {
     exp += value;
+}
+
+void Player::DeathRattle() {
+    this->setName("");
+    AudioEngine::stopAll();
+    Node::stopAllActions();
+    InputListener::Instance()->ReleaseAllKeys();
+    AudioEngine::preload("res/sounds/ds.mp3");
+    auto scene = DeathScreen::createScene();
+    Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }

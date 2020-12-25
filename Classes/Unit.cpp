@@ -2,7 +2,6 @@
 #include "AudioEngine.h"
 #include "MainMenuScene.h"
 #include "InputListener.h"
-#include "DeathScreen.h"
 #include "HUD.h"
 #include <string>
 #include <cmath>
@@ -13,7 +12,6 @@ MainMenuScene* settings = new MainMenuScene;
 
 Unit::Unit()
 {
-	layer = new Layer();
     sprite = new Sprite();
 	stats = new UnitStats(1, 1, 1, 1);
 	this->addChild(sprite);
@@ -42,19 +40,7 @@ void Unit::Damage(int value) {
 	}
 
 	if (hp <= value) {
-		if (tag == ContactListener::PLAYER)
-		{
-			AudioEngine::stopAll();
-			Node::stopAllActions();
-			InputListener::Instance()->ReleaseAllKeys();
-			AudioEngine::preload("res/sounds/ds.mp3");
-			auto scene = DeathScreen::createScene();
-			Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
-		}
-		else
-		{
-			Dead();
-		}
+		Dead();
 		return;
 	}
 	if (hp - value > maxHP) {
@@ -66,7 +52,6 @@ void Unit::Damage(int value) {
 
 void Unit::Dead() 
 {	
-	//this->removeFromParentAndCleanup(true);
 	this->setName(DEAD_TAG);
 }
 

@@ -75,7 +75,7 @@ void BossLocation::update(float dt) {
 }
 
 Enemy* BossLocation::addBoss(Point pos) {
-	auto enemy = Slime::create(this, pos);
+	auto enemy = Slime::create(pos);
 	enemies.push_back(enemy);
 	return enemy;
 }

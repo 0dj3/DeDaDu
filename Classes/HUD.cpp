@@ -46,6 +46,13 @@ void HUD::Init()
 
 	////////////////////////
 
+	map = Sprite::create("res/ui/map.png");
+	map->setAnchorPoint(Point(1, 1));
+	map->setPosition(Point(620, 350));
+	map->setScale(0.7);
+	this->addChild(map);
+
+
 	hBBackground = Sprite::create("res/ui/hpbg.png");
 	hBBackground->setAnchorPoint(Point(0, 1));
 	hBBackground->setPosition(Point(-620, 350));

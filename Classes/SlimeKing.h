@@ -13,9 +13,10 @@ class SlimeKing : public Enemy
 public:
     SlimeKing();
    
-    static Enemy* create(cocos2d::Layer* scene, const cocos2d::Vec2& position, Player* player);
-
+    static Enemy* create(const cocos2d::Vec2& position, Player* player, int lives);
+    virtual void DeathRattle() override;
 private:
+    int lives;
     void update(float dt);
     void move();
 };

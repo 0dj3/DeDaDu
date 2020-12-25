@@ -12,7 +12,7 @@ Fly::Fly()
 
 
 
-Enemy* Fly::create(cocos2d::Layer* layer, const Vec2& position)
+Enemy* Fly::create(const Vec2& position)
 {
     Fly* newFly = new Fly();
     if (newFly && newFly->sprite->initWithFile("v1.1 dungeon crawler 16x16 pixel pack/props_itens/barrel.png")) 
@@ -27,7 +27,6 @@ Enemy* Fly::create(cocos2d::Layer* layer, const Vec2& position)
         newFly->body->SetType(b2_staticBody);
         newFly->hp = 1;
         newFly->setTag(newFly->tag);
-        newFly->layer = layer;
         newFly->scheduleUpdate();
         return newFly;
     }
@@ -51,4 +50,8 @@ void Fly::move()
 
      auto move = BezierTo::create(100, bezier);
      this->runAction(move);*/
+}
+
+void Fly::DeathRattle() {
+    Enemy::DropItems(this->getPosition());
 }

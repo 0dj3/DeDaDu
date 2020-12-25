@@ -527,10 +527,10 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
         switch (enemyType)
         {
         case 1:
-            enemy = Goblin::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+            enemy = Goblin::create(Point(randomX, randomY), static_cast<Player*>(player));
             break;
         case 2:
-            enemy = SlimeKing::create(this, Point(randomX, randomY), static_cast<Player*>(player));
+            enemy = SlimeKing::create(Point(randomX, randomY), static_cast<Player*>(player), 3);
             //enemy = Slime::create(this, Point(randomX, randomY));
             break;
         /*case 3:
@@ -594,7 +594,7 @@ void Generation_map::generBarrel() {
             edgeNode->setPosition(barrel->getPosition());
             auto body = PhysicHelper::createWallPhysicBody(edgeNode, Size(barrel->getContentSize().width - 5, barrel->getContentSize().height));
             this->addChild(edgeNode);*/
-            auto enemy = Fly::create(this, Point(randomX, randomY));
+            auto enemy = Fly::create(Point(randomX, randomY));
             allPhysicBarrel.push_back(enemy);
         }
     }

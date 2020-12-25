@@ -13,7 +13,7 @@ Slime::Slime()
     this->autorelease();
 }
 
-Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
+Enemy* Slime::create(const Vec2& position)
 {
     Slime* newSlime = new Slime();
     if (newSlime && newSlime->sprite->initWithFile("res/enemy/slime/test_slime.png")) 
@@ -25,7 +25,6 @@ Enemy* Slime::create(cocos2d::Layer* layer, const Vec2& position)
         newSlime->body = PhysicHelper::createDynamicPhysicBody(newSlime, newSlime->sprite->getContentSize());
         newSlime->weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/acid.png", "res/sounds/swoosh.mp3", 10, 1, 2);
         newSlime->setTag(newSlime->tag);
-        newSlime->layer = layer;
         newSlime->scheduleUpdate();
         return newSlime;
     }
@@ -61,4 +60,8 @@ void Slime::update(float dt)
 
         this->runAction(seq);
     }
-}  
+}
+
+void Slime::DeathRattle() {
+    Enemy::DropItems(this->getPosition());
+}
