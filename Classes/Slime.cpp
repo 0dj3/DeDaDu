@@ -61,4 +61,8 @@ void Slime::update(float dt)
 
         this->runAction(seq);
     }
-}  
+}
+
+void Slime::DeathRattle() {
+    Enemy::DropItems(this->getPosition());
+}

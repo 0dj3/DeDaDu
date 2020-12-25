@@ -80,3 +80,7 @@ void Goblin::move()
      b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
      body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
 }
+
+void Goblin::DeathRattle() {
+    Enemy::DropItems(this->getPosition());
+}

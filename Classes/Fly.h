@@ -13,6 +13,7 @@ class Fly : public Enemy
 public:
     Fly();
     static Enemy* create(cocos2d::Layer* scene, const cocos2d::Vec2& position);
+    virtual void DeathRattle() override;
 private:
     void update(float dt);
     void move();

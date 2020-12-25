@@ -52,3 +52,7 @@ void Fly::move()
      auto move = BezierTo::create(100, bezier);
      this->runAction(move);*/
 }
+
+void Fly::DeathRattle() {
+    Enemy::DropItems(this->getPosition());
+}

@@ -21,7 +21,7 @@ Enemy* SlimeKing::create(cocos2d::Layer* layer, const Vec2& position, Player* pl
     {
         newSlimeKing->spawnEnemy();
         newSlimeKing->sprite->getTexture()->setAliasTexParameters();
-        newSlimeKing->sprite->setScale(3.0);
+        newSlimeKing->sprite->setScale(5.0);
         newSlimeKing->setPosition(position);
 
         newSlimeKing->body = PhysicHelper::createDynamicPhysicBody(newSlimeKing, newSlimeKing->sprite->getContentSize());
@@ -69,4 +69,8 @@ void SlimeKing::move()
      Vec2 desiredVel = stats->moveSpeed * toTarget;
      b2Vec2 vel = b2Vec2(desiredVel.x, desiredVel.y);
      body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
+}
+
+void SlimeKing::DeathRattle() {
+    Enemy::DropItems(this->getPosition());
 }

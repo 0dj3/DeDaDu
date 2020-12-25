@@ -13,6 +13,7 @@ class Slime : public Enemy
 public:
     Slime();
     static Enemy* create(cocos2d::Layer* scene, const cocos2d::Vec2& position);
+    virtual void DeathRattle() override;
 private:
     Weapon* weapon;
     void update(float dt);

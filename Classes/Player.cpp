@@ -3,6 +3,7 @@
 #include "Attack.h"
 #include "HUD.h"
 #include "Weapon.h"
+#include "DeathScreen.h"
 
 USING_NS_CC;
 
@@ -179,4 +180,14 @@ void Player::checkLVL() {
 
 void Player::giveEXP(int value) {
     exp += value;
+}
+
+void Player::DeathRattle() {
+    this->setName("");
+    AudioEngine::stopAll();
+    Node::stopAllActions();
+    InputListener::Instance()->ReleaseAllKeys();
+    AudioEngine::preload("res/sounds/ds.mp3");
+    auto scene = DeathScreen::createScene();
+    Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }

@@ -123,9 +123,12 @@ void GameScene::update(float dt)
         //Unit* unit = (Unit*)b->GetUserData();
         if (n->getName() == DEAD_TAG)
         {
+            if (n->getTag() == ContactListener::ENEMY || ContactListener::PLAYER)
+                static_cast<Unit*>(b->GetUserData())->DeathRattle();
+            if (n->getTag() == ContactListener::PLAYER)
+                continue;
             PhysicHelper::world->DestroyBody(b);
             if (n->getTag() == ContactListener::ENEMY) {
-                Enemy::DropItems(n->getPosition());
                 for (int i = 0; i < enemies.size(); i++) {
                     if (enemies[i] == n) {
                         enemies.erase(enemies.begin() + i);
@@ -249,10 +252,8 @@ void GameScene::checkPortalF() {
     auto posBX = pos.x + size.width;
     auto posBY = pos.y - size.height;
     if (player->getPosition().x >= posAX && player->getPosition().x <= posBX && player->getPosition().y <= posAY && player->getPosition().y >= posBY) {
-
         checkPortal = false;
         portal->setVisible(false);
-
 
         this->removeChild(portal);
         if (countLocation >= 3)

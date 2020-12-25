@@ -28,7 +28,7 @@ public:
     void setGold(int x);
 
     static void giveEXP(int value);
-
+    virtual void DeathRattle() override;
 private:
     int lvl = 1;
     static int exp;
