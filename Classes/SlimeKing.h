@@ -15,6 +15,8 @@ public:
    
     static Enemy* create(const cocos2d::Vec2& position, Player* player, int life);
     virtual void DeathRattle() override;
+
+    static int checkDeath;
 private:
     int life;
     void update(float dt);

@@ -53,5 +53,5 @@ void Fly::move()
 }
 
 void Fly::DeathRattle() {
-    Enemy::DropItems(this->getPosition());
+    //Enemy::DropItems(this->getPosition());
 }

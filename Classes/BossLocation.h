@@ -8,7 +8,7 @@ USING_NS_CC;
 
 class BossLocation: public Generation_map  {
 public:
-	static BossLocation* createScene(string bossName, vector<Unit*> enemies);
+	static BossLocation* createScene(string bossName, vector<Unit*> enemies, Player* player);
 
 	TMXTiledMap* mapMain;
 	TMXTiledMap* getPosRoom();
@@ -16,14 +16,25 @@ public:
 	TMXTiledMap* locIn;
 	vector<Unit*> getEnemies();
 	TMXTiledMap* getlocIn();
+	int countBoss;
+	bool checkDoor = false;
+	bool bossDeath = false;
 private:
 	bool init();
+	void update(float dt);
+	float time;
+
 	string name;
 	TMXTiledMap* hallUp;
 	TMXTiledMap* hallRight;
 	TMXTiledMap* mapOne;
-	void update(float dt);
-	Enemy* addBoss(Point pos);
+	TMXTiledMap* wall;
+
+	Unit* playerGL;
+	SlimeKing* slimeking;
+	Enemy* boss;
 	vector<Unit*> enemies;
-	float time;
+	bool checkBoss = false;
+	Enemy* addBoss(Point pos);
+	
 };

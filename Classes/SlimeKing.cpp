@@ -4,6 +4,8 @@
 #include "Anime.h"
 #include "Attack.h"
 
+int SlimeKing::checkDeath = 0;
+
 USING_NS_CC;
 SlimeKing::SlimeKing()
 {
@@ -29,6 +31,7 @@ Enemy* SlimeKing::create(const Vec2& position, Player* player, int life)
         newSlimeKing->life = life;
 
         newSlimeKing->scheduleUpdate();
+        newSlimeKing->checkDeath++;
         return newSlimeKing;
     }
     CC_SAFE_DELETE(newSlimeKing);
@@ -86,4 +89,5 @@ void SlimeKing::DeathRattle() {
         enemy = SlimeKing::create(Vec2(getPosition().x - 10, getPosition().y), _player, life - 1);
         Director::getInstance()->getRunningScene()->addChild(enemy, 2);
     }
+    checkDeath--;
 }
