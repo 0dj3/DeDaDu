@@ -35,11 +35,8 @@ public:
     void Dead();
     void SetInvulnerable(double time);
     void CheckMaxHP();
-<<<<<<< HEAD
     virtual void DeathRattle() {};
-=======
 
->>>>>>> c9bb108263d6d426a8cfe323525f30d5fde6171c
 private:
     bool isInvulnerable = false;
     void loadStats();

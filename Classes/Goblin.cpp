@@ -79,10 +79,10 @@ void Goblin::move()
      body->ApplyForceToCenter((LINEAR_ACCELERATION)*vel, true);
 }
 
-<<<<<<< HEAD
 void Goblin::DeathRattle() {
     Enemy::DropItems(this->getPosition());
-=======
+}
+
 void Goblin::idle()
 {
     char str1[200] = { 0 };
@@ -101,5 +101,4 @@ void Goblin::idle()
     Action* action1 = RepeatForever::create(Animate::create(idleAnimate));
     demo1->runAction(action1);
     this->addChild(demo1);
->>>>>>> c9bb108263d6d426a8cfe323525f30d5fde6171c
 }
