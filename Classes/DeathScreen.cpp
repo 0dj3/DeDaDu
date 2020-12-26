@@ -34,25 +34,40 @@ bool DeathScreen::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    switch (progress)
+    //switch (progress)
+    //{
+    //case 0: {
+    //    str = "You need to rest, stranger...";
+    //    progress = 1;
+    //    doc["death_progress"].SetInt(progress);
+    //    std::ofstream ofs("Resources/properties/data.json");
+    //    rapidjson::OStreamWrapper osw(ofs);
+    //    rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+    //    doc.Accept(writer);
+    //}
+    //      break;
+    //case 1: {
+    //    str = "So, next time...";
+    //    //in razrabotke
+    //}
+    //default:
+    //    str = "COMING SOON";
+    //    break;
+    //}
+
+    if (progress == 0)
     {
-    case 0: {
         str = "You need to rest, stranger...";
-        progress = 1;
-        doc["death_progress"].SetInt(progress);
-        std::ofstream ofs("Resources/properties/data.json");
-        rapidjson::OStreamWrapper osw(ofs);
-        rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
-        doc.Accept(writer);
+            progress = 1;
+            doc["death_progress"].SetInt(progress);
+            std::ofstream ofs("Resources/properties/data.json");
+            rapidjson::OStreamWrapper osw(ofs);
+            rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+            doc.Accept(writer);
     }
-          break;
-    case 1: {
+    if (progress == 1)
+    {
         str = "So, next time...";
-        //in razrabotke
-    }
-    default:
-        str = "COMING SOON";
-        break;
     }
 
     auto label = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 30);

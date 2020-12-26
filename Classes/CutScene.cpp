@@ -43,27 +43,42 @@ bool CutScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     this->scheduleOnce(CC_SCHEDULE_SELECTOR(CutScene::GoToGameScene), DISPLAY_TIME_SPLASH_SCENE);
-    switch (progress)
-    {
-    case 0: {
-        str = "Who are you?";
-        progress = 1;
-        doc["progress"].SetInt(progress);
-        std::ofstream ofs("Resources/properties/data.json");
-        rapidjson::OStreamWrapper osw(ofs);
-        rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
-        doc.Accept(writer);
-    }
-        break;
-    case 1: {
-        str = "Are you hear me?";
-        //in razrabotke
-    }
-    default:
-        str = "COMING SOON";
-        break;
-    }
+    //switch (progress)
+    //{
+    //    case 0: {
+    //        str = "Who are you?";
+    //        progress = 1;
+    //        doc["progress"].SetInt(progress);
+    //        std::ofstream ofs("Resources/properties/data.json");
+    //        rapidjson::OStreamWrapper osw(ofs);
+    //        rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+    //        doc.Accept(writer);
+    //    }
+    //        break;
+    //    case 1: {
+    //        str = "Are you hear me?";
+    //        //in razrabotke
+    //    }
+    //    default:
+    //        str = "COMING SOON";
+    //        break;
+    //}
     
+    if (progress == 0)
+    {
+        str = "Who are you?";
+                progress = 1;
+                doc["progress"].SetInt(progress);
+                std::ofstream ofs("Resources/properties/data.json");
+                rapidjson::OStreamWrapper osw(ofs);
+                rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+                doc.Accept(writer);
+    }
+    if (progress == 1)
+    {
+        str = "Are you hear me?";
+    }
+
     auto label = Label::createWithTTF(str, "fonts/Pixel Times.ttf", 30);
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);

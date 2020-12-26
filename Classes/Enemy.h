@@ -19,9 +19,8 @@ public:
     void spawnEnemy();
     virtual void DeathRattle() override {};
     void statsScale(int level);
-
 private:
-
+    void idle(char* path);
 };
 
 #endif // __ENEMY_H__

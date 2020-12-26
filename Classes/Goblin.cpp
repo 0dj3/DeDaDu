@@ -9,8 +9,8 @@ Goblin::Goblin()
 {
     stats = new UnitStats(0.5, 1, 1, 1);
     CheckMaxHP();
-    idle();
     hp = maxHP;
+    idleGoblin("res/enemy/goblin/goblin.plist");
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }
@@ -106,24 +106,24 @@ void Goblin::DeathRattle() {
     Enemy::DropItems(this->getPosition());
 }
 
-void Goblin::idle()
+void Goblin::idleGoblin(char* path)
 {
-    char str1[200] = { 0 };
-    auto spritecache1 = SpriteFrameCache::getInstance();
-    spritecache1->addSpriteFramesWithFile("res/enemy/goblin/goblin.plist");
+    char goblinStr[200] = { 0 };
+    auto goblinSpriteCache = SpriteFrameCache::getInstance();
+    goblinSpriteCache->addSpriteFramesWithFile(path);
 
     Vector<SpriteFrame*> idleAnimFrames1(6);
     for (int i = 1; i <= 6; i++) {
-        sprintf(str1, "run_%i.png", i);
-        SpriteFrame* spriteF = spritecache1->getSpriteFrameByName(str1);
+        sprintf(goblinStr, "run_%i.png", i);
+        SpriteFrame* spriteF = goblinSpriteCache->getSpriteFrameByName(goblinStr);
         spriteF->getTexture()->setAliasTexParameters();
         idleAnimFrames1.pushBack(spriteF);
     }
-    idleAnimate = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
-    auto demo1 = Sprite::createWithSpriteFrameName("run_1.png");
-    demo1->setPosition(Point(this->getPosition().x, this->getPosition().y));
-    demo1->setScale(3.0);
-    Action* action1 = RepeatForever::create(Animate::create(idleAnimate));
-    demo1->runAction(action1);
-    this->addChild(demo1);
+    auto goblinIdle = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
+    auto demoGoblin = Sprite::createWithSpriteFrameName("run_1.png");
+    demoGoblin->setPosition(Point(this->getPosition().x, this->getPosition().y));
+    demoGoblin->setScale(3.0);
+    Action* action1 = RepeatForever::create(Animate::create(goblinIdle));
+    demoGoblin->runAction(action1);
+    this->addChild(demoGoblin);
 }

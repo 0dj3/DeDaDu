@@ -14,8 +14,11 @@ public:
     Slime();
     static Enemy* create(const cocos2d::Vec2& position);
     virtual void DeathRattle() override;
+    char* spath = "res/enemy/slime/slime.plist";
 private:
+    Animation* idleSlime1;
     void update(float dt);
+    void idleSlime(char* path);
 
 };
 

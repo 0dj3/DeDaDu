@@ -6,10 +6,12 @@ USING_NS_CC;
 
 Slime::Slime()
 {
+    //idleSlime("res/enemy/slime/slime.plist");
     dmgsound = "res/sounds/hit/slime.mp3";
     stats = new UnitStats(0.3, 1, 1, 1);
     CheckMaxHP();
     hp = maxHP;
+    
     this->autorelease();
 }
 
@@ -33,6 +35,7 @@ Enemy* Slime::create(const Vec2& position)
 
 void Slime::update(float dt)
 {
+    //idleSLime();
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* microDelay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (1) + 2);
         auto move = CallFunc::create([this]() {
@@ -54,4 +57,26 @@ void Slime::update(float dt)
 
 void Slime::DeathRattle() {
     Enemy::DropItems(this->getPosition());
+}
+
+void Slime::idleSlime(char* path)
+{
+    char slimeSrt[200] = { 0 };
+    auto slimeCache = SpriteFrameCache::getInstance();
+    slimeCache->addSpriteFramesWithFile(path);
+
+    Vector<SpriteFrame*> slimeAnimFrames(6);
+    for (int i = 1; i <= 6; i++) {
+        sprintf(slimeSrt, "run_%i.png", i);
+        SpriteFrame* spriteF = slimeCache->getSpriteFrameByName(slimeSrt);
+        spriteF->getTexture()->setAliasTexParameters();
+        slimeAnimFrames.pushBack(spriteF);
+    }
+    auto slimeidle = Animation::createWithSpriteFrames(slimeAnimFrames, 0.1f);
+    auto slimeAnimation = Sprite::createWithSpriteFrameName("run_1.png");
+    slimeAnimation->setPosition(Point(this->getPosition().x, this->getPosition().y));
+    slimeAnimation->setScale(3.0);
+    Action* action1 = RepeatForever::create(Animate::create(slimeidle));
+    slimeAnimation->runAction(action1);
+    this->addChild(slimeAnimation);
 }

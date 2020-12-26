@@ -19,10 +19,10 @@ public:
     Hands* hands;
     virtual void DeathRattle() override;
 private:
-    cocos2d::Vec2 targetPosition;
+    Vec2 targetPosition;
     Animation* idleAnimate;
     Animation* runAnimate;
-    void idle();
+    void idleGoblin(char* path);
     void update(float dt);
     void move();
 };
