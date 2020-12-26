@@ -52,46 +52,14 @@ void Player::update(float dt)
     CheckMaxHP();
     move();
     cameraUpdate();
+    if (targetItem != NULL)
+        checkInteract();
     if (InputListener::Instance()->mouseStates[static_cast<int>(EventMouse::MouseButton::BUTTON_LEFT)])
     {
         Vec2 mousePos = InputListener::Instance()->mousePosition;
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 3;
         hands->UseItem(this->getPosition(), InputListener::Instance()->mousePosition.getAngle());
-    }
-    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)]) {
-        InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_R)] = false;
-        giveEXP(10);
-    }
-    if (targetItem != NULL && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
-        InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
-        if (targetItem->IsForSale()) {
-            if (gold >= targetItem->price) {
-                gold -= targetItem->price;
-                if (targetItem->type == Item::POTION) {
-                    static_cast<Potion*>(targetItem)->Drink(this);
-                    targetItem->setName(DEAD_TAG);
-                    targetItem = NULL;
-                }
-                else {
-                    hands->PutInHands(static_cast<Weapon*>(targetItem));
-                    targetItem->setName(DEAD_TAG);
-                    targetItem = NULL;
-                }
-            }
-        }
-        else {
-            if (targetItem->type == Item::POTION) {
-                static_cast<Potion*>(targetItem)->Drink(this);
-                targetItem->setName(DEAD_TAG);
-                targetItem = NULL;
-            }
-            else {
-                hands->PutInHands(static_cast<Weapon*>(targetItem));
-                targetItem->setName(DEAD_TAG);
-                targetItem = NULL;
-            }
-        }
     }
 }
 
@@ -119,17 +87,17 @@ void Player::move()
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
     b2Vec2 desiredVel = stats->moveSpeed * toTarget;
-    if (!isDashDelay && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_SHIFT)]){
+    if (!isDashDelay && InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_SHIFT)]) {
         double dashTime = 1;
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create(dashTime);
         auto startDash = CallFunc::create([this, desiredVel]() {;
-            int dashForce = 10;
-            body->ApplyForceToCenter((LINEAR_ACCELERATION) *dashForce * this->stats->moveSpeed * desiredVel, true);
-            isDashDelay = true;
-        });
+        int dashForce = 10;
+        body->ApplyForceToCenter((LINEAR_ACCELERATION)*dashForce * this->stats->moveSpeed * desiredVel, true);
+        isDashDelay = true;
+            });
         auto endDash = CallFunc::create([this, desiredVel]() {;
-            isDashDelay = false;
-        });
+        isDashDelay = false;
+            });
         auto seq = cocos2d::Sequence::create(startDash, delay, endDash, nullptr);
         SetInvulnerable(dashTime / 2);
         this->runAction(seq);
@@ -181,4 +149,40 @@ void Player::DeathRattle() {
     AudioEngine::preload("res/sounds/ds.mp3");
     auto scene = DeathScreen::createScene();
     Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+}
+
+void Player::checkInteract()
+{
+    if (getPosition().distance(targetItem->getPosition()) > PPM * 3)
+        targetItem = NULL;
+    if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)]) {
+        InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_E)] = false;
+        if (targetItem->IsForSale()) {
+            if (gold >= targetItem->price) {
+                gold -= targetItem->price;
+                if (targetItem->type == Item::POTION) {
+                    static_cast<Potion*>(targetItem)->Drink(this);
+                    targetItem->setName(DEAD_TAG);
+                    targetItem = NULL;
+                }
+                else {
+                    hands->PutInHands(static_cast<Weapon*>(targetItem));
+                    targetItem->setName(DEAD_TAG);
+                    targetItem = NULL;
+                }
+            }
+        }
+        else {
+            if (targetItem->type == Item::POTION) {
+                static_cast<Potion*>(targetItem)->Drink(this);
+                targetItem->setName(DEAD_TAG);
+                targetItem = NULL;
+            }
+            else {
+                hands->PutInHands(static_cast<Weapon*>(targetItem));
+                targetItem->setName(DEAD_TAG);
+                targetItem = NULL;
+            }
+        }
+    }
 }
