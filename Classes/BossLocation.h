@@ -16,6 +16,7 @@ public:
 	TMXTiledMap* getPosRoom();
 
 	TMXTiledMap* locIn;
+	string name;
 	vector<Unit*> getEnemies();
 	TMXTiledMap* getlocIn();
 	int countBoss;
@@ -26,7 +27,6 @@ private:
 	void update(float dt);
 	float time;
 
-	string name;
 	TMXTiledMap* hallUp;
 	TMXTiledMap* hallRight;
 	TMXTiledMap* mapOne;

@@ -67,14 +67,8 @@ bool BossLocation::init() {
 	for (int i = 0; i < items.size(); i++)
 		this->addChild(items[i]);
 
-
 	auto storeMap = store->getMap();
 	border(storeMap);
-
-	
-	//this->addChild(boss);
-
-
 
 	return true;
 }

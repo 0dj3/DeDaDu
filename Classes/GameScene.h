@@ -11,6 +11,7 @@
 #include <include/rapidjson/istreamwrapper.h>
 #include <iostream>
 #include <fstream>
+#include <DeathScreen.h>
 
 USING_NS_CC;
 
@@ -22,6 +23,7 @@ public:
     Unit* slime;
     Generation_map* generation;
     BossLocation* bosL;
+    Enemy* enemy;
 
     static cocos2d::Scene* createScene();
 
