@@ -226,7 +226,7 @@ void GameScene::checkPortalF() {
         //enemy->statsScale(countLocation);
 
         if (countLocation == (lvlBoss1 + 1) || countLocation == lvlBoss2 + 1) {
-            //bosL->unscheduleUpdate();
+            bosL->unscheduleUpdate();
             bosL->cleanScene();
             bosL->stopAllActions();
             checkBoss = false;
@@ -239,6 +239,7 @@ void GameScene::checkPortalF() {
 
         if (countLocation == lvlBoss1) {
             generation->cleanScene();
+            bosL = new BossLocation();
             bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
             checkBoss = true;
             this->addChild(bosL, 1);
@@ -247,6 +248,7 @@ void GameScene::checkPortalF() {
         else {
             if (countLocation == lvlBoss2) {
                 generation->cleanScene();
+                bosL = new BossLocation();
                 bosL = BossLocation::createScene("Goblin", enemies, static_cast<Player*>(this->player));
                 checkBoss = true;
                 this->addChild(bosL, 1);
