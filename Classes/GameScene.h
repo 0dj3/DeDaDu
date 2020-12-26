@@ -44,6 +44,7 @@ private:
     bool checkPortal = false;
     bool checkMap = false;
     bool checkBoss = false;
+    bool checkPortalBoss = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     vector<Unit*> barrels;

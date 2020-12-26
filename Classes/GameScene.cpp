@@ -130,7 +130,7 @@ void GameScene::update(float dt)
         checkEndRoom();
     }if (checkBoss == true) {
         auto enemiesBoss = bosL->getEnemies();
-        if (bosL->countBoss == 0 && bosL->bossDeath == true) {
+        if (bosL->countBoss == 0 && bosL->bossDeath == true && checkPortalBoss == false) {
             portal = new Sprite();
             portal->initWithFile("portal/portal.png");
             auto allMapOne = bosL->getlocIn();
@@ -139,6 +139,7 @@ void GameScene::update(float dt)
             portal->setScale(2.0);
             portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
             this->addChild(portal, 2);
+            checkPortalBoss = true;
             checkPortalF();
         }
     }
@@ -219,6 +220,7 @@ void GameScene::checkPortalF() {
         if (countLocation == 3 || countLocation == 6) {
             bosL->cleanScene();
             checkBoss = false;
+            checkPortalBoss == false;
         }
             
         if (countLocation >= 3) {
