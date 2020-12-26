@@ -24,12 +24,12 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(DeathScreen);
 
+    void GoToMainMenuScene(float dt);
     rapidjson::Document doc;
     
 private:
     int progress;
     char* str;
-    void GoToMainMenuScene(float dt);
 
 };
 

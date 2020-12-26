@@ -130,19 +130,26 @@ void GameScene::update(float dt)
         checkEndRoom();
     }if (checkBoss == true) {
         auto enemiesBoss = bosL->getEnemies();
-        if (bosL->countBoss == 0 && bosL->bossDeath == true) {
-            portal = new Sprite();
-            portal->initWithFile("portal/portal.png");
-            auto allMapOne = bosL->getlocIn();
-            posRoomPortal = allMapOne->getPosition();
-            sizeRoomPortal = allMapOne->getMapSize();
-            portal->setScale(2.0);
-            portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
-            this->addChild(portal, 2);
+        if (bosL->countBoss == 0 && bosL->bossDeath == true ) {
+            if (checkPortalBoss == false) {
+                if (bosL->name == "Goblin") {
+                    this->scheduleOnce(CC_SCHEDULE_SELECTOR(DeathScreen::GoToMainMenuScene), DISPLAY_TIME_SPLASH_SCENE);
+                }
+                else {
+                    portal = new Sprite();
+                    portal->initWithFile("portal/portal.png");
+                    auto allMapOne = bosL->getlocIn();
+                    posRoomPortal = allMapOne->getPosition();
+                    sizeRoomPortal = allMapOne->getMapSize();
+                    portal->setScale(2.0);
+                    portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
+                    this->addChild(portal, 2);
+                    checkPortalBoss = true;
+                }
+            }
             checkPortalF();
         }
     }
-    
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){
@@ -216,25 +223,34 @@ void GameScene::checkPortalF() {
         portal->setVisible(false);
         this->removeChild(portal);
 
-        if (countLocation == 3 || countLocation == 6) {
-            bosL->cleanScene();
+        auto lvlBoss1 = 2;
+        auto lvlBoss2 = 5;
+        //enemy->statsScale(countLocation);
+
+        if (countLocation == (lvlBoss1 + 1) || countLocation == (lvlBoss2 + 1)) {
             checkBoss = false;
+            checkPortalBoss = false;
+            bosL->unscheduleUpdate();
+            bosL->cleanScene();
+            bosL->stopAllActions();
         }
             
-        if (countLocation >= 3) {
+        if (countLocation >= (lvlBoss1 + 1)) {
             checkMap = true;
         }
 
-        if (countLocation == 2) {
+        if (countLocation == lvlBoss1) {
             generation->cleanScene();
+            bosL = new BossLocation();
             bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
             checkBoss = true;
             this->addChild(bosL, 1);
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
         else {
-            if (countLocation == 5) {
+            if (countLocation == lvlBoss2) {
                 generation->cleanScene();
+                bosL = new BossLocation();
                 bosL = BossLocation::createScene("Goblin", enemies, static_cast<Player*>(this->player));
                 checkBoss = true;
                 this->addChild(bosL, 1);

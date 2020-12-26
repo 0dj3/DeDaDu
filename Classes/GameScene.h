@@ -11,6 +11,7 @@
 #include <include/rapidjson/istreamwrapper.h>
 #include <iostream>
 #include <fstream>
+#include <DeathScreen.h>
 
 USING_NS_CC;
 
@@ -22,6 +23,7 @@ public:
     Unit* slime;
     Generation_map* generation;
     BossLocation* bosL;
+    Enemy* enemy;
 
     static cocos2d::Scene* createScene();
 
@@ -44,6 +46,7 @@ private:
     bool checkPortal = false;
     bool checkMap = false;
     bool checkBoss = false;
+    bool checkPortalBoss = false;
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     vector<Unit*> barrels;
