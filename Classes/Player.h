@@ -38,6 +38,7 @@ private:
     void move();
     void checkLVL();
     void cameraUpdate();
+    void checkInteract();
 };
 
 #endif // __PLAYER_H__
