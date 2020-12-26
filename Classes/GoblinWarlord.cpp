@@ -21,7 +21,7 @@ GoblinWarlord::GoblinWarlord()
 Enemy* GoblinWarlord::create(const Vec2& position, Player* player)
 {
     GoblinWarlord* newGoblinWarlord = new GoblinWarlord();
-    if (newGoblinWarlord && newGoblinWarlord->sprite->initWithFile("res/enemy/goblin/1.png"))
+    if (newGoblinWarlord && newGoblinWarlord->sprite->initWithFile("res/enemy/goblin/test_goblin.png"))
     {
         newGoblinWarlord->sprite->getTexture()->setAliasTexParameters();
         newGoblinWarlord->sprite->setScale(5);
