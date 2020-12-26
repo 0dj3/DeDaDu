@@ -216,31 +216,41 @@ void GameScene::checkPortalF() {
         portal->setVisible(false);
         this->removeChild(portal);
 
-        if (countLocation == 2)
+        if (countLocation == 3 && countLocation == 6) {
             bosL->cleanScene();
-
-        if (countLocation >= 2) {
-            checkMap = true;
             checkBoss = false;
         }
+            
+        if (countLocation >= 3) {
+            checkMap = true;
+        }
 
-        if (countLocation == 1) {
+        if (countLocation == 3) {
             generation->cleanScene();
-            bosL = BossLocation::createScene("Goblin", enemies, static_cast<Player*>(this->player));
+            bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
             checkBoss = true;
             this->addChild(bosL, 1);
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
         else {
-            generation->generation(checkMap);
-            portalInit();
+            if (countLocation == 6) {
+                generation->cleanScene();
+                bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
+                checkBoss = true;
+                this->addChild(bosL, 1);
+                player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
+            }
+            else {
+                generation->generation(checkMap);
+                portalInit();
 
-            barrels = generation->getBarrel();
-            for (int i = 0; i < barrels.size(); i++)
-                scene->addChild(barrels[i], 3);
+                barrels = generation->getBarrel();
+                for (int i = 0; i < barrels.size(); i++)
+                    scene->addChild(barrels[i], 3);
 
-            setPosPlayerMiniMap();
-            generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom);
+                setPosPlayerMiniMap();
+                generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom);
+            }
         }
         countLocation += 1;
     }
