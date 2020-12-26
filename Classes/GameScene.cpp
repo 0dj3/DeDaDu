@@ -225,7 +225,7 @@ void GameScene::checkPortalF() {
             checkMap = true;
         }
 
-        if (countLocation == 3) {
+        if (countLocation == 2) {
             generation->cleanScene();
             bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
             checkBoss = true;
@@ -233,9 +233,9 @@ void GameScene::checkPortalF() {
             player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
         }
         else {
-            if (countLocation == 6) {
+            if (countLocation == 5) {
                 generation->cleanScene();
-                bosL = BossLocation::createScene("slime", enemies, static_cast<Player*>(this->player));
+                bosL = BossLocation::createScene("Goblin", enemies, static_cast<Player*>(this->player));
                 checkBoss = true;
                 this->addChild(bosL, 1);
                 player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
