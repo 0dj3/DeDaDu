@@ -11,7 +11,7 @@ class Generation_map: public Layer {
 public:
 	static Generation_map* createScene(bool checkLoc, Player* player, Vec2 posHero);
     
-    void generation(bool checkLoc);
+    void generation(bool checkLoc, int statsEnemy);
     void border(TMXTiledMap* tiled);
     void borderForRoom(TMXTiledMap* tiled);
     void generHall(TMXTiledMap* sizeMap, int direction, bool checkLoc);
@@ -80,5 +80,6 @@ private:
     Vec2 posHero;
     std::vector<b2Body*> allPhStore;
     Vec2 dotPlayer;
+    int statsEnemy;
     Color3B colorMiniRoom;
 };

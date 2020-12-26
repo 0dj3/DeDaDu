@@ -15,13 +15,13 @@ Generation_map* Generation_map::createScene(bool checkLoc, Player* player, Vec2 
 }
 
 bool Generation_map::init(bool checkLoc) {
-    generation(checkLoc);
+    generation(checkLoc, 1);
     return true;
 }
 
-void Generation_map::generation(bool checkLoc) {
+void Generation_map::generation(bool checkLoc, int statsEnemy) {
     cleanScene();
-
+    this->statsEnemy = statsEnemy;
     arrayMap = generationArrayMap(sizeMap);
     checkj = sizeMap / 2;
 
@@ -541,8 +541,9 @@ std::vector<Unit*> Generation_map::createEnemy(std::vector<Unit*> enemies, TMXTi
         default:
             break;
         }
-
+        static_cast<Enemy*>(enemy)->statsScale(statsEnemy);
         this->addChild(enemy, 2);
+
         enemies.push_back(enemy);
     }
     return enemies;

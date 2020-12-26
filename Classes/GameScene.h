@@ -56,7 +56,6 @@ private:
     Sprite* portal;
     Vec2 posRoomPortal;
     Size sizeRoomPortal;
-
     std::vector<TMXTiledMap*> allMainRoom;
     int idRoom = 0;
 

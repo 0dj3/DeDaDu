@@ -223,6 +223,8 @@ void GameScene::checkPortalF() {
         portal->setVisible(false);
         this->removeChild(portal);
 
+        
+
         auto lvlBoss1 = 2;
         auto lvlBoss2 = 5;
         //enemy->statsScale(countLocation);
@@ -257,7 +259,7 @@ void GameScene::checkPortalF() {
                 player->body->SetTransform(b2Vec2(20.f, -39.f), player->body->GetAngle());
             }
             else {
-                generation->generation(checkMap);
+                generation->generation(checkMap, countLocation);
                 portalInit();
 
                 barrels = generation->getBarrel();
