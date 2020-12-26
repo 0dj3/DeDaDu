@@ -223,8 +223,8 @@ void GameScene::checkPortalF() {
         portal->setVisible(false);
         this->removeChild(portal);
 
-        auto lvlBoss1 = 1;
-        auto lvlBoss2 = 3;
+        auto lvlBoss1 = 2;
+        auto lvlBoss2 = 5;
         //enemy->statsScale(countLocation);
 
         if (countLocation == (lvlBoss1 + 1) || countLocation == (lvlBoss2 + 1)) {
