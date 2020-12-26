@@ -2,6 +2,8 @@
 #include "Generation_map.h"
 #include <string>
 #include "2d/CCFastTMXLayer.h"
+#include <SlimeKing.h>
+#include <GoblinWarlord.h>
 
 using namespace std;
 USING_NS_CC;
@@ -32,6 +34,7 @@ private:
 
 	Unit* playerGL;
 	SlimeKing* slimeking;
+	GoblinWarlord* goblinWarlord;
 	Enemy* boss;
 	vector<Unit*> enemies;
 	bool checkBoss = false;

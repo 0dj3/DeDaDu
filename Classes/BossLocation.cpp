@@ -105,7 +105,7 @@ void BossLocation::update(float dt) {
 				checkBoss = true;
 			}
 			if (name == "Goblin")
-				countBoss = slimeking->checkDeath;
+				countBoss = goblinWarlord->checkDeath;
 			else
 				countBoss = slimeking->checkDeath;
 			if (checkDoor == false) {
@@ -141,7 +141,7 @@ Enemy* BossLocation::addSlime(Point pos) {
 }
 
 Enemy* BossLocation::addGoblin(Point pos) {
-	auto boss = slimeking->create(pos, static_cast<Player*>(playerGL), 3);
+	auto boss = goblinWarlord->create(pos, static_cast<Player*>(playerGL));
 	return boss;
 }
 
