@@ -11,7 +11,7 @@ USING_NS_CC;
 
 GoblinWarlord::GoblinWarlord()
 {
-    stats = new UnitStats(6, 4, 1, 1);
+    stats = new UnitStats(6, 2, 1, 1);
     CheckMaxHP();
     hp = maxHP;
     dmgsound = "res/sounds/hit/goblin.mp3";
@@ -21,7 +21,7 @@ GoblinWarlord::GoblinWarlord()
 Enemy* GoblinWarlord::create(const Vec2& position, Player* player)
 {
     GoblinWarlord* newGoblinWarlord = new GoblinWarlord();
-    if (newGoblinWarlord && newGoblinWarlord->sprite->initWithFile("res/enemy/slime/test_slime.png"))
+    if (newGoblinWarlord && newGoblinWarlord->sprite->initWithFile("res/enemy/goblin/1.png"))
     {
         newGoblinWarlord->sprite->getTexture()->setAliasTexParameters();
         newGoblinWarlord->sprite->setScale(5);
@@ -49,16 +49,16 @@ void GoblinWarlord::update(float dt)
                 Enemy* enemy = Goblin::create(Vec2(getPosition().x + rand() % 100 - 50, getPosition().y + rand() % 100 - 50), _player);
                 Director::getInstance()->getRunningScene()->addChild(enemy, 2);
                 });
-            auto seq = cocos2d::Sequence::create(delay, spawn, spawn, spawn, spawn, nullptr);
+            auto seq = cocos2d::Sequence::create(delay, spawn, spawn, nullptr);
             this->runAction(seq);
             break;
 
         }
         case 1: {
-            cocos2d::DelayTime* attackDelay = cocos2d::DelayTime::create(1);
+            cocos2d::DelayTime* attackDelay = cocos2d::DelayTime::create(0.5);
             auto attack = CallFunc::create([this]() {
                 double angle = (Player::position - getPosition()).getAngle();
-                for (int i = 0; i < 360; i++) {
+                for (int i = 0; i < 22; i++) {
                     Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
                         Weapon::RANGE, this->getPosition(), 20 * this->stats->damage, angle + CC_DEGREES_TO_RADIANS(i * PPM), 1, 2, 1);
                 }
