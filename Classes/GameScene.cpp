@@ -216,7 +216,7 @@ void GameScene::checkPortalF() {
         portal->setVisible(false);
         this->removeChild(portal);
 
-        if (countLocation == 3 && countLocation == 6) {
+        if (countLocation == 3 || countLocation == 6) {
             bosL->cleanScene();
             checkBoss = false;
         }
