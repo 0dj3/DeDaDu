@@ -9,7 +9,7 @@ int SlimeKing::checkDeath = 0;
 USING_NS_CC;
 SlimeKing::SlimeKing()
 {
-    stats = new UnitStats(3, 1, 1, 1);
+    stats = new UnitStats(3, 2, 1, 1);
     CheckMaxHP();
     hp = maxHP;
     dmgsound = "res/sounds/hit/goblin.mp3";
@@ -21,7 +21,6 @@ Enemy* SlimeKing::create(const Vec2& position, Player* player, int life)
     SlimeKing* newSlimeKing = new SlimeKing();
     if (newSlimeKing && newSlimeKing->sprite->initWithFile("res/enemy/slime/test_slime.png"))
     {
-        newSlimeKing->spawnEnemy();
         newSlimeKing->sprite->getTexture()->setAliasTexParameters();
         newSlimeKing->sprite->setScale(life * 2);
         newSlimeKing->setPosition(position);
