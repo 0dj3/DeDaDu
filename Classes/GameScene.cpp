@@ -132,17 +132,19 @@ void GameScene::update(float dt)
         auto enemiesBoss = bosL->getEnemies();
         if (bosL->countBoss == 0 && bosL->bossDeath == true ) {
             if (checkPortalBoss == false) {
-                portal = new Sprite();
-                portal->initWithFile("portal/portal.png");
-                auto allMapOne = bosL->getlocIn();
-                posRoomPortal = allMapOne->getPosition();
-                sizeRoomPortal = allMapOne->getMapSize();
-                portal->setScale(2.0);
-                portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
-                this->addChild(portal, 2);
-                checkPortalBoss = true;
                 if (bosL->name == "Goblin") {
                     this->scheduleOnce(CC_SCHEDULE_SELECTOR(DeathScreen::GoToMainMenuScene), DISPLAY_TIME_SPLASH_SCENE);
+                }
+                else {
+                    portal = new Sprite();
+                    portal->initWithFile("portal/portal.png");
+                    auto allMapOne = bosL->getlocIn();
+                    posRoomPortal = allMapOne->getPosition();
+                    sizeRoomPortal = allMapOne->getMapSize();
+                    portal->setScale(2.0);
+                    portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
+                    this->addChild(portal, 2);
+                    checkPortalBoss = true;
                 }
             }
             checkPortalF();
@@ -225,12 +227,12 @@ void GameScene::checkPortalF() {
         auto lvlBoss2 = 3;
         //enemy->statsScale(countLocation);
 
-        if (countLocation == (lvlBoss1 + 1) || countLocation == lvlBoss2 + 1) {
+        if (countLocation == (lvlBoss1 + 1) || countLocation == (lvlBoss2 + 1)) {
+            checkBoss = false;
+            checkPortalBoss = false;
             bosL->unscheduleUpdate();
             bosL->cleanScene();
             bosL->stopAllActions();
-            checkBoss = false;
-            checkPortalBoss == false;
         }
             
         if (countLocation >= (lvlBoss1 + 1)) {

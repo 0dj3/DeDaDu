@@ -74,5 +74,5 @@ void GoblinWarlord::update(float dt)
 }
 
 void GoblinWarlord::DeathRattle() {
-
+    checkDeath--;
 }
