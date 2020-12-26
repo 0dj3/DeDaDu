@@ -710,6 +710,7 @@ void Generation_map::miniMap(int idRoom) {
     this->layer = layer;
     this->dotPlayer = dotPlayer;
     this->addChild(layer, 3);
+    allMainRoom.erase(allMainRoom.begin() + idRoom);
 }
 
 void Generation_map::addMiniMap(Player* player, Vec2 posHero, int idRoom) {

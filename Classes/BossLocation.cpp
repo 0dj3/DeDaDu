@@ -38,14 +38,28 @@ bool BossLocation::init() {
 	border(hallRight);
 	border(mapOne);
 
+	if (name == "Goblin") {
+		location2(locIn, true);
+		location2(mapMain, true);
+		location2(hallUp, true);
+		location2(hallRight, true);
+		location2(mapOne, true);
+	}
+
 	this->addChild(locIn);
 	this->addChild(mapMain);
 	this->addChild(hallUp);
 	this->addChild(hallRight);
 	this->addChild(mapOne);
 
-	createDoor(mapMain, 1, false, false);
-	createDoor(mapMain, 3, false, false);
+	if (name == "Goblin") {
+		createDoor(mapMain, 1, true, false);
+		createDoor(mapMain, 3, true, false);
+	}
+	else {
+		createDoor(mapMain, 1, false, false);
+		createDoor(mapMain, 3, false, false);
+	}
 
 	Store* store = Store::createScene(mapOne);
 	this->addChild(store);
@@ -83,16 +97,24 @@ void BossLocation::update(float dt) {
 		if (posPX >= posAX && posPX <= posBX && posPY <= posAY && posPY >= posBY) {
 			if (checkBoss == false) {
 				auto posBoss = Vec2(locIn->getPosition().x + locIn->getMapSize().width * 30, locIn->getPosition().y + locIn->getMapSize().height * 30);
-				boss = addBoss(posBoss);
+				if (name == "Goblin") 
+					boss = addGoblin(posBoss);
+				else 
+					boss = addSlime(posBoss);
 				this->addChild(boss);
 				checkBoss = true;
 			}
-
-			countBoss = slimeking->checkDeath;
+			if (name == "Goblin")
+				countBoss = slimeking->checkDeath;
+			else
+				countBoss = slimeking->checkDeath;
 			if (checkDoor == false) {
 				auto sizeMap = locIn->getMapSize();
 				auto posMap = locIn->getPosition();
-				createDoor(locIn, 1, false, true);
+				if (name == "Goblin") 
+					createDoor(locIn, 1, true, true);
+				else 
+					createDoor(locIn, 1, false, true);
 				checkDoor = true;
 			}
 			if (checkDoor == true && countBoss == 0) {
@@ -113,7 +135,12 @@ void BossLocation::update(float dt) {
 	
 }
 
-Enemy* BossLocation::addBoss(Point pos) {
+Enemy* BossLocation::addSlime(Point pos) {
+	auto boss = slimeking->create(pos, static_cast<Player*>(playerGL), 3);
+	return boss;
+}
+
+Enemy* BossLocation::addGoblin(Point pos) {
 	auto boss = slimeking->create(pos, static_cast<Player*>(playerGL), 3);
 	return boss;
 }
