@@ -47,9 +47,9 @@ void Enemy::spawnEnemy()
 }
 
 void Enemy::statsScale(int level) {
-    stats->damage = 1 + level / 10;
-    stats->attackSpeed = 1 + level / 20;
-    stats->hp = 1 + level / 5;
-    stats->moveSpeed = 1 + level / 15;
+    stats->damage += level / 10;
+    stats->attackSpeed += level / 20;
+    stats->hp += level / 5;
+    stats->moveSpeed += level / 15;
     CheckMaxHP();
 }

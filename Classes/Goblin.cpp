@@ -32,7 +32,18 @@ Enemy* Goblin::create(const Vec2& position, Player* player)
 
         newGoblin->hands = new Hands(newGoblin);
         newGoblin->addChild(newGoblin->hands);
-        Weapon* weapon = Weapon::GetRandomWeapon();
+        Weapon* weapon;
+        switch (rand() % 2)
+        {
+        case 0:
+            weapon = Weapon::createRange("res/weapon/staff1.png", "res/effects/projectile/fire.png", "res/sounds/swoosh.mp3", 10, 2, 2);
+            break;
+        case 1:
+            weapon = Weapon::createMelee("res/weapon/knife.png", "res/effects/projectile/slash.png", "res/sounds/swoosh.mp3", 20, 0.5);
+            break;
+        default:
+            break;
+        }
         newGoblin->hands->PutInHands(weapon);
         newGoblin->scheduleUpdate();
         return newGoblin;

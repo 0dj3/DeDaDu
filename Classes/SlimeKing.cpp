@@ -9,7 +9,7 @@ int SlimeKing::checkDeath = 0;
 USING_NS_CC;
 SlimeKing::SlimeKing()
 {
-    stats = new UnitStats(0.3, 1, 1, 1);
+    stats = new UnitStats(3, 1, 1, 1);
     CheckMaxHP();
     hp = maxHP;
     dmgsound = "res/sounds/hit/goblin.mp3";
@@ -42,7 +42,7 @@ void SlimeKing::update(float dt)
 {
     if (!getNumberOfRunningActions()) {
         cocos2d::DelayTime* delay = cocos2d::DelayTime::create((double)(rand()) / RAND_MAX * (3) + 1);
-        switch (rand() % 2)
+        switch (rand() % 3)
         {
         case 0: {
             auto move = CallFunc::create([this]() {
@@ -59,20 +59,25 @@ void SlimeKing::update(float dt)
         case 1: {
             cocos2d::DelayTime* attackDelay = cocos2d::DelayTime::create(1);
             auto attack1 = CallFunc::create([this]() {
-                double angle = Player::position.getAngle();
-                for (int i = -10; i < 10; i++) {
+                double angle = (Player::position - getPosition()).getAngle();
+                for (int i = -5; i < 5; i++) {
                     Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
-                        Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, angle + i, 1, 2, 1);
+                        Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, angle + CC_DEGREES_TO_RADIANS(i * PPM), 1, 2, 1);
                 }
                 });
-            auto attack2 = CallFunc::create([this]() {
-                double angle = Player::position.getAngle();
-                for (int i = 10; i > -10; i--) {
-                    Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
-                        Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, angle + i, 1, 2, 1);
-                }
+            auto seq = cocos2d::Sequence::create(delay, attack1, attackDelay, attack1, attackDelay, attack1, nullptr);
+            this->runAction(seq);
+            break;
+        }
+        case 2: {
+            cocos2d::DelayTime* attackDelay = cocos2d::DelayTime::create(0.1);
+            auto attack = CallFunc::create([this]() {
+                double angle = (Player::position - getPosition()).getAngle();
+                Attack::CreateAttack("res/effects/projectile/acid.png", ContactListener::BodyTag::ENEMY,
+                    Weapon::RANGE, this->getPosition(), 15 * this->stats->damage, angle, 1, 2, 60);
                 });
-            auto seq = cocos2d::Sequence::create(delay, attack1, attackDelay, attack2, nullptr);
+            auto atk = cocos2d::Sequence::create(attackDelay, attack, attackDelay, attack, attackDelay, attack, attackDelay, attack, attackDelay, attack, nullptr);
+            auto seq = cocos2d::Sequence::create(delay, atk, atk, atk, atk, atk, atk, atk, atk, atk, nullptr);
             this->runAction(seq);
             break;
         }
