@@ -601,106 +601,162 @@ void Generation_map::miniMap(int idRoom) {
     int sizeX = 0, sizeY = 0;
     int posMapX = 500, posMapY = -70;
 
-    for (int i = 0; i < sizeMap; i++) {
-        for (int j = sizeMap / 2; j < sizeMap; j++) {
-            if (arrayMap[i][j] != 0) {
-                //removeChild(miniRoom, true);
+    miniRoom = Sprite::create("miniMap/miniRoom.png");
+    miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+    miniRoom->setScale(2.5);
+    layer->addChild(miniRoom);
+    allDrawMainRoom.push_back(miniRoom);
+    allDrawRoom.push_back(miniRoom);
+
+    for (int i = 1; i <= 4; i++) {
+        auto hall = miniHall(miniRoom, i);
+        layer->addChild(hall);
+    }
+
+    Sprite* miniRoomD = Sprite::create("miniMap/miniRoom.png");
+    miniRoomD->setPosition(Vec2(sizeX + posMapX, posMapY - 50));
+    miniRoomD->setScale(2.5);
+    layer->addChild(miniRoomD);
+    allDrawRoom.push_back(miniRoomD);
+    sizeX += 50;
+
+    for (int j = sizeMap / 2 + 1; j < sizeMap; j++) {
+        if (arrayMap[1][j] == 2) {
+            miniRoom = Sprite::create("miniMap/miniRoom.png");
+            miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+            miniRoom->setScale(2.5);
+            layer->addChild(miniRoom);
+            allDrawMainRoom.push_back(miniRoom);
+
+            if (arrayMap[1 + 1][j] == 2) {
+                auto hall = miniHall(miniRoom, 2);
+                layer->addChild(hall);
+            }
+            auto hall = miniHall(miniRoom, 3);
+            layer->addChild(hall);
+        }
+        else {
+            if (arrayMap[1][j] == 1) {
                 miniRoom = Sprite::create("miniMap/miniRoom.png");
                 miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
                 miniRoom->setScale(2.5);
                 layer->addChild(miniRoom);
-                allDrawRoom.push_back(miniRoom);
-                if (arrayMap[i][j] == 2)
+            }
+        }
+        allDrawRoom.push_back(miniRoom);
+        sizeX += 50;
+    }
+    sizeX = -50;
+
+    for (int j = sizeMap / 2 - 1; j >= 0; j--) {
+        if (arrayMap[1][j] == 2) {
+            miniRoom = Sprite::create("miniMap/miniRoom.png");
+            miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+            miniRoom->setScale(2.5);
+            layer->addChild(miniRoom);
+            allDrawMainRoom.push_back(miniRoom);
+
+            if (arrayMap[1 + 1][j] == 2) {
+                auto hall = miniHall(miniRoom, 2);
+                layer->addChild(hall);
+            }
+            auto hall = miniHall(miniRoom, 4);
+            layer->addChild(hall);
+        }
+        else {
+            if (arrayMap[1][j] == 1) {
+                miniRoom = Sprite::create("miniMap/miniRoom.png");
+                miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                miniRoom->setScale(2.5);
+                layer->addChild(miniRoom);
+            }
+        }
+        allDrawRoom.push_back(miniRoom);
+        sizeX -= 50;
+    }
+    sizeX = 0;
+    sizeY += 50;
+
+    for (int k = 2; k < sizeMap - 1; k++) {
+        if (arrayMap[k][sizeMap / 2] == 2) {
+            miniRoom = Sprite::create("miniMap/miniRoom.png");
+            miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+            miniRoom->setScale(2.5);
+            layer->addChild(miniRoom);
+            allDrawMainRoom.push_back(miniRoom);
+            allDrawRoom.push_back(miniRoom);
+            sizeX += 50;
+
+            for (int dirMRoom = 1; dirMRoom < 4; dirMRoom++) {
+                auto hall = miniHall(miniRoom, dirMRoom + 1);
+                layer->addChild(hall);
+            }
+            for (int j = sizeMap / 2 + 1; j < sizeMap; j++) {
+                if (arrayMap[k][j] == 2) {
+                    miniRoom = Sprite::create("miniMap/miniRoom.png");
+                    miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                    miniRoom->setScale(2.5);
+                    layer->addChild(miniRoom);
                     allDrawMainRoom.push_back(miniRoom);
-                konMap = allDrawRoom.size();
-                sizeX += 50;
-
-                if ((i == (sizeMap - 1) && j == (sizeMap / 2))){
-                    auto hall = miniHall(miniRoom, 1);
-                    layer->addChild(hall);
-                }
-
-                if ((i == (0) && j == (sizeMap / 2))) {
-                    auto hall = miniHall(miniRoom, 2);
-                    layer->addChild(hall);
-                }
-
-                if (i != 0 && i != sizeMap - 1) {
-                    if (arrayMap[i][j] != 1) {
-                        if (arrayMap[i + 1][j] == 2) {
-                            auto hall = miniHall(miniRoom, 2);
-                            layer->addChild(hall);
-                        }
-                        if (arrayMap[i - 1][j] == 2) {
-                            auto hall = miniHall(miniRoom, 1);
-                            layer->addChild(hall);
-                        }
-                    }
-                }
-                if (j != 0 && j != sizeMap - 1) {
-                    if (arrayMap[i][j + 1] != 0){
-                        auto hall = miniHall(miniRoom, 3);
+                    allDrawRoom.push_back(miniRoom);
+                    sizeX += 50;
+                    if (arrayMap[k + 1][j] == 2) {
+                        auto hall = miniHall(miniRoom, 2);
                         layer->addChild(hall);
                     }
-                    if (arrayMap[i][j - 1] != 0){
-                        auto hall = miniHall(miniRoom, 4);
-                        layer->addChild(hall);
-                    }    
+                    auto hall = miniHall(miniRoom, 3);
+                    layer->addChild(hall);
+                }
+                else {
+                    if (arrayMap[k][j] == 1) {
+                        miniRoom = Sprite::create("miniMap/miniRoom.png");
+                        miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                        miniRoom->setScale(2.5);
+                        layer->addChild(miniRoom);
+                        allDrawRoom.push_back(miniRoom);
+                        sizeX += 50;
+                    }
                 }
             }
-            k = 0;
-            z = 0;
+            sizeX = -50;
+            for (int j = sizeMap / 2 - 1; j >= 0; j--) {
+                if (arrayMap[k][j] == 2) {
+                    miniRoom = Sprite::create("miniMap/miniRoom.png");
+                    miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                    miniRoom->setScale(2.5);
+                    layer->addChild(miniRoom);
+                    allDrawMainRoom.push_back(miniRoom);
+                    allDrawRoom.push_back(miniRoom);
+                    sizeX -= 50;
+                    if (arrayMap[k + 1][j] == 2) {
+                        auto hall = miniHall(miniRoom, 2);
+                        layer->addChild(hall);
+                    }
+                    auto hall = miniHall(miniRoom, 4);
+                    layer->addChild(hall);
+                }
+                else {
+                    if (arrayMap[k][j] == 1) {
+                        miniRoom = Sprite::create("miniMap/miniRoom.png");
+                        miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+                        miniRoom->setScale(2.5);
+                        layer->addChild(miniRoom);
+                        allDrawRoom.push_back(miniRoom);
+                        sizeX -= 50;
+                    }
+                }
+            }
         }
         sizeY += 50;
         sizeX = 0;
     }
 
-    k = 0;
-    z = 0;
-    sizeX -= 50;
-    sizeY = 0;
+    miniRoom = Sprite::create("miniMap/miniRoom.png");
+    miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
+    miniRoom->setScale(2.5);
+    layer->addChild(miniRoom);
+    allDrawRoom.push_back(miniRoom);
 
-    for (int i = 0; i < sizeMap; i++) {
-        for (int j = sizeMap / 2 - 1; j >= 0; j--) {
-            if (arrayMap[i][j] != 0) {
-                //removeChild(miniRoom, true);
-                miniRoom = Sprite::create("miniMap/miniRoom.png");
-                miniRoom->setPosition(Vec2(sizeX + posMapX, sizeY + posMapY));
-                miniRoom->setScale(2.5);
-                layer->addChild(miniRoom);
-                allDrawRoom.push_back(miniRoom);
-                if (arrayMap[i][j] == 2)
-                    allDrawMainRoom.push_back(miniRoom);
-                sizeX -= 50;
-                if (i != 0 && i != sizeMap - 1) {
-                    if (arrayMap[i][j] != 1) {
-                        if (arrayMap[i + 1][j] == 2) {
-                            auto hall = miniHall(miniRoom, 2);
-                            layer->addChild(hall);
-                        }
-                        if (arrayMap[i - 1][j] == 2) {
-                            auto hall = miniHall(miniRoom, 1);
-                            layer->addChild(hall);
-                        }
-                    }
-                }
-                if (j != 0 && j != sizeMap - 1) {
-                    if (arrayMap[i][j + 1] != 0) {
-                        auto hall = miniHall(miniRoom, 3);
-                        layer->addChild(hall);
-                    }
-                    if (arrayMap[i][j - 1] != 0) {
-                        auto hall = miniHall(miniRoom, 4);
-                        layer->addChild(hall);
-                    }
-                }
-            }
-            k = 0;
-            z = 0;
-        }
-        sizeY += 50;
-        sizeX = -50;
-    }
     Vec2 dotPlayer;
     dotPlayer = Vec2(allDrawMainRoom[idRoom]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawMainRoom[idRoom]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5);
 
