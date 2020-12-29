@@ -80,9 +80,11 @@ void Player::move()
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_D)]) {
         directionX++;
+        sprite->setFlippedX(false);
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_A)]) {
         directionX--;
+        sprite->setFlippedX(true);
     }
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
