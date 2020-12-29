@@ -10,7 +10,7 @@ Goblin::Goblin()
     stats = new UnitStats(0.5, 1, 1, 1);
     CheckMaxHP();
     hp = maxHP;
-    idleGoblin("res/enemy/goblin/goblin.plist");
+    Goblin::idleGoblin("res/enemy/goblin/goblin.plist");
     dmgsound = "res/sounds/hit/goblin.mp3";
     this->autorelease();
 }
@@ -120,10 +120,12 @@ void Goblin::idleGoblin(char* path)
         idleAnimFrames1.pushBack(spriteF);
     }
     auto goblinIdle = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
-    auto demoGoblin = Sprite::createWithSpriteFrameName("run_1.png");
+    /*auto demoGoblin = Sprite::createWithSpriteFrameName("run_1.png");
     demoGoblin->setPosition(Point(this->getPosition().x, this->getPosition().y));
     demoGoblin->setScale(3.0);
-    Action* action1 = RepeatForever::create(Animate::create(goblinIdle));
-    demoGoblin->runAction(action1);
-    this->addChild(demoGoblin);
+    Action* action1 = RepeatForever::create(Animate::create(goblinIdle));*/
+    Animate* animate = Animate::create(goblinIdle);
+    Goblin::sprite->runAction(RepeatForever::create(animate));
+    /*demoGoblin->runAction(action1);
+    this->addChild(demoGoblin);*/
 }

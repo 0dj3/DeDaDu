@@ -39,6 +39,11 @@ private:
     void checkLVL();
     void cameraUpdate();
     void checkInteract();
+    void idleGoblin(char* path);
+    float time = 0;
+    int asRun = 1;
+    int asIdle = 1;
+    Vec2 pastPos = Vec2(0, 0);
 };
 
 #endif // __PLAYER_H__

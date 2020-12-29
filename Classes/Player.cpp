@@ -47,6 +47,7 @@ Unit* Player::create(const Vec2& position)
 
 void Player::update(float dt)
 {
+    time += dt;
     position = getPosition();
     checkLVL();
     CheckMaxHP();
@@ -60,6 +61,34 @@ void Player::update(float dt)
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 3;
         hands->UseItem(this->getPosition(), InputListener::Instance()->mousePosition.getAngle());
+    }
+    if (time > 0.1f) {
+        int pastPosX = pastPos.x;
+        int pastPosY = pastPos.y;
+        int posX = this->getPosition().x;
+        int posY = this->getPosition().y;
+        if (pastPosX != posX || pastPosY != posY) {
+            char goblinStr[200] = { 0 };
+            sprintf(goblinStr, "res/hero/run_%i.png", asRun);
+            sprite->setTexture(goblinStr);
+            sprite->getTexture()->setAliasTexParameters();
+            sprite->setScale(3.0);
+            if (asRun == 6)
+                asRun = 1;
+            else asRun++;
+        }
+        else {
+            char goblinStr[200] = { 0 };
+            sprintf(goblinStr, "res/hero/idle_%i.png", asIdle);
+            sprite->setTexture(goblinStr);
+            sprite->getTexture()->setAliasTexParameters();
+            sprite->setScale(3.0);
+            if (asIdle == 6)
+                asIdle = 1;
+            else asIdle++;
+        }
+        pastPos = this->getPosition();
+        time = 0;
     }
 }
 
@@ -187,4 +216,28 @@ void Player::checkInteract()
             }
         }
     }
+}
+
+void Player::idleGoblin(char* path)
+{
+    char goblinStr[200] = { 0 };
+    auto goblinSpriteCache = SpriteFrameCache::getInstance();
+    goblinSpriteCache->addSpriteFramesWithFile(path);
+
+    Vector<SpriteFrame*> idleAnimFrames1(6);
+    for (int i = 1; i <= 6; i++) {
+        sprintf(goblinStr, "run_%i.png", i);
+        SpriteFrame* spriteF = goblinSpriteCache->getSpriteFrameByName(goblinStr);
+        spriteF->getTexture()->setAliasTexParameters();
+        idleAnimFrames1.pushBack(spriteF);
+    }
+    auto goblinIdle = Animation::createWithSpriteFrames(idleAnimFrames1, 0.1f);
+    /*auto demoGoblin = Sprite::createWithSpriteFrameName("run_1.png");
+    demoGoblin->setPosition(Point(this->getPosition().x, this->getPosition().y));
+    demoGoblin->setScale(3.0);*/
+    //Action* action1 = RepeatForever::create(Animate::create(goblinIdle));
+    Animate* animate = Animate::create(goblinIdle);
+    Player::sprite->runAction(RepeatForever::create(animate));
+
+    //sprite->runAction(action1);
 }
