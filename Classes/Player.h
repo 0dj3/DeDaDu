@@ -44,6 +44,8 @@ private:
     int asRun = 1;
     int asIdle = 1;
     Vec2 pastPos = Vec2(0, 0);
+
+    bool checkHands = false;
 };
 
 #endif // __PLAYER_H__

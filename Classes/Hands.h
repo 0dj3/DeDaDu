@@ -45,11 +45,10 @@ public:
 	Weapon* GetWeapon() { return weapon; };
 
 	bool IsDelay() { return isDelay; };
-
+	cocos2d::Sprite* handsSprite;
 protected:
 	Unit* unit = NULL;
 	bool isDelay = false;
-	cocos2d::Sprite* handsSprite;
 	Weapon* weapon = NULL;
 
 };

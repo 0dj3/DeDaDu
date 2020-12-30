@@ -16,6 +16,7 @@ Player::Player()
     tag = ContactListener::PLAYER;
     gold = 20;
     stats = new UnitStats(1, 1, 1, 2);
+    //idleGoblin("res/hero/hero.plist");
     CheckMaxHP();
     hp = maxHP;
     autorelease();
@@ -61,6 +62,7 @@ void Player::update(float dt)
         mousePos.normalize();
         Vec2 pos = this->getPosition() + mousePos * this->sprite->getContentSize().height * this->getScale() * 3;
         hands->UseItem(this->getPosition(), InputListener::Instance()->mousePosition.getAngle());
+        
     }
     if (time > 0.1f) {
         int pastPosX = pastPos.x;
@@ -110,10 +112,20 @@ void Player::move()
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_D)]) {
         directionX++;
         sprite->setFlippedX(false);
+        if (checkHands == true) {
+            hands->setPositionX(hands->getPositionX() + sprite->getContentSize().width * 2.7);
+            checkHands = false;
+        }
+        hands->handsSprite->setFlippedX(false);
     }
     if (InputListener::Instance()->keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_A)]) {
         directionX--;
         sprite->setFlippedX(true);
+        if (checkHands == false) {
+            hands->setPositionX(hands->getPositionX() - sprite->getContentSize().width * 2.7);
+            checkHands = true;
+        }
+        hands->handsSprite->setFlippedX(true);
     }
     b2Vec2 toTarget = b2Vec2(directionX, directionY);
     toTarget.Normalize();
@@ -238,6 +250,6 @@ void Player::idleGoblin(char* path)
     //Action* action1 = RepeatForever::create(Animate::create(goblinIdle));
     Animate* animate = Animate::create(goblinIdle);
     Player::sprite->runAction(RepeatForever::create(animate));
-
+    goblinSpriteCache->destroyInstance();
     //sprite->runAction(action1);
 }
