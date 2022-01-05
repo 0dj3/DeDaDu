@@ -124,6 +124,18 @@ void GameScene::update(float dt)
             myActor->setPosition(Vec2(b->GetPosition().x * PPM, b->GetPosition().y * PPM));
         }
     }
+
+    if (checkPortal == true) {
+        char portalStr[200] = { 0 };
+        sprintf(portalStr, "portal/start/portal_%i.png", asPortal);
+        portal->setTexture(portalStr);
+        portal->getTexture()->setAliasTexParameters();
+        portal->setScale(1.0);
+        if (asPortal == 24)
+            asPortal = 1;
+        else asPortal++;
+    }
+
     if (checkBoss == false) {
         generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom, hud->getPosition());
         enemies = generation->checkRoom(player, enemies, checkMap);
@@ -137,11 +149,11 @@ void GameScene::update(float dt)
                 }
                 else {
                     portal = new Sprite();
-                    portal->initWithFile("portal/portal.png");
+                    portal->initWithFile("portal/start/portal_1.png");
                     auto allMapOne = bosL->getlocIn();
                     posRoomPortal = allMapOne->getPosition();
                     sizeRoomPortal = allMapOne->getMapSize();
-                    portal->setScale(2.0);
+                    portal->setScale(1.0);
                     portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
                     this->addChild(portal, 2);
                     checkPortalBoss = true;
@@ -150,6 +162,8 @@ void GameScene::update(float dt)
             checkPortalF();
         }
     }
+
+    
 }
 
 void GameScene::menuCloseCallback(Ref* pSender){
@@ -176,14 +190,15 @@ void GameScene::checkEndRoom() {
 
 void GameScene::portalInit() {
     portal = new Sprite();
-    portal->initWithFile("portal/portal.png");
+    
+    portal->initWithFile("portal/start/portal_1.png");
 
     auto allMapOne = generation->getAllMapOne();
     int idMap = 0 + rand() % (allMapOne.size() - 1);
 
     posRoomPortal = allMapOne[idMap]->getPosition();
     sizeRoomPortal = allMapOne[idMap]->getMapSize();
-    portal->setScale(2.0);
+    portal->setScale(1.0);
     portal->setPosition(Vec2(posRoomPortal.x + sizeRoomPortal.width * 30, posRoomPortal.y + sizeRoomPortal.height * 30));
     this->addChild(portal);
     portal->setVisible(false);
@@ -212,7 +227,7 @@ void GameScene::setEnemies(vector<Unit*> enemies) {
 
 void GameScene::checkPortalF() {
     auto pos = portal->getPosition();
-    auto size = portal->getContentSize();
+    auto size = portal->getContentSize() * 0.7;
     auto posAX = pos.x - size.width;
     auto posAY = pos.y + size.height;
     auto posBX = pos.x + size.width;

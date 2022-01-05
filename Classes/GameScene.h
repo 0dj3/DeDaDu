@@ -50,7 +50,7 @@ private:
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     vector<Unit*> barrels;
-    
+    int asPortal = 1;
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
     Node* layerMiniMap;
     Sprite* portal;

@@ -782,12 +782,13 @@ void Generation_map::addMiniMap(Player* player, Vec2 posHero, int idRoom, Point 
     }
     layer->setPosition(posHUD);
     dotPlayer = (Vec2(allDrawMainRoom[idRoom]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawMainRoom[idRoom]->getPosition().y + posHero.y / 22.8 - FirstPosPl.y));
-    removeChild(draw);
-    draw = DrawNode::create();
     
+    //расположение героя в миникарте 
+    /*removeChild(draw);
+    draw = DrawNode::create();
     draw->drawDot(dotPlayer+posHUD, 2, Color4F::RED);
     addChild(draw);
-    
+    */
 
 
     for (int i = 0; i < allDrawRoom.size(); i++) {
