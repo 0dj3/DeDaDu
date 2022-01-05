@@ -21,6 +21,7 @@ bool Generation_map::init(bool checkLoc) {
 
 void Generation_map::generation(bool checkLoc, int statsEnemy) {
     cleanScene();
+    checkPl = false;
     this->statsEnemy = statsEnemy;
     arrayMap = generationArrayMap(sizeMap);
     checkj = sizeMap / 2;
@@ -761,7 +762,7 @@ void Generation_map::miniMap(int idRoom) {
     allDrawRoom.push_back(miniRoom);
 
     Vec2 dotPlayer;
-    dotPlayer = Vec2(allDrawMainRoom[idRoom]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawMainRoom[idRoom]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5);
+    dotPlayer = Vec2(allDrawMainRoom[idRoom]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawMainRoom[idRoom]->getPosition().y + posHero.y / 22.8 - FirstPosPl.y);
 
     this->colorMiniRoom =miniRoom->getColor();
     //return layer;
@@ -776,12 +777,19 @@ void Generation_map::miniMap(int idRoom) {
 void Generation_map::addMiniMap(Player* player, Vec2 posHero, int idRoom, Point posHUD) {
     
     if (checkPl == false) {
-        FirstPosPl = Vec2(posHero.x / 18, posHero.y / 23);
+        FirstPosPl = Vec2(posHero.x / 18, posHero.y / 22.8);
         checkPl = true;        
     }
     layer->setPosition(posHUD);
-    dotPlayer = (Vec2(allDrawMainRoom[idRoom]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawMainRoom[idRoom]->getPosition().y + posHero.y / 23 - FirstPosPl.y + 5));
+    dotPlayer = (Vec2(allDrawMainRoom[idRoom]->getPosition().x + (posHero.x / 18) - FirstPosPl.x + 1, allDrawMainRoom[idRoom]->getPosition().y + posHero.y / 22.8 - FirstPosPl.y));
+    removeChild(draw);
+    draw = DrawNode::create();
     
+    draw->drawDot(dotPlayer+posHUD, 2, Color4F::RED);
+    addChild(draw);
+    
+
+
     for (int i = 0; i < allDrawRoom.size(); i++) {
 
         auto posPX = dotPlayer.x;

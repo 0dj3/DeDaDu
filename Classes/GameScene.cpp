@@ -267,7 +267,7 @@ void GameScene::checkPortalF() {
                     scene->addChild(barrels[i], 2);
 
                 setPosPlayerMiniMap();
-                generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom, hud->getPosition());
+                //generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom, hud->getPosition());
             }
         }
         countLocation += 1;

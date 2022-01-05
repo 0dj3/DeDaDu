@@ -82,4 +82,5 @@ private:
     Vec2 dotPlayer;
     int statsEnemy;
     Color3B colorMiniRoom;
+    DrawNode* draw;
 };
