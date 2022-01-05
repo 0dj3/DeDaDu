@@ -34,7 +34,7 @@ public:
 
     void miniMap(int idRoom);
     Sprite* miniHall(Sprite* miniRoom, int direction);
-    void addMiniMap(Player* player, Vec2 posHero, int idRoom);
+    void addMiniMap(Player* player, Vec2 posHero, int idRoom, Point posHUD);
     void cleanScene();
 
     std::vector<TMXTiledMap*> allMainRoom;

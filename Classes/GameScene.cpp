@@ -62,7 +62,7 @@ bool GameScene::init()
     setPosPlayerMiniMap();
     barrels = generation->getBarrel();
     for (int i = 0; i < barrels.size(); i++)
-        scene->addChild(barrels[i], 3);
+        scene->addChild(barrels[i], 2);
 
     this->addChild(player, 4);
     
@@ -125,7 +125,7 @@ void GameScene::update(float dt)
         }
     }
     if (checkBoss == false) {
-        generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom);
+        generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom, hud->getPosition());
         enemies = generation->checkRoom(player, enemies, checkMap);
         checkEndRoom();
     }if (checkBoss == true) {
@@ -264,10 +264,10 @@ void GameScene::checkPortalF() {
 
                 barrels = generation->getBarrel();
                 for (int i = 0; i < barrels.size(); i++)
-                    scene->addChild(barrels[i], 3);
+                    scene->addChild(barrels[i], 2);
 
                 setPosPlayerMiniMap();
-                generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom);
+                generation->addMiniMap(static_cast<Player*>(player), player->getPosition(), idRoom, hud->getPosition());
             }
         }
         countLocation += 1;
