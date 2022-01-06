@@ -76,6 +76,7 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
+    time += dt;
     int velocityIterations = 6;
     int positionIterations = 2;
 
@@ -125,15 +126,19 @@ void GameScene::update(float dt)
         }
     }
 
-    if (checkPortal == true) {
-        char portalStr[200] = { 0 };
-        sprintf(portalStr, "portal/start/portal_%i.png", asPortal);
-        portal->setTexture(portalStr);
-        portal->getTexture()->setAliasTexParameters();
-        portal->setScale(1.0);
-        if (asPortal == 24)
-            asPortal = 1;
-        else asPortal++;
+    if (checkPortal == true || checkBoss == true) {
+        if (time > 0.05f) {
+            char portalStr[200] = { 0 };
+            sprintf(portalStr, "portal/start/portal_%i.png", asPortal);
+            portal->setTexture(portalStr);
+            portal->getTexture()->setAliasTexParameters();
+            portal->setScale(1.0);
+            if (asPortal == 24)
+                asPortal = 5;
+            else asPortal++;
+            time = 0;
+        }
+       
     }
 
     if (checkBoss == false) {

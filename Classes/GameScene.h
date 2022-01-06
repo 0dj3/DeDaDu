@@ -41,6 +41,7 @@ public:
     void setEnemies(std::vector<Unit*> enemies);
     void checkPortalF();
 private:
+    double time = 0;
     void update(float dt);
     int countLocation = 1;
     bool checkPortal = false;
@@ -50,7 +51,7 @@ private:
     cocos2d::PhysicsWorld* sceneWorld;
     std::vector<Unit*> enemies;
     vector<Unit*> barrels;
-    int asPortal = 1;
+    int asPortal = 5;
     void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { sceneWorld = world; };
     Node* layerMiniMap;
     Sprite* portal;
